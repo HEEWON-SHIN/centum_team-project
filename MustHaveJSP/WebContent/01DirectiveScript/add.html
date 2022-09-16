@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<!-- 자연수를 입력받아 1부터 입력받은 자연수만큼의 누적 합을 요청하는 페이지(정적 페이지)  -->
+	자연수를 입력하세요.
+							<!-- 입력한 값을 주소창에 노출해서 요청하는 get방식(기본값), 노출 안 하는 방식은 post -->
+	<form action="add.jsp" method="get"><!-- action속성에는 요청할 서버페이지 주소 작성 -->
+		
+		1부터<input type="text" name="num">
+			<input type="submit" value="계산요청">
+	</form>
+	
+	
+</body>
+</html>

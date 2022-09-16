@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+	
+		/*웹브라우저가 모든 소스를 읽어들인 후에! 34번 코드줄에서
+			함수를 호출하기 때문에 $(function(){});
+		  	안에 적지 않아도 된다.*/
+		function check() {
+			
+			if($("input[name=dan]").val() == ""){//단수를입력하지 않았다면?
+				
+				alert("단수를 입력하세요");
+				return false;//<form>의 action속성에 작성된 gugu.jsp로 전송요청을 차단
+			}else{
+			
+			//단수를 입력했다면?
+			$("form").submit();//action속성에 작성된 gugu.jsp로 전송시킨다.
+			}
+		}
+		
+
+
+</script>
+
+</head>
+<body>
+	<h1>구구단의 단수를 입력하세요.</h1>	<!-- onsubmit : 출력하기 버튼을 눌렀을 때의 이벤트 등록하는 속성(반드시! return구문을 적어줘야 gugu.jsp로 안 넘어간다.-->
+	<form action="gugu.jsp" method="post" onsubmit="return check();">
+		출력할 구구단 : <input type='text' name='dan' /><br>
+						<input type='submit' value='출력하기'/>
+	</form>
+</body>
+</html>

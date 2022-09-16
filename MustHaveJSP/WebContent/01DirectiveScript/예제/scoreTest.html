@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 시험점수를 입력받아 입력한 시험점수가 어떤 학점에 해당하는지
+	 scoreTest.jsp서버페이지로 요청하는 클라이언트가 요청하는 디자인 화면(정적페이지) -->
+	 
+	 
+	<h1>시험 점수를 입력해주세요</h1>
+	<form action="scoreTest.jsp" method="get">
+	시험점수 :<input type="text" name="score"><br>
+			<input type="submit" value="변환하기">
+			<!-- form 태그 안에는 <input type=submit> 혹은 <input type="submit">이
+				 한개씩만 있어야 한다.
+				 만약 버튼을 여러개 만들고싶다면...
+				 <button>태그의 onclick속성을 이용해서 기능을가진 버튼을 만들어야 한다. -->
+	</form>
+	
+</body>
+
+</html>

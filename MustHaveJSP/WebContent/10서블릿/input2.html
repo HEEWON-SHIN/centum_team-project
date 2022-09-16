@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>여러가지 input type표시 창</title>
+</head>
+<body>
+
+	<!-- 
+		<input> type속성의 값을 설정해 여러개의 <input>태그를 만들 때는 체크박스를 사용해서 값을 설정하는 것이 좋다.
+		체크박스의 name 속성값은 모두 subject이므로 서블릿으로 전송할 때 체크된 값들만 새로운 String배열에 저장후 전송한다.
+	
+	 -->
+
+
+	
+	<form action="http://localhost:8081/MustHaveJSP/input2" method="get" name="frmInput">
+	
+		아이디 : <input type="text" name="user_id"><br>
+		비밀번호 : <input type="password" name="user_pw"><br>
+	
+		과목 : 
+			<input type="checkbox" name="subject" value="java" checked>자바
+			
+			<input type="checkbox" name="subject" value="c">c언어	
+	
+			<input type="checkbox" name="subject" value="JSP">JSP
+			
+			<input type="checkbox" name="subject" value="Android">안드로이드
+	
+		<input type="submit" value="전송"><input type="reset" value="다시 입력">
+	
+		<br><br>
+	
+	</form>
+	
+	
+	
+</body>
+</html>

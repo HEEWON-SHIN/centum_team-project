@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>FunWeb</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <resource-ref>
+  	<description>dd</description>
+  	<res-ref-name>jdbc/jspdb</res-ref-name>
+  	<res-type>javax.sql.DataSource</res-type>
+  	<res-auth>Container</res-auth>
+  </resource-ref>
+  
+  
+  
+  
+  
+  <!-- 서블릿 클래스를 요청할 주소 설정 -->
+	<servlet>
+		
+		<servlet-name>aaa</servlet-name><!-- 가짜 주소와 연결됨을 보여줄 이름 지정,,태그 사이에 똑같이 적어줘야함. -->
+		<servlet-class>sec01.ex01.First_Servlet</servlet-class><!-- 실제 요청할 서블릿 경로 -->
+	
+	</servlet>  
+  
+  	<servlet-mapping>
+  	
+  		<servlet-name>aaa</servlet-name><!-- 진짜 주소와 연결됨을 보여줄 이름 지정,,태그 사이에 똑같이 적어줘야함. -->
+  		<url-pattern>/first</url-pattern><!-- 웹브라우저 주소창에 입력하여 요청할 매핑이름(가짜주소) -->
+  		
+  	</servlet-mapping>
+  
+  
+  
+  
+  
+  <!-- 변수를 선언해놓고 application객체에 넣어서 톰캣서버가 멈추기 전까지 모든 jsp에서 사용할 수 있도록 하자.
+  
+  		 1.	페이징 처리를 위한 설정 두가지
+		
+			1. 한 페이지에 출력할 게시물의 갯수
+				POSTS_PER_PAGE = 10;(10개씩 보여주기 위해 변수에 10 저장)
+				
+			2. 한 화면에 출력할 블록 갯수를 설정(prev 1 2 3 4 5 next 부분을 한 블럭으로 묶음)
+				PAGES_PER_BLOCK = 5; -->
+  
+  
+  <context-param>
+  	<param-name>POSTS_PER_PAGE</param-name>
+  	<param-value>10</param-value>
+  </context-param>
+  
+  
+  <context-param>
+  	<param-name>PAGES_PER_BLOCK</param-name>
+  	<param-value>5</param-value>
+  </context-param>
+  
+  
+  
+</web-app>
