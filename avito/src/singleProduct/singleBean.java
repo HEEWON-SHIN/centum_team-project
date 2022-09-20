@@ -4,7 +4,7 @@ public class singleBean {
 
 	private int pdNum;
 	private String pdName;
-	private int pdPrice;
+	private String pdPrice;
 	private String pdImg_Main;
 	private String pdImg_Sub;
 	private String pdInfo;
@@ -16,7 +16,7 @@ public class singleBean {
 	}
 
 
-	public singleBean(int pdNum, String pdName, int pdPrice, String pdImg_Main) {
+	public singleBean(int pdNum, String pdName, String pdPrice, String pdImg_Main) {
 		
 		this.pdNum = pdNum;
 		this.pdName = pdName;
@@ -26,7 +26,7 @@ public class singleBean {
 	}
 
 
-	public singleBean(int pdNum, String pdName, int pdPrice, String pdImg_Main, String pdImg_Sub, String pdInfo,
+	public singleBean(int pdNum, String pdName, String pdPrice, String pdImg_Main, String pdImg_Sub, String pdInfo,
 			String pdCategory) {
 		
 		this.pdNum = pdNum;
@@ -59,12 +59,12 @@ public class singleBean {
 	}
 
 
-	public int getPdPrice() {
+	public String getPdPrice() {
 		return pdPrice;
 	}
 
 
-	public void setPdPrice(int pdPrice) {
+	public void setPdPrice(String pdPrice) {
 		this.pdPrice = pdPrice;
 	}
 

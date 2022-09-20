@@ -8,15 +8,15 @@
 		<div class="row">
 			<div class="col-md-6">
 				<ol class="breadcrumb">
-					<li><a href="index.jsp">Home</a></li>
-					<li><a href="shop.jsp">Shop</a></li>
+					<li><a href="${contextPath}/index.jsp">Home</a></li>
+					<li><a href="${contextPath}/shop-sidebar.jsp">Shop</a></li>
 					<li class="active">Single Product</li>
 				</ol>
 			</div>
 			<div class="col-md-6">
 				<ol class="product-pagination text-right">
-					<li><a href="blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
+					<li><a href="./blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
+					<li><a href="./blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
 				</ol>
 			</div>
 		</div>
@@ -28,23 +28,23 @@
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
 								<div class='item active'>
-									<img src='images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+									<img src='./images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
 								</div>
 								<div class='item'>
-									<img src='images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
+									<img src='./images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
 								</div>
 								
 								<div class='item'>
-									<img src='images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
+									<img src='./images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
 								</div>
 								<div class='item'>
-									<img src='images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
+									<img src='./images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
 								</div>
 								<div class='item'>
-									<img src='images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
+									<img src='./images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
 								</div>
 								<div class='item'>
-									<img src='images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
+									<img src='./images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
 								</div>
 								
 							</div>
@@ -61,25 +61,25 @@
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='images/shop/single-products/product-1.jpg' alt='' />
+								<img src='./images/shop/single-products/product-1.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='1'>
-								<img src='images/shop/single-products/product-2.jpg' alt='' />
+								<img src='./images/shop/single-products/product-2.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='2'>
-								<img src='images/shop/single-products/product-3.jpg' alt='' />
+								<img src='./images/shop/single-products/product-3.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='3'>
-								<img src='images/shop/single-products/product-4.jpg' alt='' />
+								<img src='./images/shop/single-products/product-4.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='4'>
-								<img src='images/shop/single-products/product-5.jpg' alt='' />
+								<img src='./images/shop/single-products/product-5.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='5'>
-								<img src='images/shop/single-products/product-6.jpg' alt='' />
+								<img src='./images/shop/single-products/product-6.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='6'>
-								<img src='images/shop/single-products/product-7.jpg' alt='' />
+								<img src='./images/shop/single-products/product-7.jpg' alt='' />
 							</li>
 						</ol>
 					</div>
@@ -87,8 +87,8 @@
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
-					<h2>Eclipse Crossbody</h2>
-					<p class="product-price">$300</p>
+					<h2>${sBean.pdName}</h2>
+					<p class="product-price">$ ${sBean.pdPrice}</p>
 					
 					
 					<div class="color-swatches">
@@ -123,11 +123,11 @@
 					<div class="product-category">
 						<span>Categories:</span>
 						<ul>
-							<li><a href="product-single.jsp">Products</a></li>
-							<li><a href="product-single.jsp">Soap</a></li>
+							<li><a href="./product-single.jsp">Products</a></li>
+							<li><a href="./product-single.jsp">Soap</a></li>
 						</ul>
 					</div>
-					<a href="cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
+					<a href="./cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
 				</div>
 			</div>
 		</div>
@@ -151,7 +151,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="images/blog/avater-1.jpg" alt="" width="50" height="50" />
+								            <img class="media-object comment-avatar" src="./images/blog/avater-1.jpg" alt="" width="50" height="50" />
 								        </a>
 
 								        <div class="media-body">
@@ -202,7 +202,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="images/blog/avater-1.jpg" alt="" width="50" height="50">
+								            <img class="media-object comment-avatar" src="./images/blog/avater-1.jpg" alt="" width="50" height="50">
 								        </a>
 
 								        <div class="media-body">
@@ -243,7 +243,7 @@
 				<div class="product-item">
 					<div class="product-thumb">
 						<span class="bage">Sale</span>
-						<img class="img-responsive" src="images/shop/products/product-5.jpg" alt="product-img" />
+						<img class="img-responsive" src="./images/shop/products/product-5.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -261,7 +261,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="product-single.jsp">Reef Boardsport</a></h4>
+						<h4><a href="./product-single.jsp">Reef Boardsport</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -269,7 +269,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="images/shop/products/product-1.jpg" alt="product-img" />
+						<img class="img-responsive" src="./images/shop/products/product-1.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -287,7 +287,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="product-single.jsp">Rainbow Shoes</a></h4>
+						<h4><a href="./product-single.jsp">Rainbow Shoes</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -295,7 +295,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="images/shop/products/product-2.jpg" alt="product-img" />
+						<img class="img-responsive" src="./images/shop/products/product-2.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -313,7 +313,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="product-single.jsp">Strayhorn SP</a></h4>
+						<h4><a href="./product-single.jsp">Strayhorn SP</a></h4>
 						<p class="price">$230</p>
 					</div>
 				</div>
@@ -321,7 +321,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="images/shop/products/product-3.jpg" alt="product-img" />
+						<img class="img-responsive" src="./images/shop/products/product-3.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -339,7 +339,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="product-single.jsp">Bradley Mid</a></h4>
+						<h4><a href="./product-single.jsp">Bradley Mid</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -362,7 +362,7 @@
 	        	<div class="row">
 	        		<div class="col-md-8">
 	        			<div class="modal-image">
-		        			<img class="img-responsive" src="images/shop/products/modal-product.jpg" />
+		        			<img class="img-responsive" src="./images/shop/products/modal-product.jpg" />
 	        			</div>
 	        		</div>
 	        		<div class="col-md-3">

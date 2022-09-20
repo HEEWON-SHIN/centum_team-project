@@ -38,6 +38,8 @@ public class singleProductController extends HttpServlet {
 
 	protected void doHandle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String contextPath = req.getContextPath();
+		
 		//재요청할 페이지 주소를 저장할 변수
 		String nextPage = "";
 				
@@ -45,19 +47,29 @@ public class singleProductController extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 
 		/**요청명 가져오기**/
+		
+		
 		String action = req.getPathInfo();
+		
 		System.out.println("action : " + action);
 		
 		
 		try {
 			
-			
-			
-			
-			
-			
-			
-			
+			if(action == null || action.equals("/viewSinglePd.s")) {
+				
+				/*글번호를 기준으로 DB에 저장된 제품 정보를 조회해옴*/
+				sBean = singleSevice.product(Integer.parseInt(req.getParameter("pdNum")));
+				 
+				req.setAttribute("sBean", sBean);
+				
+				nextPage = "/product-single.jsp";
+				
+				
+				
+			}else {
+				nextPage = "/product-single.jsp";
+			}
 			
 			/**뷰 또는 컨트롤러 재요청**/
 			RequestDispatcher dispatch = req.getRequestDispatcher(nextPage);

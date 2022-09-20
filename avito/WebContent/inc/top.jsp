@@ -24,18 +24,18 @@
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
   
   <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="plugins/themefisher-font/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">
   
   <!-- Animate css -->
-  <link rel="stylesheet" href="plugins/animate/animate.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/animate/animate.css">
   <!-- Slick Carousel -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/slick/slick.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/slick/slick-theme.css">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 </head>
 
@@ -54,7 +54,7 @@
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- Site Logo -->
 				<div class="logo text-center">
-					<a href="index.jsp">
+					<a href="${pageContext.request.contextPath}/index.jsp">
 						<!-- replace logo here -->
 						<svg width="135px" height="29px" viewBox="0 0 155 29" version="1.1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -113,8 +113,8 @@
 								<span class="total-price">$1799.00</span>
 							</div>
 							<ul class="text-center cart-buttons">
-								<li><a href="cart.jsp" class="btn btn-small">View Cart</a></li>
-								<li><a href="checkout.jsp" class="btn btn-small btn-solid-border">Checkout</a></li>
+								<li><a href="${pageContext.request.contextPath}/cart.jsp" class="btn btn-small">View Cart</a></li>
+								<li><a href="${pageContext.request.contextPath}/checkout.jsp" class="btn btn-small btn-solid-border">Checkout</a></li>
 							</ul>
 						</div>
 
@@ -161,7 +161,7 @@
 
 					<!-- Home -->
 					<li class="dropdown ">
-						<a href="index.jsp">Home</a>
+						<a href="${pageContext.request.contextPath}/index.jsp">Home</a>
 					</li><!-- / Home -->
 
 
@@ -187,11 +187,11 @@
 									<ul>
 										<li class="dropdown-header">Introduction</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="contact.jsp">Contact Us</a></li>
-										<li><a href="about.jsp">About Us</a></li>
-										<li><a href="404.jsp">404 Page</a></li>
-										<li><a href="coming-soon.jsp">Coming Soon</a></li>
-										<li><a href="faq.jsp">FAQ</a></li>
+										<li><a href="${pageContext.request.contextPath}/contact.jsp">Contact Us</a></li>
+										<li><a href="${pageContext.request.contextPath}/about.jsp">About Us</a></li>
+										<li><a href="${pageContext.request.contextPath}/404.jsp">404 Page</a></li>
+										<li><a href="${pageContext.request.contextPath}/coming-soon.jsp">Coming Soon</a></li>
+										<li><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></li>
 									</ul>
 								</div>
 
@@ -200,10 +200,10 @@
 									<ul>
 										<li class="dropdown-header">Dashboard</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="dashboard.jsp">User Interface</a></li>
-										<li><a href="order.jsp">Orders</a></li>
-										<li><a href="address.jsp">Address</a></li>
-										<li><a href="profile-details.jsp">Profile Details</a></li>
+										<li><a href="${pageContext.request.contextPath}/dashboard.jsp">User Interface</a></li>
+										<li><a href="${pageContext.request.contextPath}/order.jsp">Orders</a></li>
+										<li><a href="${pageContext.request.contextPath}/address.jsp">Address</a></li>
+										<li><a href="${pageContext.request.contextPath}/profile-details.jsp">Profile Details</a></li>
 									</ul>
 								</div>
 
@@ -212,15 +212,15 @@
 									<ul>
 										<li class="dropdown-header">Utility</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="login.jsp">Login Page</a></li>
-										<li><a href="signin.jsp">Signin Page</a></li>
-										<li><a href="forget-password.jsp">Forget Password</a></li>
+										<li><a href="${pageContext.request.contextPath}/login.jsp">Login Page</a></li>
+										<li><a href="${pageContext.request.contextPath}/signin.jsp">Signin Page</a></li>
+										<li><a href="${pageContext.request.contextPath}/forget-password.jsp">Forget Password</a></li>
 									</ul>
 								</div>
 
 								<!-- Mega Menu -->
 								<div class="col-sm-3 col-xs-12">
-									<a href="shop.jsp">
+									<a href="${pageContext.request.contextPath}/shop.jsp">
 										<img class="img-responsive" src="images/shop/header-img.jpg" alt="menu image" />
 									</a>
 								</div>
@@ -250,9 +250,9 @@
 							role="button" aria-haspopup="true" aria-expanded="false">Elements <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="typography.jsp">Typography</a></li>
-							<li><a href="buttons.jsp">Buttons</a></li>
-							<li><a href="alerts.jsp">Alerts</a></li>
+							<li><a href="${pageContext.request.contextPath}/typography.jsp">Typography</a></li>
+							<li><a href="${pageContext.request.contextPath}/buttons.jsp">Buttons</a></li>
+							<li><a href="${pageContext.request.contextPath}/alerts.jsp">Alerts</a></li>
 						</ul>
 					</li><!-- / Blog -->
 				</ul><!-- / .nav .navbar-nav -->
