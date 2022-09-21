@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
+<%request.setCharacterEncoding("utf-8");%>
+	
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%-- JSTL라이브러리의 Formatting태그들을 사용하기 위해 taglib 지시자를 선언 --%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
 
  <jsp:include page="./inc/top.jsp"></jsp:include> 
@@ -17,8 +25,8 @@
 			</div>
 			<div class="col-md-6">
 				<ol class="product-pagination text-right">
-					<li><a href="${pageContext.request.contextPath}/blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="${pageContext.request.contextPath}/blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
+					<li><a href="${contextPath}/blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
+					<li><a href="${contextPath}/blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
 				</ol>
 			</div>
 		</div>
@@ -30,23 +38,23 @@
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
 								<div class='item active'>
-									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
 								</div>
 								<div class='item'>
-									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
 								</div>
 								
 								<div class='item'>
-									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
 								</div>
 								<div class='item'>
-									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
 								</div>
 								<div class='item'>
-									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
 								</div>
 								<div class='item'>
-									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
 								</div>
 								
 							</div>
@@ -63,25 +71,25 @@
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-1.jpg' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='1'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-2.jpg' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='2'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-3.jpg' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='3'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-4.jpg' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='4'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-5.jpg' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='5'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-6.jpg' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='6'>
-								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-7.jpg' alt='' />
+								<img src='${contextPath}/images/shop/single-products/product-7.jpg' alt='' />
 							</li>
 						</ol>
 					</div>
@@ -125,11 +133,15 @@
 					<div class="product-category">
 						<span>Categories:</span>
 						<ul>
-							<li><a href="${pageContext.request.contextPath}/product-single.jsp">Products</a></li>
-							<li><a href="${pageContext.request.contextPath}/product-single.jsp">Soap</a></li>
+							<c:if test = "${fn:contains(sBean.pdCategory, 'clothes')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Clothes</a></li></c:if>
+							<c:if test = "${fn:contains(sBean.pdCategory, 'top')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Top</a></li></c:if>
+							<c:if test = "${fn:contains(sBean.pdCategory, 'bottom')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Bottom</a></li></c:if>
+							<c:if test = "${fn:contains(sBean.pdCategory, 'dress')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Dress</a></li></c:if>
+							<c:if test = "${fn:contains(sBean.pdCategory, 'accessory')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Accessory</a></li></c:if>
+							<c:if test = "${fn:contains(sBean.pdCategory, 'muffler')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Muffler</a></li></c:if>
 						</ul>
 					</div>
-					<a href="${pageContext.request.contextPath}/cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
+					<a href="${contextPath}/cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
 				</div>
 			</div>
 		</div>
@@ -143,8 +155,11 @@
 					<div class="tab-content patternbg">
 						<div id="details" class="tab-pane fade active in">
 							<h4>Product Description</h4>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut per spici</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis delectus quidem repudiandae veniam distinctio repellendus magni pariatur molestiae asperiores animi, eos quod iusto hic doloremque iste a, nisi iure at unde molestias enim fugit, nulla voluptatibus. Deserunt voluptate tempora aut illum harum, deleniti laborum animi neque, praesentium explicabo, debitis ipsa?</p>
+							
+							<p>${sBean.pdInfo}
+							
+							<!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut per spici</p> -->
+							
 						</div>
 						<div id="reviews" class="tab-pane fade">
 							<div class="post-comments">
@@ -153,7 +168,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="${pageContext.request.contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50" />
+								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50" />
 								        </a>
 
 								        <div class="media-body">
@@ -178,7 +193,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="${pageContext.request.contextPath}/images/blog/avater-4.jpg" alt="" width="50" height="50" />
+								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-4.jpg" alt="" width="50" height="50" />
 								        </a>
 
 								        <div class="media-body">
@@ -204,7 +219,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="${pageContext.request.contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50">
+								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50">
 								        </a>
 
 								        <div class="media-body">
@@ -245,7 +260,7 @@
 				<div class="product-item">
 					<div class="product-thumb">
 						<span class="bage">Sale</span>
-						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-5.jpg" alt="product-img" />
+						<img class="img-responsive" src="${contextPath}/images/shop/products/product-5.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -263,7 +278,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Reef Boardsport</a></h4>
+						<h4><a href="${contextPath}/product-single.jsp">Reef Boardsport</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -271,7 +286,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-1.jpg" alt="product-img" />
+						<img class="img-responsive" src="${contextPath}/images/shop/products/product-1.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -289,7 +304,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Rainbow Shoes</a></h4>
+						<h4><a href="${contextPath}/product-single.jsp">Rainbow Shoes</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -297,7 +312,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-2.jpg" alt="product-img" />
+						<img class="img-responsive" src="${contextPath}/images/shop/products/product-2.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -315,7 +330,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Strayhorn SP</a></h4>
+						<h4><a href="${contextPath}/product-single.jsp">Strayhorn SP</a></h4>
 						<p class="price">$230</p>
 					</div>
 				</div>
@@ -323,7 +338,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-3.jpg" alt="product-img" />
+						<img class="img-responsive" src="${contextPath}/images/shop/products/product-3.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -341,7 +356,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Bradley Mid</a></h4>
+						<h4><a href="${contextPath}/product-single.jsp">Bradley Mid</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -364,7 +379,7 @@
 	        	<div class="row">
 	        		<div class="col-md-8">
 	        			<div class="modal-image">
-		        			<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/modal-product.jpg" />
+		        			<img class="img-responsive" src="${contextPath}/images/shop/products/modal-product.jpg" />
 	        			</div>
 	        		</div>
 	        		<div class="col-md-3">
@@ -390,28 +405,28 @@
     =====================================-->
     
     <!-- Main jQuery -->
-    <script src="${pageContext.request.contextPath}/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="${contextPath}/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="${pageContext.request.contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- Bootstrap Touchpin -->
-    <script src="${pageContext.request.contextPath}/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="${contextPath}/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
     <!-- Instagram Feed Js -->
-    <script src="${pageContext.request.contextPath}/plugins/instafeed/instafeed.min.js"></script>
+    <script src="${contextPath}/plugins/instafeed/instafeed.min.js"></script>
     <!-- Video Lightbox Plugin -->
-    <script src="${pageContext.request.contextPath}/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <script src="${contextPath}/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
     <!-- Count Down Js -->
-    <script src="${pageContext.request.contextPath}/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+    <script src="${contextPath}/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
     <!-- slick Carousel -->
-    <script src="${pageContext.request.contextPath}/plugins/slick/slick.min.js"></script>
-    <script src="${pageContext.request.contextPath}/plugins/slick/slick-animation.min.js"></script>
+    <script src="${contextPath}/plugins/slick/slick.min.js"></script>
+    <script src="${contextPath}/plugins/slick/slick-animation.min.js"></script>
 
     <!-- Google Mapl -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/google-map/gmap.js"></script>
+    <script type="text/javascript" src="${contextPath}/plugins/google-map/gmap.js"></script>
 
     <!-- Main Js File -->
-    <script src="${pageContext.request.contextPath}/js/script.js"></script>
+    <script src="${contextPath}/js/script.js"></script>
     
 
 

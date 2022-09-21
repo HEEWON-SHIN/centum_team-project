@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
+<%request.setCharacterEncoding("utf-8");%>
+	
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%-- JSTL라이브러리의 Formatting태그들을 사용하기 위해 taglib 지시자를 선언 --%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
 <section class="page-header">
@@ -11,7 +20,7 @@
 				<div class="content">
 					<h1 class="page-name">Cart</h1>
 					<ol class="breadcrumb">
-						<li><a href="index.jsp">Home</a></li>
+						<li><a href="${contextPath}/index.jsp">Home</a></li>
 						<li class="active">cart</li>
 					</ol>
 				</div>
@@ -33,8 +42,12 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="">Item Name</th>
+                    	
+                      <th class=""></th>
                       <th class="">Item Price</th>
+                      <th class="">Item Color</th>
+                      <th class="">Item Size</th>
+                      <th class="">Item Quantity</th>
                       <th class="">Actions</th>
                     </tr>
                   </thead>
@@ -46,35 +59,16 @@
                           <a href="#!">Sunglass</a>
                         </div>
                       </td>
-                      <td class="">$200.00</td>
+                      <td class="" align="center">$200.00</td>
+                      <td class="" align="center">$200.00</td>
+                      <td class="" align="center">$200.00</td>
+                      <td class="" align="center">$200.00</td>
+                      
                       <td class="">
                         <a class="product-remove" href="#!">Remove</a>
                       </td>
                     </tr>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-2.jpg" alt="" />
-                          <a href="#!">Airspace</a>
-                        </div>
-                      </td>
-                      <td class="">$200.00</td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-3.jpg" alt="" />
-                          <a href="#!">Bingo</a>
-                        </div>
-                      </td>
-                      <td class="">$200.00</td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
+                    
                   </tbody>
                 </table>
                 <a href="checkout.jsp" class="btn btn-main pull-right">Checkout</a>
@@ -95,28 +89,28 @@
     =====================================-->
     
     <!-- Main jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <script src="${contextPath}/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- Bootstrap Touchpin -->
-    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="${contextPath}/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
     <!-- Instagram Feed Js -->
-    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <script src="${contextPath}/plugins/instafeed/instafeed.min.js"></script>
     <!-- Video Lightbox Plugin -->
-    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <script src="${contextPath}/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
     <!-- Count Down Js -->
-    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+    <script src="${contextPath}/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
     <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/slick/slick-animation.min.js"></script>
+    <script src="${contextPath}/plugins/slick/slick.min.js"></script>
+    <script src="${contextPath}/plugins/slick/slick-animation.min.js"></script>
 
     <!-- Google Mapl -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+    <script type="text/javascript" src="${contextPath}/plugins/google-map/gmap.js"></script>
 
     <!-- Main Js File -->
-    <script src="js/script.js"></script>
+    <script src="${contextPath}/js/script.js"></script>
     
 
 
