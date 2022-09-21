@@ -21,7 +21,7 @@
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
   
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/images/favicon.png" />
   
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/themefisher-font/style.css">
@@ -80,7 +80,7 @@
 							<!-- Cart Item -->
 							<div class="media">
 								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
+									<img class="media-object" src="${pageContext.request.contextPath}/images/shop/cart/cart-1.jpg" alt="image" />
 								</a>
 								<div class="media-body">
 									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
@@ -95,7 +95,7 @@
 							<!-- Cart Item -->
 							<div class="media">
 								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-2.jpg" alt="image" />
+									<img class="media-object" src="${pageContext.request.contextPath}/images/shop/cart/cart-2.jpg" alt="image" />
 								</a>
 								<div class="media-body">
 									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
@@ -221,7 +221,7 @@
 								<!-- Mega Menu -->
 								<div class="col-sm-3 col-xs-12">
 									<a href="${pageContext.request.contextPath}/shop.jsp">
-										<img class="img-responsive" src="images/shop/header-img.jpg" alt="menu image" />
+										<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/header-img.jpg" alt="menu image" />
 									</a>
 								</div>
 							</div><!-- / .row -->
@@ -236,11 +236,11 @@
 							role="button" aria-haspopup="true" aria-expanded="false">Blog <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="blog-left-sidebar.jsp">Blog Left Sidebar</a></li>
-							<li><a href="blog-right-sidebar.jsp">Blog Right Sidebar</a></li>
-							<li><a href="blog-full-width.jsp">Blog Full Width</a></li>
-							<li><a href="blog-grid.jsp">Blog 2 Columns</a></li>
-							<li><a href="blog-single.jsp">Blog Single</a></li>
+							<li><a href="${pageContext.request.contextPath}/blog-left-sidebar.jsp">Blog Left Sidebar</a></li>
+							<li><a href="${pageContext.request.contextPath}/blog-right-sidebar.jsp">Blog Right Sidebar</a></li>
+							<li><a href="${pageContext.request.contextPath}/blog-full-width.jsp">Blog Full Width</a></li>
+							<li><a href="${pageContext.request.contextPath}/blog-grid.jsp">Blog 2 Columns</a></li>
+							<li><a href="${pageContext.request.contextPath}/blog-single.jsp">Blog Single</a></li>
 						</ul>
 					</li><!-- / Blog -->
 

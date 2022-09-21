@@ -38,7 +38,7 @@ public class singleProductController extends HttpServlet {
 
 	protected void doHandle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String contextPath = req.getContextPath();
+		
 		
 		//재요청할 페이지 주소를 저장할 변수
 		String nextPage = "";

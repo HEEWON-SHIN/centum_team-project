@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<jsp:include page="./inc/top.jsp"></jsp:include>
+
+
+ <jsp:include page="./inc/top.jsp"></jsp:include> 
 <section class="single-product">
 	<div class="container">
 		<div class="row">
@@ -15,8 +17,8 @@
 			</div>
 			<div class="col-md-6">
 				<ol class="product-pagination text-right">
-					<li><a href="./blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="./blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
+					<li><a href="${pageContext.request.contextPath}/blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
+					<li><a href="${pageContext.request.contextPath}/blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
 				</ol>
 			</div>
 		</div>
@@ -28,23 +30,23 @@
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
 								<div class='item active'>
-									<img src='./images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
 								</div>
 								<div class='item'>
-									<img src='./images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
+									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
 								</div>
 								
 								<div class='item'>
-									<img src='./images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
+									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
 								</div>
 								<div class='item'>
-									<img src='./images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
+									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
 								</div>
 								<div class='item'>
-									<img src='./images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
+									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
 								</div>
 								<div class='item'>
-									<img src='./images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
+									<img src='${pageContext.request.contextPath}/images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
 								</div>
 								
 							</div>
@@ -61,25 +63,25 @@
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='./images/shop/single-products/product-1.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-1.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='1'>
-								<img src='./images/shop/single-products/product-2.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-2.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='2'>
-								<img src='./images/shop/single-products/product-3.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-3.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='3'>
-								<img src='./images/shop/single-products/product-4.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-4.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='4'>
-								<img src='./images/shop/single-products/product-5.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-5.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='5'>
-								<img src='./images/shop/single-products/product-6.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-6.jpg' alt='' />
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='6'>
-								<img src='./images/shop/single-products/product-7.jpg' alt='' />
+								<img src='${pageContext.request.contextPath}/images/shop/single-products/product-7.jpg' alt='' />
 							</li>
 						</ol>
 					</div>
@@ -123,11 +125,11 @@
 					<div class="product-category">
 						<span>Categories:</span>
 						<ul>
-							<li><a href="./product-single.jsp">Products</a></li>
-							<li><a href="./product-single.jsp">Soap</a></li>
+							<li><a href="${pageContext.request.contextPath}/product-single.jsp">Products</a></li>
+							<li><a href="${pageContext.request.contextPath}/product-single.jsp">Soap</a></li>
 						</ul>
 					</div>
-					<a href="./cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
+					<a href="${pageContext.request.contextPath}/cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
 				</div>
 			</div>
 		</div>
@@ -151,7 +153,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="./images/blog/avater-1.jpg" alt="" width="50" height="50" />
+								            <img class="media-object comment-avatar" src="${pageContext.request.contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50" />
 								        </a>
 
 								        <div class="media-body">
@@ -176,7 +178,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="./images/blog/avater-4.jpg" alt="" width="50" height="50" />
+								            <img class="media-object comment-avatar" src="${pageContext.request.contextPath}/images/blog/avater-4.jpg" alt="" width="50" height="50" />
 								        </a>
 
 								        <div class="media-body">
@@ -202,7 +204,7 @@
 								    <li class="media">
 
 								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="./images/blog/avater-1.jpg" alt="" width="50" height="50">
+								            <img class="media-object comment-avatar" src="${pageContext.request.contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50">
 								        </a>
 
 								        <div class="media-body">
@@ -243,7 +245,7 @@
 				<div class="product-item">
 					<div class="product-thumb">
 						<span class="bage">Sale</span>
-						<img class="img-responsive" src="./images/shop/products/product-5.jpg" alt="product-img" />
+						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-5.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -261,7 +263,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="./product-single.jsp">Reef Boardsport</a></h4>
+						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Reef Boardsport</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -269,7 +271,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="./images/shop/products/product-1.jpg" alt="product-img" />
+						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-1.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -287,7 +289,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="./product-single.jsp">Rainbow Shoes</a></h4>
+						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Rainbow Shoes</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -295,7 +297,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="./images/shop/products/product-2.jpg" alt="product-img" />
+						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-2.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -313,7 +315,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="./product-single.jsp">Strayhorn SP</a></h4>
+						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Strayhorn SP</a></h4>
 						<p class="price">$230</p>
 					</div>
 				</div>
@@ -321,7 +323,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<img class="img-responsive" src="./images/shop/products/product-3.jpg" alt="product-img" />
+						<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/product-3.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -339,7 +341,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="./product-single.jsp">Bradley Mid</a></h4>
+						<h4><a href="${pageContext.request.contextPath}/product-single.jsp">Bradley Mid</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>
@@ -362,7 +364,7 @@
 	        	<div class="row">
 	        		<div class="col-md-8">
 	        			<div class="modal-image">
-		        			<img class="img-responsive" src="./images/shop/products/modal-product.jpg" />
+		        			<img class="img-responsive" src="${pageContext.request.contextPath}/images/shop/products/modal-product.jpg" />
 	        			</div>
 	        		</div>
 	        		<div class="col-md-3">
@@ -382,33 +384,34 @@
   	</div>
 </div>
 <jsp:include page="./inc/bottom.jsp"></jsp:include>
+
     <!-- 
     Essential Scripts
     =====================================-->
     
     <!-- Main jQuery -->
-    <script src="./plugins/jquery/dist/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- Bootstrap Touchpin -->
-    <script src="./plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
     <!-- Instagram Feed Js -->
-    <script src="./plugins/instafeed/instafeed.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/instafeed/instafeed.min.js"></script>
     <!-- Video Lightbox Plugin -->
-    <script src="./plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
     <!-- Count Down Js -->
-    <script src="./plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
     <!-- slick Carousel -->
-    <script src="./plugins/slick/slick.min.js"></script>
-    <script src="./plugins/slick/slick-animation.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/slick/slick.min.js"></script>
+    <script src="${pageContext.request.contextPath}/plugins/slick/slick-animation.min.js"></script>
 
     <!-- Google Mapl -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="./plugins/google-map/gmap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/google-map/gmap.js"></script>
 
     <!-- Main Js File -->
-    <script src="./js/script.js"></script>
+    <script src="${pageContext.request.contextPath}/js/script.js"></script>
     
 
 
