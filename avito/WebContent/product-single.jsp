@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+ 
 <%request.setCharacterEncoding("utf-8");%>
 	
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <%-- JSTL라이브러리의 Formatting태그들을 사용하기 위해 taglib 지시자를 선언 --%>
@@ -11,8 +12,75 @@
 
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
+<jsp:include page="./inc/top.jsp"></jsp:include> 
 
- <jsp:include page="./inc/top.jsp"></jsp:include> 
+
+<script>
+ function showReview() {
+	 
+ 
+		$.ajax({
+			url:"<%=request.getContextPath()%>/single/showReview.do",
+			type:"post",
+			//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
+		
+       		dataType : 'text',//응답받을 데이터 타입
+        	
+			
+			success:function(resData){
+				
+				console.log(resData);
+				
+				var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
+				
+				var Comment_Item='';
+				
+				
+				
+				for(var i in json){
+					
+// 					$("#r_name").text(json[i].name);
+// 					$("#r_time").text(json[i].rTime);
+// 					$("#r_content").text(json[i].rContent);
+					
+					
+					Comment_Item += '<li class="media">'
+
+			        +'<a class="pull-left" >'
+			            +'<img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50">'
+			        +'</a>'
+
+			        +'<div class="media-body">'
+
+			          + ' <div class="comment-info">'
+			               + '<div class="comment-author">'
+			                   + '<a id="r_name" >'+json[i].name+'</a>'
+			               + '</div>'
+			                +'<time datetime="2013-04-06T13:53" id="r_time">'+json[i].rTime+'</time>'
+			                +'<a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>reply</a>'
+			            +'</div>'
+
+			            +'<p id="r_content">'
+			            
+			            +json[i].rContent
+			              + '<input  type="hidden" value="ccc" />'
+			            +'</p>'
+
+			       + '</div>'
+
+			    +'</li>';
+			    	
+				}//for
+				$("#commen_item").html(Comment_Item);
+			}//success:	
+		});
+}
+ 
+
+</script>
+
+
+ 
 <section class="single-product">
 	<div class="container">
 		<div class="row">
@@ -150,7 +218,7 @@
 				<div class="tabCommon mt-20">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a></li>
-						<li class=""><a data-toggle="tab" href="#reviews" aria-expanded="false">Reviews (3)</a></li>
+						<li class=""><a data-toggle="tab" href="#reviews" onclick="showReview();" aria-expanded="false">Reviews (3)</a></li>
 					</ul>
 					<div class="tab-content patternbg">
 						<div id="details" class="tab-pane fade active in">
@@ -163,63 +231,12 @@
 						</div>
 						<div id="reviews" class="tab-pane fade">
 							<div class="post-comments">
-						    	<ul class="media-list comments-list m-bot-50 clearlist">
+						    	<ul class="media-list comments-list m-bot-50 clearlist" id="commen_item">
+								    
 								   
-								    <!-- Comment Item start-->
 								    <li class="media">
 
-								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50" />
-								        </a>
-
-								        <div class="media-body">
-								            <div class="comment-info">
-								                <h4 class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
-								                	
-								                </h4>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
-								            </div>
-
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod laborum minima, reprehenderit laboriosam officiis praesentium? Impedit minus provident assumenda quae.
-								            </p>
-								        </div>
-
-								    </li>
-								    <!-- End Comment Item -->
-
-								    <!-- Comment Item start-->
-								    <li class="media">
-
-								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-4.jpg" alt="" width="50" height="50" />
-								        </a>
-
-								        <div class="media-body">
-
-								            <div class="comment-info">
-								                <div class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
-								                </div>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
-								            </div>
-
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni natus, nostrum iste non delectus atque ab a accusantium optio, dolor!
-								            </p>
-
-								        </div>
-
-								    </li>
-								    <!-- End Comment Item -->
-
-								    <!-- Comment Item start-->
-								    <li class="media">
-
-								        <a class="pull-left" href="#!">
+								        <a class="pull-left" >
 								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50">
 								        </a>
 
@@ -227,14 +244,14 @@
 
 								            <div class="comment-info">
 								                <div class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
+								                    <a id="r_name" ></a>
 								                </div>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
+								                <time datetime="2013-04-06T13:53" id="r_time"></time>
+								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>reply</a>
 								            </div>
 
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.
+								            <p id="r_content">
+								               <input  type="hidden" value="ccc" />
 								            </p>
 
 								        </div>
