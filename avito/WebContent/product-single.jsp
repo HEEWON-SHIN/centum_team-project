@@ -14,6 +14,10 @@
 
 <jsp:include page="./inc/top.jsp"></jsp:include> 
 
+<style>
+	#paging{margin-left: 80px;}
+</style>
+
 
 <script>
  function showReview() {
@@ -71,6 +75,16 @@
 			    +'</li>';
 			    	
 				}//for
+				
+				
+				Comment_Item += '<div class="col-md-6" id="paging">'
+				+'<ol class="product-pagination text-right">'
+				+'<li><a href="${contextPath}/blog-left-sidebar.jsp" onclick="showReview();"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>'
+				+'<li><a href="${contextPath}/blog-left-sidebar.jsp" onclick="showReview();">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>'
+				+'</ol>'
+				+'</div>';
+				
+				
 				$("#commen_item").html(Comment_Item);
 			}//success:	
 		});
@@ -91,12 +105,7 @@
 					<li class="active">Single Product</li>
 				</ol>
 			</div>
-			<div class="col-md-6">
-				<ol class="product-pagination text-right">
-					<li><a href="${contextPath}/blog-left-sidebar.jsp"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="${contextPath}/blog-left-sidebar.jsp">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
-				</ol>
-			</div>
+			
 		</div>
 		<div class="row mt-20">
 			<div class="col-md-5">
