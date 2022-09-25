@@ -14,11 +14,17 @@ public class reviewService {
 	
 	
 	/*리뷰 보여주기*/
-	public List<reviewBean> show() {
+	public List<reviewBean> show(int os, int pdNum) {
 		
-		return rDao.show();
+		return rDao.show(os, pdNum);
 		
 		
+	}
+
+	/*전체 부모글의 갯수 조회*/
+	public int countReviews(int pdNum) {
+		
+		return rDao.count(pdNum); 
 	}
 
 }

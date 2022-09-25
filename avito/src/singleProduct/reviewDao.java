@@ -61,7 +61,7 @@ public class reviewDao {
 	
 	
 	/*리뷰 보여주기*/
-	public List<reviewBean> show() {
+	public List<reviewBean> show(int os, int pdNum) {
 		
 		List<reviewBean> rList = new ArrayList<reviewBean>();
 		
@@ -70,9 +70,12 @@ public class reviewDao {
 		try {
 			con = getCon();
 			
-			sql = "select * from review";
+			sql = "select * from review where pdnum=? and level=0 limit 3 offset ?";
 		
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pdNum);
+			pstmt.setInt(2, os);
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -98,5 +101,31 @@ public class reviewDao {
 		
 		return rList;
 	}
+
+	
+	/*전체 부모리뷰글의 갯수 반환*/
+	public int count(int pdNum) {
+
+		int totReviews = 0;
+		
+		try {
+			con = getCon();
+			
+			sql = "select count(*) from (select * from review where pdnum=?)pd where level=0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pdNum);
+			rs = pstmt.executeQuery();
+			rs.next();
+			totReviews = rs.getInt(1);
+			
+		} catch (Exception e) {
+			System.out.println("count메소드 내부 오류 발생 : "+e);
+			e.printStackTrace();
+		}finally {
+			close();
+		}		
+	
+		return totReviews;
+	}//count메소드 끝
 
 }

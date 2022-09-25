@@ -78,15 +78,26 @@ public class singleProductController extends HttpServlet {
 				
 				/*글번호를 기준으로 DB에 저장된 제품 정보를 조회해옴*/
 				sBean = singleSevice.product(Integer.parseInt(req.getParameter("pdNum")));
+				
+				/*글번호를 기준으로 부모 리뷰글 갯수를 조회*/
+				int totReviews = reviewService.countReviews(Integer.parseInt(req.getParameter("pdNum")));
 				 
 				req.setAttribute("sBean", sBean);
+				req.setAttribute("totReviews", totReviews);
 				
 				nextPage = "/product-single.jsp";
 			
 				
 			}else if(action.equals("/showReview.do")) {/**product-single.jsp페이지에서 review버튼을 클릭했을 때?**/
 				
-				List<reviewBean> rList  = reviewService.show();
+				
+				
+				
+				int os = Integer.parseInt(req.getParameter("offset"));//product-single.jsp페이지에서 쿼리스트링으로 넘긴값 받음
+				
+				int pdNum = Integer.parseInt(req.getParameter("pdNum")); 
+				
+				List<reviewBean> rList  = reviewService.show(os, pdNum);
 				
 				resp.setContentType("text/html; charset=utf-8");
 				
@@ -112,7 +123,7 @@ public class singleProductController extends HttpServlet {
 					
 					jsonObj.put("rTime", sdf.format(j_rBean.getrTime()));
 					
-					//jason배열에 json객체 담기
+					//json배열에 json객체 담기
 					jsonArr.add(jsonObj);
 					
 				}
@@ -124,6 +135,10 @@ public class singleProductController extends HttpServlet {
 		
 				return;//아래쪽 다른 메소드 실행되지 않도록 해줌
 				
+			
+			
+			
+			
 			}else {
 				nextPage = "/product-single.jsp";
 			}

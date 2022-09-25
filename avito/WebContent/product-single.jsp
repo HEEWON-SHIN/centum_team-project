@@ -1,3 +1,4 @@
+<%@page import="singleProduct.singleBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,13 +19,17 @@
 	#paging{margin-left: 80px;}
 </style>
 
+<% singleBean sBean = (singleBean)request.getAttribute("sBean"); %>
 
 <script>
+
+var os = 0;
+
+
  function showReview() {
 	 
- 
 		$.ajax({
-			url:"<%=request.getContextPath()%>/single/showReview.do",
+			url:'<%=request.getContextPath()%>/single/showReview.do?offset='+os+'&pdNum='+<%=sBean.getPdNum()%>,
 			type:"post",
 			//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
 		
@@ -77,19 +82,36 @@
 				}//for
 				
 				
-				Comment_Item += '<div class="col-md-6" id="paging">'
-				+'<ol class="product-pagination text-right">'
-				+'<li><a href="${contextPath}/blog-left-sidebar.jsp" onclick="showReview();"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>'
-				+'<li><a href="${contextPath}/blog-left-sidebar.jsp" onclick="showReview();">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>'
-				+'</ol>'
-				+'</div>';
+// 				Comment_Item += '<div class="col-md-6" id="paging">'
+// 				+'<ol class="product-pagination text-right">'
+// 				+'<li><a href="javascript:void(0);" onclick="a();"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>'
+// 				+'<li><a href="javascript:void(0);" onclick="a();"> Next <i class="tf-ion-ios-arrow-right"></i></a>'
+// 				+'</ol>'
+// 				+'</div>';
 				
 				
 				$("#commen_item").html(Comment_Item);
 			}//success:	
 		});
+}//showReview메소드 끝
+
+function next() {
+	
+	os+=3;	
+	if(os>=<%=request.getAttribute("totReviews")%>){os=<%=request.getAttribute("totReviews")%>-1;}
+			
+	showReview();
+	
 }
  
+ 
+function prev() {
+	
+	os-=3;
+	if(os<0){os=0;}
+	
+	showReview();
+} 
 
 </script>
 
@@ -227,7 +249,7 @@
 				<div class="tabCommon mt-20">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a></li>
-						<li class=""><a data-toggle="tab" href="#reviews" onclick="showReview();" aria-expanded="false">Reviews (3)</a></li>
+						<li class=""><a data-toggle="tab" href="#reviews" onclick="showReview();" aria-expanded="false">Reviews (${totReviews})</a></li>
 					</ul>
 					<div class="tab-content patternbg">
 						<div id="details" class="tab-pane fade active in">
@@ -267,6 +289,15 @@
 
 								    </li>
 							</ul>
+							
+							<div class="col-md-6" id="paging">
+				<ol class="product-pagination text-right">
+					<li><a href="javascript:void(0);" onclick="prev();"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
+					<li><a href="javascript:void(0);" onclick="next();"> Next <i class="tf-ion-ios-arrow-right"></i></a></li>
+				</ol>
+			</div>
+							
+							
 							</div>
 						</div>
 					</div>

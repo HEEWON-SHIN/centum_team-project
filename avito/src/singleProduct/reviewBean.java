@@ -12,6 +12,7 @@ public class reviewBean {
 	private int rPtNo;
 	private int level;
 	private Date rTime;
+	private int pdNum;
 	
 	public reviewBean() {
 		
@@ -82,6 +83,14 @@ public class reviewBean {
 
 	public void setrTime(Date rTime) {
 		this.rTime = rTime;
+	}
+
+	public int getPdNum() {
+		return pdNum;
+	}
+
+	public void setPdNum(int pdNum) {
+		this.pdNum = pdNum;
 	}
 	
 	
