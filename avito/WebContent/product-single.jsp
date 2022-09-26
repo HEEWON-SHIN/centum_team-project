@@ -17,6 +17,7 @@
 
 <style>
 	#paging{margin-left: 80px;}
+	#reply{margin-left: 40px;}
 </style>
 
 <% singleBean sBean = (singleBean)request.getAttribute("sBean"); %>
@@ -73,9 +74,14 @@ var os = 0;
 			            
 			            +json[i].rContent
 			              + '<input  type="hidden" value="ccc" />'
-			            +'</p>'
+			            +'</p>';
+			            
+			            //댓글 시작
+			            
+			            
+			            //댓글 끝
 
-			       + '</div>'
+	 Comment_Item += '</div>'
 
 			    +'</li>';
 			    	
@@ -98,19 +104,19 @@ var os = 0;
 function next() {
 	
 	os+=3;	
-	if(os>=<%=request.getAttribute("totReviews")%>){os=<%=request.getAttribute("totReviews")%>-1;}
-			
-	showReview();
 	
+	if(os>=<%=request.getAttribute("totReviews")%>){	os=<%=request.getAttribute("totReviews")%>-1; 	}
+			
+	showReview();	
 }
  
+
  
-function prev() {
-	
-	os-=3;
+function prev() {	
+	os-=3;	
 	if(os<0){os=0;}
 	
-	showReview();
+	showReview();		
 } 
 
 </script>
@@ -292,8 +298,8 @@ function prev() {
 							
 							<div class="col-md-6" id="paging">
 				<ol class="product-pagination text-right">
-					<li><a href="javascript:void(0);" onclick="prev();"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
-					<li><a href="javascript:void(0);" onclick="next();"> Next <i class="tf-ion-ios-arrow-right"></i></a></li>
+					<li><a href="javascript:void(0);" onclick="prev();" id="prev"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
+					<li><a href="javascript:void(0);" onclick="next();" id="next"> Next <i class="tf-ion-ios-arrow-right"></i></a></li>
 				</ol>
 			</div>
 							
