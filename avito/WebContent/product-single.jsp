@@ -37,7 +37,7 @@ var os = 0;
        		dataType : 'text',//응답받을 데이터 타입
         	
 			
-			success:function(resData){
+			  success:function(resData){
 				
 				console.log(resData);
 				
