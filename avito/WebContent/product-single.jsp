@@ -43,6 +43,8 @@ var os = 0;
 				
 				var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
 				
+				
+				
 				var Comment_Item='';
 				
 				
@@ -76,10 +78,17 @@ var os = 0;
 			              + '<input  type="hidden" value="ccc" />'
 			            +'</p>';
 			            
-			            //댓글 시작
+			            //댓글 시작****************//
+	Comment_Item += '<div class="comment-info" id="reply">'
+   					    +'<h4 class="comment-author">'
+    						+'<a href="#!">Jonathon Andrew</a>&nbsp;&nbsp;&nbsp;<time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>'								                	
+						+'</h4>'							
+						+'<p>'
+							+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.'
+						+'</p>'
+					+'</div>';		            
 			            
-			            
-			            //댓글 끝
+			            //댓글 끝***************************//
 
 	 Comment_Item += '</div>'
 
