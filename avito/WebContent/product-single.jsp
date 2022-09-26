@@ -18,9 +18,13 @@
 <style>
 	#paging{margin-left: 80px;}
 	#reply{margin-left: 40px;}
+	#leaveReview{margin-top: 50px; margin-bottom: 20px;}
+	#review_input{width: 1030px;}
+	
 </style>
 
-<% singleBean sBean = (singleBean)request.getAttribute("sBean"); %>
+<%-- <% singleBean sBean = (singleBean)request.getAttribute("sBean"); %>
+<%=sBean.getPdNum()%> --%>
 
 <script>
 
@@ -30,7 +34,7 @@ var os = 0;
  function showReview() {
 	 
 		$.ajax({
-			url:'<%=request.getContextPath()%>/single/showReview.do?offset='+os+'&pdNum='+<%=sBean.getPdNum()%>,
+			url:'${contextPath}/single/showReview.do?offset='+os+'&pdNum='+${sBean.pdNum},
 			type:"post",
 			//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
 		
@@ -45,12 +49,13 @@ var os = 0;
 				
 				var Comment_Item='';
 				
-				for(var i in json){
+		for(var i in json){
 					
 // 					$("#r_name").text(json[i].name);
 // 					$("#r_time").text(json[i].rTime);
 // 					$("#r_content").text(json[i].rContent);
 					
+				if(json[i].rNo != null){//부모글 갯수만큼 반복	
 					
 					Comment_Item += '<li class="media">'
 
@@ -86,15 +91,18 @@ var os = 0;
 										+json[j].__rContent
 									+'</p>'
 								+'</div>';		            
-				}//if문	    
+				}//if문	
+				
+				
 			}//안쪽 for문	
 		//*****************************************댓글 끝***************************//
 
 	 Comment_Item += '</div>'
 
 			    +'</li>';
-			    	
-				}//for
+			    
+				}//바깥 if    	
+			}//for
 				
 				
 				
@@ -122,6 +130,13 @@ function prev() {
 	
 	showReview();		
 } 
+
+
+function submit() {
+	alert("dasjfdsla");
+	os = 0;
+	showReview();
+}
 
 </script>
 
@@ -278,12 +293,43 @@ function prev() {
 								   
 								</ul>
 							
-							<div class="col-md-6" id="paging">
-				<ol class="product-pagination text-right">
-					<li><a href="javascript:void(0);" onclick="prev();" id="prev"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
-					<li><a href="javascript:void(0);" onclick="next();" id="next"> Next <i class="tf-ion-ios-arrow-right"></i></a></li>
-				</ol>
-			</div>
+					
+						
+						<!-- next, prev버튼 -->	
+						<div class="col-md-6" id="paging">
+							<ol class="product-pagination text-right">
+								<li><a href="javascript:void(0);" onclick="prev();" id="prev"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
+								<li><a href="javascript:void(0);" onclick="next();" id="next"> Next <i class="tf-ion-ios-arrow-right"></i></a></li>
+							</ol>
+						</div>
+						<!-- next, prev버튼 -->	
+						
+							<div class="widget product-category" id="leaveReview">
+					
+					<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
+					  	<div class="panel panel-default">
+						    <div class="panel-heading" role="tab" id="headingOne">
+						      	<h4 class="panel-title">
+						        	<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						          	Leave Review
+						        	</a>
+						      	</h4>
+						    </div>
+					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+								<ul>
+									<form action="">
+									<input type="text" id="review_input">
+									<li><a href="#!" onclick="submit();">Submit</a></li>
+									
+									</form>
+									
+								</ul>
+							</div>
+					    </div>
+					  </div>
+					</div>	
+				</div>		
 							
 							
 							</div>
