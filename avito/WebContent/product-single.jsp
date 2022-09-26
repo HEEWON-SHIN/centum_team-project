@@ -43,11 +43,7 @@ var os = 0;
 				
 				var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
 				
-				
-				
 				var Comment_Item='';
-				
-				
 				
 				for(var i in json){
 					
@@ -75,20 +71,24 @@ var os = 0;
 			            +'<p id="r_content">'
 			            
 			            +json[i].rContent
-			              + '<input  type="hidden" value="ccc" />'
+			              + '<input  type="hidden" />'
 			            +'</p>';
 			            
-			            //댓글 시작****************//
-	Comment_Item += '<div class="comment-info" id="reply">'
-   					    +'<h4 class="comment-author">'
-    						+'<a href="#!">Jonathon Andrew</a>&nbsp;&nbsp;&nbsp;<time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>'								                	
-						+'</h4>'							
-						+'<p>'
-							+'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.'
-						+'</p>'
-					+'</div>';		            
-			            
-			            //댓글 끝***************************//
+		//*****************************************댓글 시작*****************************//
+		for(var j in json){	            
+			if(json[i].rNo == json[j].__rPtNo){
+				            
+				Comment_Item += '<div class="comment-info" id="reply">'
+			   					    +'<h4 class="comment-author">'
+			    						+'<a>'+json[j].__name+'</a>&nbsp;&nbsp;&nbsp;<time datetime="2013-04-06T13:53">'+json[j].__rTime+'</time>'								                	
+									+'</h4>'							
+									+'<p>'
+										+json[j].__rContent
+									+'</p>'
+								+'</div>';		            
+				}//if문	    
+			}//안쪽 for문	
+		//*****************************************댓글 끝***************************//
 
 	 Comment_Item += '</div>'
 
@@ -97,12 +97,7 @@ var os = 0;
 				}//for
 				
 				
-// 				Comment_Item += '<div class="col-md-6" id="paging">'
-// 				+'<ol class="product-pagination text-right">'
-// 				+'<li><a href="javascript:void(0);" onclick="a();"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>'
-// 				+'<li><a href="javascript:void(0);" onclick="a();"> Next <i class="tf-ion-ios-arrow-right"></i></a>'
-// 				+'</ol>'
-// 				+'</div>';
+				
 				
 				
 				$("#commen_item").html(Comment_Item);
@@ -279,31 +274,9 @@ function prev() {
 							<div class="post-comments">
 						    	<ul class="media-list comments-list m-bot-50 clearlist" id="commen_item">
 								    
+								   <!-- 리뷰 달리는 곳 -->
 								   
-								    <li class="media">
-
-								        <a class="pull-left" >
-								            <img class="media-object comment-avatar" src="${contextPath}/images/blog/avater-1.jpg" alt="" width="50" height="50">
-								        </a>
-
-								        <div class="media-body">
-
-								            <div class="comment-info">
-								                <div class="comment-author">
-								                    <a id="r_name" ></a>
-								                </div>
-								                <time datetime="2013-04-06T13:53" id="r_time"></time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>reply</a>
-								            </div>
-
-								            <p id="r_content">
-								               <input  type="hidden" value="ccc" />
-								            </p>
-
-								        </div>
-
-								    </li>
-							</ul>
+								</ul>
 							
 							<div class="col-md-6" id="paging">
 				<ol class="product-pagination text-right">

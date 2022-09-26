@@ -95,9 +95,16 @@ public class singleProductController extends HttpServlet {
 				
 				int os = Integer.parseInt(req.getParameter("offset"));//product-single.jsp페이지에서 쿼리스트링으로 넘긴값 받음
 				
-				int pdNum = Integer.parseInt(req.getParameter("pdNum")); 
+				int pdNum = Integer.parseInt(req.getParameter("pdNum")); //조회할 리뷰의 제품 번호
 				
-				List<reviewBean> rList  = reviewService.show(os, pdNum);
+				List<reviewBean> rList  = reviewService.show(os, pdNum);//전체 부모글 조회
+				
+
+				List<reviewBean> __rList = reviewService.reply(pdNum, rList);//댓글 조회
+				//System.out.println(__rList.size());
+				
+				
+				
 				
 				resp.setContentType("text/html; charset=utf-8");
 				
@@ -105,6 +112,9 @@ public class singleProductController extends HttpServlet {
 
 				JSONArray jsonArr = new JSONArray();
 				
+				
+				
+				//******부모글*****************************************************
 				for(int i=0; i<rList.size(); i++) {
 					
 					JSONObject jsonObj = new JSONObject();//jason객체 생성
@@ -125,11 +135,42 @@ public class singleProductController extends HttpServlet {
 					
 					//json배열에 json객체 담기
 					jsonArr.add(jsonObj);
+				
+				}//원글 for문
+				
+				
+				
+				
+				//******댓글******************************************************
+				for(int i=0; i<__rList.size(); i++) {
 					
-				}
+					JSONObject jsonObj = new JSONObject();//jason객체 생성
+					
+					reviewBean j_rBean = __rList.get(i);//__rList에서 rBean꺼내서 다시 j_rBean에 저장
+					
+					//jason객체에 각각 j_rBean에 담긴 정보 담기
+					jsonObj.put("__rNo", Integer.toString(j_rBean.getrNo()));
+					jsonObj.put("__email", j_rBean.getEmail());
+					jsonObj.put("__name", j_rBean.getName());
+					jsonObj.put("__rContent", j_rBean.getrContent());
+					jsonObj.put("__rPtNo", Integer.toString(j_rBean.getrPtNo()) );
+					jsonObj.put("__level", Integer.toString(j_rBean.getLevel()));
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					
+					jsonObj.put("__rTime", sdf.format(j_rBean.getrTime()));
+					
+					//json배열에 json객체 담기
+					jsonArr.add(jsonObj);
+				
+				}//댓글 for문
+				
+				
 				
 				//json배열을 String으로 변환!!
 				String jsonToStr = jsonArr.toJSONString();
+				
+				System.out.println(jsonToStr);
 				
 				out.print(jsonArr);//product-single.jsp페이지의 review태그를 클릭하면 실행되는 showReview()의 ajax success하면 실행되는 메소드로 전달!
 		

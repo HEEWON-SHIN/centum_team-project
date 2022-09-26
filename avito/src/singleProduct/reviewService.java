@@ -27,4 +27,10 @@ public class reviewService {
 		return rDao.count(pdNum); 
 	}
 
+
+	public List<reviewBean> reply(int pdNum, List rList) {
+	
+		return rDao.reply(pdNum, rList);
+	}
+
 }

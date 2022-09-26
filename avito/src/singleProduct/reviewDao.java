@@ -87,6 +87,7 @@ public class reviewDao {
 				rBean.setrPtNo(rs.getInt(5));
 				rBean.setLevel(rs.getInt(6));
 				rBean.setrTime(rs.getDate(7));
+				rBean.setPdNum(rs.getInt(8));
 				
 				rList.add(rBean);
 			}
@@ -108,6 +109,7 @@ public class reviewDao {
 
 		int totReviews = 0;
 		
+		
 		try {
 			con = getCon();
 			
@@ -128,4 +130,57 @@ public class reviewDao {
 		return totReviews;
 	}//count메소드 끝
 
+	
+	/*댓글 조회하는 메소드*/
+	public List<reviewBean> reply(int pdNum, List rList) {
+		
+		reviewBean rBean = null;
+		
+		List<reviewBean> __rList = new ArrayList<reviewBean>();
+		
+		try {
+			int rNo;
+			con = getCon();
+			sql = "select * from review where pdNum=? and rptno=? and level=1";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, pdNum);
+		
+		for(int i=0; i<rList.size(); i++) {
+			
+			rNo = ((reviewBean) rList.get(i)).getrNo();//부모글번호(rptno) = 부모글의 글번호(rNo) 
+			
+			pstmt.setInt(2, rNo);
+			
+			rs =  pstmt.executeQuery();
+			while(rs.next()) {
+				rBean = new reviewBean();
+				
+				rBean.setrNo(rs.getInt(1));
+				rBean.setEmail(rs.getString(2));
+				rBean.setName(rs.getString(3));
+				rBean.setrContent(rs.getString(4));
+				rBean.setrPtNo(rs.getInt(5));
+				rBean.setLevel(rs.getInt(6));
+				rBean.setrTime(rs.getDate(7));
+				rBean.setPdNum(rs.getInt(8));
+				
+				__rList.add(rBean);
+			}//while
+			
+			
+		}//for문
+			
+		
+		}catch(Exception e){
+			System.out.println("reply메소드 오류 발생 " +e);
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return __rList;
+		
+	}
 }
