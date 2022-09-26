@@ -37,11 +37,13 @@ var os = 0;
        		dataType : 'text',//응답받을 데이터 타입
         	
 			
-			success:function(resData){
+			  success:function(resData){
 				
 				console.log(resData);
 				
 				var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
+				
+				
 				
 				var Comment_Item='';
 				
