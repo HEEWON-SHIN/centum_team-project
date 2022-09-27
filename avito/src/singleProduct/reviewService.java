@@ -33,4 +33,9 @@ public class reviewService {
 		return rDao.reply(pdNum, rList);
 	}
 
+	/*리뷰(부모글) INSERT*/
+	public int leaveReview(String content, int pdNum, String name, String email) {
+		return rDao.leaveReview(content, pdNum, name, email);		
+	}
+
 }

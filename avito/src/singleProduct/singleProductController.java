@@ -90,9 +90,6 @@ public class singleProductController extends HttpServlet {
 				
 			}else if(action.equals("/showReview.do")) {/**product-single.jsp페이지에서 review버튼을 클릭했을 때?**/
 				
-				
-				
-				
 				int os = Integer.parseInt(req.getParameter("offset"));//product-single.jsp페이지에서 쿼리스트링으로 넘긴값 받음
 				
 				int pdNum = Integer.parseInt(req.getParameter("pdNum")); //조회할 리뷰의 제품 번호
@@ -170,15 +167,26 @@ public class singleProductController extends HttpServlet {
 				//json배열을 String으로 변환!!
 				String jsonToStr = jsonArr.toJSONString();
 				
-				System.out.println(jsonToStr);
+				//System.out.println(jsonToStr);
 				
 				out.print(jsonArr);//product-single.jsp페이지의 review태그를 클릭하면 실행되는 showReview()의 ajax success하면 실행되는 메소드로 전달!
 		
 				return;//아래쪽 다른 메소드 실행되지 않도록 해줌
 				
-			
-			
-			
+			}else if(action.equals("/leaveReview.do")) {
+				
+				//인풋태그 값, pdNum매개변수로 넘겨줌
+				int result = reviewService.leaveReview(req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
+																			req.getParameter("name"), req.getParameter("email"));
+				
+				JSONObject jsonObj = new JSONObject();//jason객체 생성
+				jsonObj.put("result", Integer.toString(result));
+				
+				
+				PrintWriter out  = resp.getWriter();
+				out.print(jsonObj.toJSONString());
+				
+				return;
 			
 			}else {
 				nextPage = "/product-single.jsp";

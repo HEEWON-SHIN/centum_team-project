@@ -183,4 +183,35 @@ public class reviewDao {
 		return __rList;
 		
 	}
+
+	
+	/*리뷰(부모글) 작성하는 메소드*/
+	public int leaveReview(String content, int pdNum, String name, String email) {
+	
+		int result =0;
+		
+		try {
+			con = getCon();
+			sql = "insert into review (email, name, rContent, level, pdNum) "
+					+ " values(?, ?, ?, 0, ?)";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, pdNum);
+			
+			result = pstmt.executeUpdate();
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("leaveReview메소드 에러 : "+e);
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return result;
+	}//leaveReview메소드 끝
 }

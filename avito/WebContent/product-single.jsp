@@ -117,7 +117,7 @@ function next() {
 	
 	os+=3;	
 	
-	if(os>=<%=request.getAttribute("totReviews")%>){	os=<%=request.getAttribute("totReviews")%>-1; 	}
+	if(os>=${totReviews}){	os=${totReviews}-1; 	}
 			
 	showReview();	
 }
@@ -133,9 +133,28 @@ function prev() {
 
 
 function submit() {
-	alert("dasjfdsla");
-	os = 0;
+	//alert("dasjfdsla");
+	
+	//$("#review_form").submit();
+	
+	
+	$.ajax({
+		url:'${contextPath}/single/leaveReview.do?content='+$("#review_input").val()+'&pdNum='+${sBean.pdNum}+'&name='+${name}+'&email='+${email},
+		type:"post",
+		//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
+	
+      	dataType : 'text',//응답받을 데이터 타입
+ 		
+		success:function(resData){
+			console.log(resData);
+		  }
+	});
+	
+	
+	os=${totReviews}-1;
 	showReview();
+	
+	return true;
 }
 
 </script>
@@ -305,7 +324,7 @@ function submit() {
 						<!-- next, prev버튼 -->	
 						
 							<div class="widget product-category" id="leaveReview">
-					
+				<!-- 리뷰 남기기 -->	
 					<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
 					  	<div class="panel panel-default">
 						    <div class="panel-heading" role="tab" id="headingOne">
@@ -318,12 +337,12 @@ function submit() {
 					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<ul>
-									<form action="">
-									<input type="text" id="review_input">
-									<li><a href="#!" onclick="submit();">Submit</a></li>
 									
-									</form>
+									<input type="text" id="review_input" name="review_input"/>
+									<li><a href="#!" onclick="return submit();">Submit</a></li>
 									
+								
+				<!-- 리뷰 남기기 끝 -->					
 								</ul>
 							</div>
 					    </div>
