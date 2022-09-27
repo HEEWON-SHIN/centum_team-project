@@ -175,12 +175,12 @@ public class singleProductController extends HttpServlet {
 				
 			}else if(action.equals("/leaveReview.do")) {
 				
-				//인풋태그 값, pdNum매개변수로 넘겨줌
-				int result = reviewService.leaveReview(req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
+				//INSERT성공하면 글의 갯수 조회해서 반환			//인풋태그 값, pdNum등을 매개변수로 넘겨줌
+				int totReviews = reviewService.leaveReview(req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
 																			req.getParameter("name"), req.getParameter("email"));
 				
 				JSONObject jsonObj = new JSONObject();//jason객체 생성
-				jsonObj.put("result", Integer.toString(result));
+				jsonObj.put("totReviews", Integer.toString(totReviews));
 				
 				
 				PrintWriter out  = resp.getWriter();

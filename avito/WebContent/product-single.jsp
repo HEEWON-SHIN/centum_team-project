@@ -70,13 +70,13 @@ var os = 0;
 			                   + '<a id="r_name" >'+json[i].name+'</a>'
 			               + '</div>'
 			                +'<time datetime="2013-04-06T13:53" id="r_time">'+json[i].rTime+'</time>'
-			                +'<a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>reply</a>'
+			                +'<a class="comment-button" href="#!" onclick="rp_review();"><i class="tf-ion-chatbubbles"></i>reply</a>'
 			            +'</div>'
 
 			            +'<p id="r_content">'
 			            
 			            +json[i].rContent
-			              + '<input  type="hidden" />'
+			              
 			            +'</p>';
 			            
 		//*****************************************댓글 시작*****************************//
@@ -103,12 +103,9 @@ var os = 0;
 			    
 				}//바깥 if    	
 			}//for
-				
-				
-				
-				
-				
-				$("#commen_item").html(Comment_Item);
+
+			
+			$("#commen_item").html(Comment_Item);
 			}//success:	
 		});
 }//showReview메소드 끝
@@ -133,28 +130,57 @@ function prev() {
 
 
 function submit() {
-	//alert("dasjfdsla");
-	
-	//$("#review_form").submit();
-	
+
 	
 	$.ajax({
-		url:'${contextPath}/single/leaveReview.do?content='+$("#review_input").val()+'&pdNum='+${sBean.pdNum}+'&name='+${name}+'&email='+${email},
+		url:'${contextPath}/single/leaveReview.do?content='+$("#review_input").val()+'&pdNum='+${sBean.pdNum}+'&name=열여덟&email=1017@naver.com',
 		type:"post",
 		//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
 	
       	dataType : 'text',//응답받을 데이터 타입
  		
 		success:function(resData){
-			console.log(resData);
+			
+			var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
+			
+			$("#totReviews").text(json.totReviews);
+			
+			$("#review_input").val('');
+			 os=${totReviews}-1;
+			showReview(); 
+			
+			
 		  }
 	});
 	
 	
-	os=${totReviews}-1;
-	showReview();
+}//submit메소드 끝
+
+function rp_review() {
+	//alert("ehlsk");
+	var rp_reply;
 	
-	return true;
+	rp_reply = '<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">'
+	  	+'<div class="panel panel-default">'
+   + '<div class="panel-heading" role="tab" id="headingOne">'
+      	+'<h4 class="panel-title">'
+        	+'<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
+          	+'Leave Reply'
+        	+'</a>'
+      	+'</h4>'
+    +'</div>'
++'<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">'
+	+'<div class="panel-body">'
+		+'<ul>'
+			
+			+'<input type="text" id="review_input" name="review_input"/>'
+			+'<li><a href="#!" onclick="submit();">Submit</a></li>';
+	
+	
+	
+	
+	$("r_content").appendChild(rp_reply);
+	
 }
 
 </script>
@@ -293,7 +319,7 @@ function submit() {
 				<div class="tabCommon mt-20">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a></li>
-						<li class=""><a data-toggle="tab" href="#reviews" onclick="showReview();" aria-expanded="false">Reviews (${totReviews})</a></li>
+						<li class=""><a data-toggle="tab" href="#reviews" onclick="showReview();" aria-expanded="false">Reviews (<span id="totReviews">${totReviews}</span>)</a></li>
 					</ul>
 					<div class="tab-content patternbg">
 						<div id="details" class="tab-pane fade active in">
@@ -339,7 +365,7 @@ function submit() {
 								<ul>
 									
 									<input type="text" id="review_input" name="review_input"/>
-									<li><a href="#!" onclick="return submit();">Submit</a></li>
+									<li><a href="#!" onclick="submit();">Submit</a></li>
 									
 								
 				<!-- 리뷰 남기기 끝 -->					

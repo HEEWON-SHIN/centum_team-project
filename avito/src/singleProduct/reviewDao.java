@@ -200,8 +200,10 @@ public class reviewDao {
 			pstmt.setString(2, name);
 			pstmt.setString(3, content);
 			pstmt.setInt(4, pdNum);
+			pstmt.executeUpdate();
 			
-			result = pstmt.executeUpdate();
+			
+			result = count(pdNum);//새 글 INSERT에 성공하면 새로 조회한 글 갯수 반환
 			
 			
 			
