@@ -19,7 +19,9 @@
 	#paging{margin-left: 80px;}
 	#reply{margin-left: 40px;}
 	#leaveReview{margin-top: 50px; margin-bottom: 20px;}
-	#review_input{width: 1030px;}
+	#review_input{width: 1030px; height: 80px;}
+	#reply_input{width: 1010px;}
+	#reply_ul{margin-left: 20px;}
 	
 </style>
 
@@ -69,11 +71,13 @@ var os = 0;
 			               + '<div class="comment-author">'
 			                   + '<a id="r_name" >'+json[i].name+'</a>'
 			               + '</div>'
-			                +'<time datetime="2013-04-06T13:53" id="r_time">'+json[i].rTime+'</time>'
-			                +'<a class="comment-button" href="#!" onclick="rp_review();"><i class="tf-ion-chatbubbles"></i>reply</a>'
+			                +'<time id="r_time">'+json[i].rTime+'</time>'
+			                +'<a class="comment-button" href="#!" onclick="rp_review('+json[i].rNo+');"><i class="tf-ion-chatbubbles"></i>reply</a>'
 			            +'</div>'
-
-			            +'<p id="r_content">'
+			           
+			            +'<span hidden id="span_reply'+json[i].rNo+'">'+json[i].rNo+'</span>'//부모글 글번호
+						
+			            +'<p id="r_content'+json[i].rNo+'_">'
 			            
 			            +json[i].rContent
 			              
@@ -85,6 +89,7 @@ var os = 0;
 				            
 				Comment_Item += '<div class="comment-info" id="reply">'
 			   					    +'<h4 class="comment-author">'
+			   					    +'<span id="reply_rptNo" hidden>'+json[j].rNo+'</span>'//댓글 글번호
 			    						+'<a>'+json[j].__name+'</a>&nbsp;&nbsp;&nbsp;<time datetime="2013-04-06T13:53">'+json[j].__rTime+'</time>'								                	
 									+'</h4>'							
 									+'<p>'
@@ -92,6 +97,8 @@ var os = 0;
 									+'</p>'
 								+'</div>';		            
 				}//if문	
+				
+				
 				
 				
 			}//안쪽 for문	
@@ -156,31 +163,31 @@ function submit() {
 	
 }//submit메소드 끝
 
-function rp_review() {
-	//alert("ehlsk");
+function rp_review(rptno) {
+	
 	var rp_reply;
 	
-	rp_reply = '<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">'
-	  	+'<div class="panel panel-default">'
-   + '<div class="panel-heading" role="tab" id="headingOne">'
-      	+'<h4 class="panel-title">'
-        	+'<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
-          	+'Leave Reply'
-        	+'</a>'
-      	+'</h4>'
-    +'</div>'
-+'<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">'
-	+'<div class="panel-body">'
-		+'<ul>'
-			
-			+'<input type="text" id="review_input" name="review_input"/>'
-			+'<li><a href="#!" onclick="submit();">Submit</a></li>';
+	rp_reply = 
+		'<div class="panel-heading" role="tab" id="headingOne">'		
+			+'<h4 class="panel-title">'
+	        	+'<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
+	          	+'Leave Reply'
+	        	+'</a>'
+	      	+'</h4>'
+		+'</div>'
+		+'<ul id="reply_ul">'
+			+'<span hidden id="span_reply">'+rptno+'</span>'
+			+'<input type="text" id="reply_input" name="review_input"/>'
+			+'<li><a href="#!" onclick="reply_submit();">Submit</a></li>'
+		+'<ul>';
 	
 	
 	
+	//console.log("번호 : "+ rptno);
 	
-	$("r_content").appendChild(rp_reply);
-	
+	var tag_id = "#r_content"+rptno+"_";
+		
+	$(tag_id).html(rp_reply);
 }
 
 </script>
@@ -351,25 +358,25 @@ function rp_review() {
 						
 							<div class="widget product-category" id="leaveReview">
 				<!-- 리뷰 남기기 -->	
-					<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
-					  	<div class="panel panel-default">
-						    <div class="panel-heading" role="tab" id="headingOne">
+					<!-- <div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
+					  	<div class="panel panel-default">-->
+						    <div class="panel-heading" role="tab" id="headingOne"> 
 						      	<h4 class="panel-title">
 						        	<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 						          	Leave Review
 						        	</a>
 						      	</h4>
-						    </div>
-					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-							<div class="panel-body">
+						     </div>
+					   <!-- <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body"> -->
 								<ul>
 									
 									<input type="text" id="review_input" name="review_input"/>
 									<li><a href="#!" onclick="submit();">Submit</a></li>
-									
+								</ul>	
 								
 				<!-- 리뷰 남기기 끝 -->					
-								</ul>
+								
 							</div>
 					    </div>
 					  </div>
