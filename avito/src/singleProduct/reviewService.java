@@ -44,4 +44,16 @@ public class reviewService {
 		return rDao.leaveReply(rptNo, content, pdNum, name, email);
 	}
 
+	/*댓글 삭제*/
+	public int deleteReply(int rNo) { 
+		
+		return rDao.deleteReply(rNo);
+	}
+
+	/*리뷰 삭제*/
+	public int deleteReview(int rNo, int pdNum) {
+		
+		return rDao.deleteReview(rNo, pdNum);
+	}
+
 }

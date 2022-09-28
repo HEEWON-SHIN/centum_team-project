@@ -30,6 +30,8 @@
 
 <script>
 
+
+
 var os = 0;
 
 
@@ -72,8 +74,14 @@ var os = 0;
 			                   + '<a id="r_name" >'+json[i].name+'</a>'
 			               + '</div>'
 			                +'<time id="r_time">'+json[i].rTime+'</time>'
-			                +'<a class="comment-button" href="#!" onclick="rp_review('+json[i].rNo+');"><i class="tf-ion-chatbubbles"></i>reply</a>'
-			            +'</div>'
+			                
+			                
+			                +'<a class="comment-button" href="#!" onclick="rp_review('+json[i].rNo+');"><i class="tf-ion-chatbubbles"></i>REPLY</a>'
+			                +'<a class="comment-button" href="#!" onclick="r_modify('+json[i].rNo+');">&nbsp;/&nbsp;MODIFY</a>'
+			                +'<a class="comment-button" href="#!" onclick="r_delete('+json[i].rNo+');">&nbsp;/&nbsp;DELETE</a>'
+			            
+			                
+			                +'</div>'
 			           
 			            +'<span hidden id="span_reply'+json[i].rNo+'">'+json[i].rNo+'</span>'//부모글 글번호
 						
@@ -90,7 +98,11 @@ var os = 0;
 				Comment_Item += '<div class="comment-info" id="reply">'
 			   					    +'<h4 class="comment-author">'
 			   					    +'<span id="reply_rptNo" hidden>'+json[j].rNo+'</span>'//댓글 글번호
-			    						+'<a>'+json[j].__name+'</a>&nbsp;&nbsp;&nbsp;<time datetime="2013-04-06T13:53">'+json[j].__rTime+'</time>'								                	
+			    						+'<a>'+json[j].__name+'</a>&nbsp;&nbsp;&nbsp;<time>'+json[j].__rTime+'</time>'
+			    							
+			    							+'<a class="comment-button" href="#!" onclick="rp_modify('+json[j].__rNo+');"><time id="lower">&nbsp;&nbsp;&nbsp;&nbsp;MODIFY</time></a>'
+						                	+'<a class="comment-button" href="#!" onclick="rp_delete('+json[j].__rNo+');"><time id="lower">&nbsp;/&nbsp;&nbsp;&nbsp;DELETE</time></a>'
+			    						
 									+'</h4>'							
 									+'<p>'
 										+json[j].__rContent
@@ -135,9 +147,8 @@ function prev() {
 	showReview();		
 } 
 
-
+/*리뷰 작성 submit*/
 function submit() {
-
 	
 	$.ajax({
 		url:'${contextPath}/single/leaveReview.do?content='+$("#review_input").val()+'&pdNum='+${sBean.pdNum}+'&name=열여덟&email=1017@naver.com',
@@ -155,8 +166,7 @@ function submit() {
 			$("#review_input").val('');
 			 os=${totReviews}-1;
 			showReview(); 
-			
-			
+						
 		  }
 	});
 	
@@ -219,6 +229,61 @@ function reply_submit(rptNo) {
 	
 }//reply_submit메소드 끝
 
+
+/*부모글 수정 메소드*/
+function r_modify(rNo) {
+	alert("sdfaads");
+}
+
+/*부모글 삭제 메소드*/
+function r_delete(rNo) {
+	
+	if(!confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
+	    return false;
+	}
+
+	$.ajax({	url:'${contextPath}/single/deleteReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum},
+		type:"post",
+		
+      	dataType : 'text',//응답받을 데이터 타입
+ 		
+		success:function(resData){
+			
+			var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
+			
+			$("#totReviews").text(json.totReviews);
+			 os=0;
+			showReview(); 
+		}
+		
+	});
+}
+
+/*댓글 수정 메소드*/
+function rp_modify(rNo) {
+	alert("sdfaads");
+}
+
+/*댓글 삭제 메소드*/
+function rp_delete(rNo) {
+	
+	if(!confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
+	    return false;
+	}
+	
+
+	$.ajax({	url:'${contextPath}/single/deleteReply.do?rNo='+rNo,
+		type:"post",
+		
+      	dataType : 'text',//응답받을 데이터 타입
+ 		
+		success:function(resData){
+			showReview();
+		}
+		
+	});
+	
+}
 
 
 </script>

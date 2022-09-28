@@ -173,7 +173,7 @@ public class singleProductController extends HttpServlet {
 		
 				return;//아래쪽 다른 메소드 실행되지 않도록 해줌
 				
-			}else if(action.equals("/leaveReview.do")) {
+			}else if(action.equals("/leaveReview.do")) {//리뷰달기 submit버튼 눌렀을 때
 				
 				//INSERT성공하면 글의 갯수 조회해서 반환			//인풋태그 값, pdNum등을 매개변수로 넘겨줌
 				int totReviews = reviewService.leaveReview(req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
@@ -188,14 +188,29 @@ public class singleProductController extends HttpServlet {
 				
 				return;
 				
-			}else if(action.equals("/leaveReply.do")) {
+			}else if(action.equals("/leaveReply.do")) {//댓글달기 버튼 눌렀을 때
 				
 				//INSERT성공하면 1 반환			//인풋태그 값, pdNum등을 매개변수로 넘겨줌
 				int result = reviewService.leaveReply(Integer.parseInt(req.getParameter("rptNo")) ,req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
 																			req.getParameter("name"), req.getParameter("email"));
 				
 				JSONObject jsonObj = new JSONObject();//jason객체 생성
-				jsonObj.put("totReviews", Integer.toString(result));
+				jsonObj.put("result", Integer.toString(result));
+				
+				
+				PrintWriter out  = resp.getWriter();
+				out.print(jsonObj.toJSONString());
+				
+				return;
+			
+				
+			}else if(action.equals("/deleteReply.do")) {
+				
+				//DELETE 성공하면 1 반환
+				int result = reviewService.deleteReply(Integer.parseInt(req.getParameter("rNo")));
+				
+				JSONObject jsonObj = new JSONObject();//jason객체 생성
+				jsonObj.put("result", Integer.toString(result));
 				
 				
 				PrintWriter out  = resp.getWriter();
@@ -203,7 +218,19 @@ public class singleProductController extends HttpServlet {
 				
 				return;
 				
+			}else if(action.equals("/deleteReview.do")) {
 				
+				//INSERT성공하면 글의 갯수 조회해서 반환			//인풋태그 값, pdNum등을 매개변수로 넘겨줌
+				int totReviews = reviewService.deleteReview(Integer.parseInt(req.getParameter("rNo")), Integer.parseInt(req.getParameter("pdNum")));
+				
+				JSONObject jsonObj = new JSONObject();//jason객체 생성
+				jsonObj.put("totReviews", Integer.toString(totReviews));
+				
+				
+				PrintWriter out  = resp.getWriter();
+				out.print(jsonObj.toJSONString());
+				
+				return;
 			
 			}else {
 				nextPage = "/product-single.jsp";

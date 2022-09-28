@@ -202,11 +202,8 @@ public class reviewDao {
 			pstmt.setInt(4, pdNum);
 			pstmt.executeUpdate();
 			
-			
 			totReviews = count(pdNum);//새 글 INSERT에 성공하면 새로 조회한 글 갯수 반환
-			
-			
-			
+		
 		} catch (Exception e) {
 			System.out.println("leaveReview메소드 에러 : "+e);
 			e.printStackTrace();
@@ -249,6 +246,50 @@ public class reviewDao {
 		
 		return result;
 	}//leaveReply메소드 끝
+
+	public int deleteReply(int rNo) {
+
+		int result = 0;
+		
+		try {
+			con = getCon();
+			sql = "delete from review where rNo=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, rNo);
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			System.out.println("deleteReply메소드 에러 : "+e);
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return result;
+	}
+
+	/*리뷰 삭제*/
+	public int deleteReview(int rNo, int pdNum) {
+		
+		int totReviews = 0;
+		
+		try {
+			con = getCon();
+			sql = "delete from review where rNo=? or rptNo=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, rNo);
+			pstmt.setInt(2, rNo);
+			pstmt.executeUpdate();
+			
+			totReviews = count(pdNum);
+			
+		}catch (Exception e) {
+			System.out.println("deleteReview메소드 에러 : "+e);
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return totReviews;//글 삭제 성공하면 다시 부모글 갯수 조회해서 반환
+	}
 	
 	
 }
