@@ -188,7 +188,7 @@ public class reviewDao {
 	/*리뷰(부모글) 작성하는 메소드*/
 	public int leaveReview(String content, int pdNum, String name, String email) {
 	
-		int result =0;
+		int totReviews =0;
 		
 		try {
 			con = getCon();
@@ -203,7 +203,7 @@ public class reviewDao {
 			pstmt.executeUpdate();
 			
 			
-			result = count(pdNum);//새 글 INSERT에 성공하면 새로 조회한 글 갯수 반환
+			totReviews = count(pdNum);//새 글 INSERT에 성공하면 새로 조회한 글 갯수 반환
 			
 			
 			
@@ -214,6 +214,41 @@ public class reviewDao {
 			close();
 		}
 		
-		return result;
+		return totReviews;//새 글 추가에 성공하면 전체 글의 갯수 조회해서 반환
 	}//leaveReview메소드 끝
+
+	
+	/*댓글 INSERT*/
+	public int leaveReply(int rptNo, String content, int pdNum, String name, String email) {
+		
+		int result =0;
+		
+		try {
+			con = getCon();
+			sql = "insert into review (email, name, rContent, rptNo,  level, pdNum) "
+					+ " values(?, ?, ?, ?, 1, ?)";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, rptNo);
+			pstmt.setInt(5, pdNum);
+			
+			
+			result = pstmt.executeUpdate();//성공하면 1 반환
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("leaveReply메소드 에러 : "+e);
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return result;
+	}//leaveReply메소드 끝
+	
+	
 }

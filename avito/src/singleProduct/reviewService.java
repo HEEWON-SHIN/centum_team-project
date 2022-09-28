@@ -38,4 +38,10 @@ public class reviewService {
 		return rDao.leaveReview(content, pdNum, name, email);		
 	}
 
+	/*댓글 INSERT*/
+	public int leaveReply(int rptNo, String content, int pdNum, String name, String email) {
+		
+		return rDao.leaveReply(rptNo, content, pdNum, name, email);
+	}
+
 }

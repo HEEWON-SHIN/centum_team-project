@@ -163,12 +163,13 @@ function submit() {
 	
 }//submit메소드 끝
 
-function rp_review(rptno) {
+/*댓글 입력창 띄우기*/
+function rp_review(rptNo) {
 	
 	var rp_reply;
 	
 	rp_reply = 
-		'<div class="panel-heading" role="tab" id="headingOne">'		
+		'<div class="panel-heading_1" role="tab" id="headingOne">'		
 			+'<h4 class="panel-title">'
 	        	+'<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
 	          	+'Leave Reply'
@@ -176,19 +177,49 @@ function rp_review(rptno) {
 	      	+'</h4>'
 		+'</div>'
 		+'<ul id="reply_ul">'
-			+'<span hidden id="span_reply">'+rptno+'</span>'
-			+'<input type="text" id="reply_input" name="review_input"/>'
-			+'<li><a href="#!" onclick="reply_submit();">Submit</a></li>'
+			+'<span hidden id="span_reply">'+rptNo+'</span>'//부모글 번호 
+			+'<input type="text" id="reply_input" name="reply_input"/>'
+			+'<li><a href="#!" onclick="reply_submit('+rptNo+');">Submit</a></li>'//부모글 번호 매개변수로 넘기기
 		+'<ul>';
 	
 	
 	
 	//console.log("번호 : "+ rptno);
 	
-	var tag_id = "#r_content"+rptno+"_";
+	var tag_id = "#r_content"+rptNo+"_";
 		
 	$(tag_id).html(rp_reply);
-}
+}//rp_review메소드 끝
+
+
+/*댓글 작성하는 메소드*/
+function reply_submit(rptNo) {
+	
+	$.ajax({
+		url:'${contextPath}/single/leaveReply.do?rptNo='+rptNo+'&content='+$("#reply_input").val()+'&pdNum='+${sBean.pdNum}+'&name=댓글&email=@naver.com',
+		type:"post",
+		//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
+	
+      	dataType : 'text',//응답받을 데이터 타입
+ 		
+		success:function(resData){
+			
+			var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
+			
+			//$("#totReviews").text(json.totReviews);
+			
+			$("#reply_input").val('');
+			$(".panel-heading_1").hide();
+			 //os=${totReviews}-1;
+			showReview(); 
+		
+		  }
+	});
+	
+	
+}//reply_submit메소드 끝
+
+
 
 </script>
 
@@ -362,7 +393,7 @@ function rp_review(rptno) {
 					  	<div class="panel panel-default">-->
 						    <div class="panel-heading" role="tab" id="headingOne"> 
 						      	<h4 class="panel-title">
-						        	<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						        	<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 						          	Leave Review
 						        	</a>
 						      	</h4>

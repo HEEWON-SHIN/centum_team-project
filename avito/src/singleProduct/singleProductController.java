@@ -187,6 +187,23 @@ public class singleProductController extends HttpServlet {
 				out.print(jsonObj.toJSONString());
 				
 				return;
+				
+			}else if(action.equals("/leaveReply.do")) {
+				
+				//INSERT성공하면 1 반환			//인풋태그 값, pdNum등을 매개변수로 넘겨줌
+				int result = reviewService.leaveReply(Integer.parseInt(req.getParameter("rptNo")) ,req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
+																			req.getParameter("name"), req.getParameter("email"));
+				
+				JSONObject jsonObj = new JSONObject();//jason객체 생성
+				jsonObj.put("totReviews", Integer.toString(result));
+				
+				
+				PrintWriter out  = resp.getWriter();
+				out.print(jsonObj.toJSONString());
+				
+				return;
+				
+				
 			
 			}else {
 				nextPage = "/product-single.jsp";
