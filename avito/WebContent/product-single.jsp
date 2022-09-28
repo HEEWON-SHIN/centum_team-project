@@ -132,9 +132,12 @@ var os = 0;
 function next() {
 	
 	os+=3;	
+	var totrv = $("#totReviews").text();
 	
-	if(os>=${totReviews}){	os=${totReviews}-1; 	}
-			
+	if(os>=totrv){  os=totrv-1;}
+	//if(os>=${totReviews}){	os=${totReviews}-1; 	}
+	//if(r_delete.load()){	os=${totReviews}-2;}		
+	
 	showReview();	
 }
  
