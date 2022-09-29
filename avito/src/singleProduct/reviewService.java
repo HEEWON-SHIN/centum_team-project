@@ -56,4 +56,16 @@ public class reviewService {
 		return rDao.deleteReview(rNo, pdNum);
 	}
 
+	/*글번호로에 해당하는 글 조회*/
+	public String getReview(int rNo, int pdNum) {
+		
+		return rDao.getReview(rNo, pdNum);
+	}
+
+	/*글번호에 해당하는 글 수정하기*/
+	public int editReview(int rNo, int pdNum, String rContent) {
+		
+		return rDao.editReview(rNo, pdNum, rContent);
+	}
+
 }

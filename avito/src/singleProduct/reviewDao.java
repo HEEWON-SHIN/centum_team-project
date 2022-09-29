@@ -22,6 +22,8 @@ public class reviewDao {
 	
 	singleBean sBean;
 	
+	reviewBean rBean;
+	
 
 	/* DB연결 메소드 */
 	private  Connection getCon() throws Exception{
@@ -134,7 +136,8 @@ public class reviewDao {
 	/*댓글 조회하는 메소드*/
 	public List<reviewBean> reply(int pdNum, List rList) {
 		
-		reviewBean rBean = null;
+		//reviewBean rBean = null;
+		rBean = new reviewBean();
 		
 		List<reviewBean> __rList = new ArrayList<reviewBean>();
 		
@@ -289,6 +292,58 @@ public class reviewDao {
 			close();
 		}
 		return totReviews;//글 삭제 성공하면 다시 부모글 갯수 조회해서 반환
+	}
+
+	/*글번호에 해당하는 글 하나를 조회*/
+	public String getReview(int rNo, int pdNum) {
+		
+		String rContent = "";
+		
+		try {
+			con = getCon();
+			sql = "select * from review where rNo=? or rptNo=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, rNo);
+			pstmt.setInt(2, pdNum);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			rContent = rs.getString("rContent");
+			
+		}catch (Exception e) {
+			System.out.println("getReview메소드 에러 : "+e);
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		
+		return rContent;
+	}
+
+	public int editReview(int rNo, int pdNum, String rContent) {
+
+		rBean = new reviewBean();
+		int result = 0;
+		
+		try {
+			con = getCon();
+			sql = "update review set rContent=? where rNo=? and pdNum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, rContent);
+			pstmt.setInt(2, rNo);
+			pstmt.setInt(3, pdNum);
+			result = pstmt.executeUpdate();
+			
+			
+			
+		}catch (Exception e) {
+			System.out.println("getReview메소드 에러 : "+e);
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return result;
 	}
 	
 	

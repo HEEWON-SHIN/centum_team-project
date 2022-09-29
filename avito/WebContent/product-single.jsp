@@ -22,6 +22,7 @@
 	#review_input{width: 1030px; height: 80px;}
 	#reply_input{width: 1010px;}
 	#reply_ul{margin-left: 20px;}
+	#edit_review_input{width: 1010px;}
 	
 </style>
 
@@ -77,7 +78,7 @@ var os = 0;
 			                
 			                
 			                +'<a class="comment-button" href="#!" onclick="rp_review('+json[i].rNo+');"><i class="tf-ion-chatbubbles"></i>REPLY</a>'
-			                +'<a class="comment-button" href="#!" onclick="r_modify('+json[i].rNo+');">&nbsp;/&nbsp;MODIFY</a>'
+			                +'<a class="comment-button" href="#!" onclick="getReview('+json[i].rNo+');">&nbsp;/&nbsp;EDIT</a>'
 			                +'<a class="comment-button" href="#!" onclick="r_delete('+json[i].rNo+');">&nbsp;/&nbsp;DELETE</a>'
 			            
 			                
@@ -100,7 +101,7 @@ var os = 0;
 			   					    +'<span id="reply_rptNo" hidden>'+json[j].rNo+'</span>'//댓글 글번호
 			    						+'<a>'+json[j].__name+'</a>&nbsp;&nbsp;&nbsp;<time>'+json[j].__rTime+'</time>'
 			    							
-			    							+'<a class="comment-button" href="#!" onclick="rp_modify('+json[j].__rNo+');"><time id="lower">&nbsp;&nbsp;&nbsp;&nbsp;MODIFY</time></a>'
+			    							+'<a class="comment-button" href="#!" onclick="rp_modify('+json[j].__rNo+');"><time id="lower">&nbsp;&nbsp;&nbsp;&nbsp;EDIT</time></a>'
 						                	+'<a class="comment-button" href="#!" onclick="rp_delete('+json[j].__rNo+');"><time id="lower">&nbsp;/&nbsp;&nbsp;&nbsp;DELETE</time></a>'
 			    						
 									+'</h4>'							
@@ -192,7 +193,7 @@ function rp_review(rptNo) {
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rptNo+'</span>'//부모글 번호 
 			+'<input type="text" id="reply_input" name="reply_input"/>'
-			+'<li><a href="#!" onclick="reply_submit('+rptNo+');">Submit</a></li>'//부모글 번호 매개변수로 넘기기
+			+'<li><a href="#!" onclick="reply_submit('+rptNo+');">Leave a Reply</a></li>'//부모글 번호 매개변수로 넘기기
 		+'<ul>';
 	
 	
@@ -233,10 +234,63 @@ function reply_submit(rptNo) {
 }//reply_submit메소드 끝
 
 
-/*부모글 수정 메소드*/
-function r_modify(rNo) {
-	alert("sdfaads");
+/*부모글 수정 메소드1 - 부모글 내용 받아오기*/
+function getReview(rNo) {
+	
+var review;
+	
+	review = 
+		'<div class="panel-heading_2" role="tab" id="headingOne">'		
+
+		+'<ul id="reply_ul">'
+			+'<span hidden id="span_reply">'+rNo+'</span>'//부모글 번호 
+			+'<input type="text" id="edit_review_input" class="edit_review_input'+rNo+'" name="reply_input"/>'
+			+'<li><a href="#!" onclick="edit_review_submit('+rNo+');">Edit Review</a></li>'//부모글 번호 매개변수로 넘기기
+		+'<ul>'
+		+'</div>';
+	
+	var tag_id = "#r_content"+rNo+"_";
+		
+	$(tag_id).html(review);
+	
+	/*부모글 내용 받아오기*/
+	$.ajax({url:'${contextPath}/single/getReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum},
+			type:"post",
+			dataType : "text",
+			success:function(resData){
+				
+				var input = ".edit_review_input"+rNo;
+				$(input).val(resData);
+				
+			}
+			
+	
+	});
+	
 }
+
+/*부모글 수정 메소드2 - submit했을 때*/
+function edit_review_submit(rNo) {
+	
+	var input = ".edit_review_input"+rNo;
+	var rContent = $(input).val();
+	
+	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
+		type:"post",
+		dataType : "text",
+		success:function(resData){
+			
+			var input = ".edit_review_input"+rNo;
+			$(input).val("");
+			$(".panel-heading_2").hide();
+			
+			showReview();
+		}
+		
+
+});
+}
+
 
 /*부모글 삭제 메소드*/
 function r_delete(rNo) {
@@ -265,6 +319,8 @@ function r_delete(rNo) {
 /*댓글 수정 메소드*/
 function rp_modify(rNo) {
 	alert("sdfaads");
+	
+	
 }
 
 /*댓글 삭제 메소드*/
