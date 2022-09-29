@@ -20,9 +20,10 @@
 	#reply{margin-left: 40px;}
 	#leaveReview{margin-top: 50px; margin-bottom: 20px;}
 	#review_input{width: 1030px; height: 80px;}
-	#reply_input{width: 1010px;}
+	#reply_input{width: 1010px; height: 50px;}
 	#reply_ul{margin-left: 20px;}
-	#edit_review_input{width: 1010px;}
+	#edit_review_input{width: 1010px; height: 50px;}
+	#edit_reply_input{width: 1010px; height: 50px;}
 	
 </style>
 
@@ -154,8 +155,12 @@ function prev() {
 /*리뷰 작성 submit*/
 function submit() {
 	
+	var content = $("#review_input").val();
+	content = content.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");//띄어쓰기 변환해줌
+	
+	
 	$.ajax({
-		url:'${contextPath}/single/leaveReview.do?content='+$("#review_input").val()+'&pdNum='+${sBean.pdNum}+'&name=열여덟&email=1017@naver.com',
+		url:'${contextPath}/single/leaveReview.do?content='+content+'&pdNum='+${sBean.pdNum}+'&name=열여덟&email=1017@naver.com',
 		type:"post",
 		//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
 	
@@ -185,14 +190,14 @@ function rp_review(rptNo) {
 	rp_reply = 
 		'<div class="panel-heading_1" role="tab" id="headingOne">'		
 			+'<h4 class="panel-title">'
-	        	+'<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
+	        	+'<a >'
 	          	+'Leave Reply'
 	        	+'</a>'
 	      	+'</h4>'
 		+'</div>'
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rptNo+'</span>'//부모글 번호 
-			+'<input type="text" id="reply_input" name="reply_input"/>'
+			+'<textarea rows="3" style="resize: none; white-space:pre-wrap;" type="text" id="reply_input" name="reply_input"/>'
 			+'<li><a href="#!" onclick="reply_submit('+rptNo+');">Leave a Reply</a></li>'//부모글 번호 매개변수로 넘기기
 		+'<ul>';
 	
@@ -209,8 +214,11 @@ function rp_review(rptNo) {
 /*댓글 작성하는 메소드*/
 function reply_submit(rptNo) {
 	
+	var content = $("#reply_input").val();
+	content = content.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
+	
 	$.ajax({
-		url:'${contextPath}/single/leaveReply.do?rptNo='+rptNo+'&content='+$("#reply_input").val()+'&pdNum='+${sBean.pdNum}+'&name=댓글&email=@naver.com',
+		url:'${contextPath}/single/leaveReply.do?rptNo='+rptNo+'&content='+content+'&pdNum='+${sBean.pdNum}+'&name=댓글&email=@naver.com',
 		type:"post",
 		//data:{ 속성1:값1 , 속성2:[ㅇ,ㅇ],  속성3:[{속성1,속성값1, }    ]   },
 	
@@ -219,8 +227,6 @@ function reply_submit(rptNo) {
 		success:function(resData){
 			
 			var json = JSON.parse(resData);//컨트롤러에서 넘어온 String객체를 jason객체로 변환!
-			
-			//$("#totReviews").text(json.totReviews);
 			
 			$("#reply_input").val('');
 			$(".panel-heading_1").hide();
@@ -244,7 +250,7 @@ var review;
 
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rNo+'</span>'//부모글 번호 
-			+'<input type="text" id="edit_review_input" class="edit_review_input'+rNo+'" name="reply_input"/>'
+			+'<textarea rows="3" style="resize: none; white-space:pre-wrap;" id="edit_review_input" class="edit_review_input'+rNo+'" name="reply_input"/>'
 			+'<li><a href="#!" onclick="edit_review_submit('+rNo+');">Edit Review</a></li>'//부모글 번호 매개변수로 넘기기
 		+'<ul>'
 		+'</div>';
@@ -259,6 +265,8 @@ var review;
 			dataType : "text",
 			success:function(resData){
 				
+				//resData.replace("<br>", /(\r\n|\n\r|\r|\n)/g);
+				
 				var input = ".edit_review_input"+rNo;
 				$(input).val(resData);
 				
@@ -272,15 +280,16 @@ var review;
 /*부모글 수정 메소드2 - submit했을 때*/
 function edit_review_submit(rNo) {
 	
-	
+	var input = ".edit_review_input"+rNo;
 	var rContent = $(input).val();
+	rContent = rContent.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
 	
 	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
 		type:"post",
 		dataType : "text",
 		success:function(resData){
 			
-			var input = ".edit_review_input"+rNo;
+			
 			$(input).val("");
 			$(".panel-heading_2").hide();
 			
@@ -328,7 +337,7 @@ var review;
 
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rNo+'</span>'//글번호 
-			+'<input type="text" id="edit_reply_input" class="edit_reply_input'+rNo+'" name="reply_input"/>'
+			+'<textarea rows=3" style="resize: none; white-space:pre-wrap;" id="edit_reply_input" class="edit_reply_input'+rNo+'" name="reply_input"/>'
 			+'<li><a href="#!" onclick="edit_reply_submit('+rNo+');">Edit Review</a></li>'//부모글 번호 매개변수로 넘기기
 		+'<ul>'
 		+'</div>';
@@ -359,6 +368,7 @@ function edit_reply_submit(rNo) {
 	
 	var input = ".edit_reply_input"+rNo;
 	var rContent = $(input).val();
+	rContent = rContent.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
 	
 	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
 		type:"post",
@@ -579,7 +589,7 @@ function rp_delete(rNo) {
 							<div class="panel-body"> -->
 								<ul>
 									
-									<input type="text" id="review_input" name="review_input"/>
+									<textarea  style="resize: none; white-space:pre-wrap;" id="review_input" name="review_input"></textarea>
 									<li><a href="#!" onclick="submit();">Submit</a></li>
 								</ul>	
 								

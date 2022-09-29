@@ -190,6 +190,7 @@ public class singleProductController extends HttpServlet {
 				
 			}else if(action.equals("/leaveReply.do")) {//댓글달기 버튼 눌렀을 때
 				
+				
 				//INSERT성공하면 1 반환			//인풋태그 값, pdNum등을 매개변수로 넘겨줌
 				int result = reviewService.leaveReply(Integer.parseInt(req.getParameter("rptNo")) ,req.getParameter("content"), Integer.parseInt(req.getParameter("pdNum")),
 																			req.getParameter("name"), req.getParameter("email"));
@@ -235,13 +236,10 @@ public class singleProductController extends HttpServlet {
 				
 			}else if(action.equals("/getReview.do")) {//글 수정 요청 받음
 				
-				System.out.println(req.getParameter("rNo"));
-				System.out.println(req.getParameter("pdNum"));
-				
 				/*글 내용 조회해오기*/
 				String rContent = reviewService.getReview(Integer.parseInt(req.getParameter("rNo")), Integer.parseInt(req.getParameter("pdNum")));
 				
-				
+				rContent = rContent.replace("<br>", "\r\n");
 				
 				resp.setContentType("text/html; charset=utf-8");
 				PrintWriter out  = resp.getWriter();
