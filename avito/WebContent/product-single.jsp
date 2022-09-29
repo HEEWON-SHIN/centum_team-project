@@ -91,7 +91,10 @@ var os = 0;
 			            
 			            +json[i].rContent
 			              
-			            +'</p>';
+			            +'</p>'
+			            +'<p id="rr_content'+json[i].rNo+'_">'
+			            +'</p>'
+			            ;
 			            
 		//*****************************************댓글 시작*****************************//
 		for(var j in json){	            
@@ -156,6 +159,8 @@ function prev() {
 function submit() {
 	
 	var content = $("#review_input").val();
+	if(content == "" || content == null){alert("한 글자 이상 입력해주세요."); return false;}
+	
 	content = content.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");//띄어쓰기 변환해줌
 	
 	
@@ -188,24 +193,28 @@ function rp_review(rptNo) {
 	var rp_reply;
 	
 	rp_reply = 
-		'<div class="panel-heading_1" role="tab" id="headingOne">'		
+		'<div class="panel-heading_1" role="tab" id="hideme">'		
 			+'<h4 class="panel-title">'
 	        	+'<a >'
 	          	+'Leave Reply'
 	        	+'</a>'
 	      	+'</h4>'
-		+'</div>'
+		
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rptNo+'</span>'//부모글 번호 
 			+'<textarea rows="3" style="resize: none; white-space:pre-wrap;" type="text" id="reply_input" name="reply_input"/>'
-			+'<li><a href="#!" onclick="reply_submit('+rptNo+');">Leave a Reply</a></li>'//부모글 번호 매개변수로 넘기기
-		+'<ul>';
+			+'<li><a href="#!" onclick="reply_submit('+rptNo+');">Leave a Reply</a>'//부모글 번호 매개변수로 넘기기
+			//+'<a href="#!" onclick=$(this).parent().parent().parent().hide();>&nbsp;&nbsp;/&nbsp;&nbsp;Cancle</a></li>'
+			+'<a href="#!" onclick=showReview();>&nbsp;&nbsp;/&nbsp;&nbsp;Cancle</a></li>'
+		+'<ul>'
+		+'</div>'
+		;
 	
 	
 	
 	//console.log("번호 : "+ rptno);
 	
-	var tag_id = "#r_content"+rptNo+"_";
+	var tag_id = "#rr_content"+rptNo+"_";
 		
 	$(tag_id).html(rp_reply);
 }//rp_review메소드 끝
@@ -215,6 +224,7 @@ function rp_review(rptNo) {
 function reply_submit(rptNo) {
 	
 	var content = $("#reply_input").val();
+	if(content == "" || content == null){alert("한 글자 이상 입력해주세요."); return false;}
 	content = content.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
 	
 	$.ajax({
@@ -251,8 +261,9 @@ var review;
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rNo+'</span>'//부모글 번호 
 			+'<textarea rows="3" style="resize: none; white-space:pre-wrap;" id="edit_review_input" class="edit_review_input'+rNo+'" name="reply_input"/>'
-			+'<li><a href="#!" onclick="edit_review_submit('+rNo+');">Edit Review</a></li>'//부모글 번호 매개변수로 넘기기
-		+'<ul>'
+			+'<li><a href="#!" onclick="edit_review_submit('+rNo+');">Edit Review</a>'//부모글 번호 매개변수로 넘기기
+			+'<a href="#!" onclick=showReview();>&nbsp;&nbsp;/&nbsp;&nbsp;Cancle</a></li>'
+			+'<ul>'
 		+'</div>';
 	
 	var tag_id = "#r_content"+rNo+"_";
@@ -282,6 +293,8 @@ function edit_review_submit(rNo) {
 	
 	var input = ".edit_review_input"+rNo;
 	var rContent = $(input).val();
+	if(rContent == "" || rContent == null){alert("한 글자 이상 입력해주세요."); return false;}
+	
 	rContent = rContent.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
 	
 	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
@@ -338,7 +351,8 @@ var review;
 		+'<ul id="reply_ul">'
 			+'<span hidden id="span_reply">'+rNo+'</span>'//글번호 
 			+'<textarea rows=3" style="resize: none; white-space:pre-wrap;" id="edit_reply_input" class="edit_reply_input'+rNo+'" name="reply_input"/>'
-			+'<li><a href="#!" onclick="edit_reply_submit('+rNo+');">Edit Review</a></li>'//부모글 번호 매개변수로 넘기기
+			+'<li><a href="#!" onclick="edit_reply_submit('+rNo+');">Edit Review</a>'//부모글 번호 매개변수로 넘기기
+			+'<a href="#!" onclick=showReview();>&nbsp;&nbsp;/&nbsp;&nbsp;Cancle</a></li>'
 		+'<ul>'
 		+'</div>';
 	
@@ -368,6 +382,8 @@ function edit_reply_submit(rNo) {
 	
 	var input = ".edit_reply_input"+rNo;
 	var rContent = $(input).val();
+	if(rContent == "" || rContent == null){alert("한 글자 이상 입력해주세요."); return false;}
+	
 	rContent = rContent.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
 	
 	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
