@@ -101,11 +101,11 @@ var os = 0;
 			   					    +'<span id="reply_rptNo" hidden>'+json[j].rNo+'</span>'//댓글 글번호
 			    						+'<a>'+json[j].__name+'</a>&nbsp;&nbsp;&nbsp;<time>'+json[j].__rTime+'</time>'
 			    							
-			    							+'<a class="comment-button" href="#!" onclick="rp_modify('+json[j].__rNo+');"><time id="lower">&nbsp;&nbsp;&nbsp;&nbsp;EDIT</time></a>'
+			    							+'<a class="comment-button" href="#!" onclick="getReply('+json[j].__rNo+');"><time id="lower">&nbsp;&nbsp;&nbsp;&nbsp;EDIT</time></a>'
 						                	+'<a class="comment-button" href="#!" onclick="rp_delete('+json[j].__rNo+');"><time id="lower">&nbsp;/&nbsp;&nbsp;&nbsp;DELETE</time></a>'
 			    						
 									+'</h4>'							
-									+'<p>'
+									+'<p id="rp_content'+json[j].__rNo+'">'
 										+json[j].__rContent
 									+'</p>'
 								+'</div>';		            
@@ -272,7 +272,7 @@ var review;
 /*부모글 수정 메소드2 - submit했을 때*/
 function edit_review_submit(rNo) {
 	
-	var input = ".edit_review_input"+rNo;
+	
 	var rContent = $(input).val();
 	
 	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
@@ -316,12 +316,66 @@ function r_delete(rNo) {
 	});
 }
 
-/*댓글 수정 메소드*/
-function rp_modify(rNo) {
-	alert("sdfaads");
+/*댓글 수정 메소드1 - 글내용 받아오기*/
+function getReply(rNo) {
 	
+	console.log(rNo);
+	
+var review;
+	
+	review = 
+		'<div class="panel-heading_3" role="tab" id="headingOne">'		
+
+		+'<ul id="reply_ul">'
+			+'<span hidden id="span_reply">'+rNo+'</span>'//글번호 
+			+'<input type="text" id="edit_reply_input" class="edit_reply_input'+rNo+'" name="reply_input"/>'
+			+'<li><a href="#!" onclick="edit_reply_submit('+rNo+');">Edit Review</a></li>'//부모글 번호 매개변수로 넘기기
+		+'<ul>'
+		+'</div>';
+	
+	var tag_id = "#rp_content"+rNo;
+		
+	$(tag_id).html(review);
+	
+	/*글 내용 받아오기*/
+	$.ajax({url:'${contextPath}/single/getReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum},
+			type:"post",
+			dataType : "text",
+			success:function(resData){
+				console.log(resData);
+				
+				var input = ".edit_reply_input"+rNo;
+				$(input).val(resData);
+				
+			}
+			
+	
+	});
 	
 }
+
+/*댓글 수정 메소드2 - submit했을 때*/
+function edit_reply_submit(rNo) {
+	
+	var input = ".edit_reply_input"+rNo;
+	var rContent = $(input).val();
+	
+	$.ajax({url:'${contextPath}/single/editReview.do?rNo='+rNo+'&pdNum='+${sBean.pdNum}+"&rContent="+rContent,
+		type:"post",
+		dataType : "text",
+		success:function(resData){
+			
+			
+			$(input).val("");
+			$(".panel-heading_3").hide();
+			
+			showReview();
+		}
+		
+
+});
+}
+
 
 /*댓글 삭제 메소드*/
 function rp_delete(rNo) {

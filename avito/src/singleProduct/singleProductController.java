@@ -235,22 +235,13 @@ public class singleProductController extends HttpServlet {
 				
 			}else if(action.equals("/getReview.do")) {//부모글 수정 요청 받음
 				
+				System.out.println(req.getParameter("rNo"));
+				System.out.println(req.getParameter("pdNum"));
+				
 				/*부모글 내용 조회해오기*/
 				String rContent = reviewService.getReview(Integer.parseInt(req.getParameter("rNo")), Integer.parseInt(req.getParameter("pdNum")));
 				
-				/*
-				 * JSONObject jsonObj = new JSONObject();//jason객체 생성
-				 * 
-				 * //jason객체에 각각 j_rBean에 담긴 정보 담기 jsonObj.put("rNo",
-				 * Integer.toString(rBean.getrNo())); jsonObj.put("email", rBean.getEmail());
-				 * jsonObj.put("name", rBean.getName()); jsonObj.put("rContent",
-				 * rBean.getrContent()); jsonObj.put("rPtNo", Integer.toString(rBean.getrPtNo())
-				 * ); jsonObj.put("level", Integer.toString(rBean.getLevel()));
-				 * 
-				 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				 * 
-				 * jsonObj.put("rTime", sdf.format(rBean.getrTime()));
-				 */
+				
 				
 				resp.setContentType("text/html; charset=utf-8");
 				PrintWriter out  = resp.getWriter();

@@ -301,7 +301,7 @@ public class reviewDao {
 		
 		try {
 			con = getCon();
-			sql = "select * from review where rNo=? or rptNo=?";
+			sql = "select * from review where rNo=? and pdNum=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, rNo);
 			pstmt.setInt(2, pdNum);
