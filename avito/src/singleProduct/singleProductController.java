@@ -233,12 +233,12 @@ public class singleProductController extends HttpServlet {
 				return;
 				
 				
-			}else if(action.equals("/getReview.do")) {//부모글 수정 요청 받음
+			}else if(action.equals("/getReview.do")) {//글 수정 요청 받음
 				
 				System.out.println(req.getParameter("rNo"));
 				System.out.println(req.getParameter("pdNum"));
 				
-				/*부모글 내용 조회해오기*/
+				/*글 내용 조회해오기*/
 				String rContent = reviewService.getReview(Integer.parseInt(req.getParameter("rNo")), Integer.parseInt(req.getParameter("pdNum")));
 				
 				
@@ -250,7 +250,7 @@ public class singleProductController extends HttpServlet {
 				return;
 				
 				
-			}else if(action.equals("/editReview.do")) {
+			}else if(action.equals("/editReview.do")) {//글삭제 submit했을 때
 				
 				int result = reviewService.editReview(Integer.parseInt(req.getParameter("rNo")), 
 														Integer.parseInt(req.getParameter("pdNum")), req.getParameter("rContent"));

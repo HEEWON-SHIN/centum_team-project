@@ -372,7 +372,6 @@ function edit_reply_submit(rNo) {
 			showReview();
 		}
 		
-
 });
 }
 
