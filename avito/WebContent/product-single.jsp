@@ -440,6 +440,10 @@ function rp_delete(rNo) {
 			</div>
 			
 		</div>
+		
+	<form action="${contextPath}/single/addCart.do" method="post" enctype="multipart/form-data">
+	
+	
 		<div class="row mt-20">
 			<div class="col-md-5">
 				<div class="single-product-slider">
@@ -481,7 +485,7 @@ function rp_delete(rNo) {
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' />
+								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' name="img"/>
 							</li>
 							<li data-target='#carousel-custom' data-slide-to='1'>
 								<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' />
@@ -507,27 +511,25 @@ function rp_delete(rNo) {
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
-					<h2>${sBean.pdName}</h2>
+					<h2 >${sBean.pdName}</h2>
 					<p class="product-price">$ ${sBean.pdPrice}</p>
 					
 					
 					<div class="color-swatches">
 						<span>color:</span>
 						<ul>
+							
 							<li>
-								<a href="#!" class="swatch-violet"></a>
+								<a href="#!" class="swatch-black" id="black"></a>
 							</li>
 							<li>
-								<a href="#!" class="swatch-black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream"></a>
+								<a href="#!" class="swatch-cream" id="white"></a>
 							</li>
 						</ul>
 					</div>
 					<div class="product-size">
 						<span>Size:</span>
-						<select class="form-control">
+						<select class="form-control" name="size">
 							<option>S</option>
 							<option>M</option>
 							<option>L</option>
@@ -551,10 +553,21 @@ function rp_delete(rNo) {
 							<c:if test = "${fn:contains(sBean.pdCategory, 'muffler')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Muffler</a></li></c:if>
 						</ul>
 					</div>
-					<a href="${contextPath}/cart.jsp" class="btn btn-main mt-20">Add To Cart</a>
+				
+					<input type="hidden" name="name" value="${name}">
+					<input type="hidden" name="email" value="${email}">
+					<input type="hidden" name="pdNum" value="${sBean.pdNum}">
+					<input type="hidden" name="pdName" value="${sBean.pdName}">
+					<input type="hidden" name="pdPrice" value="${sBean.pdPrice}">
+				
+					<input type="submit" class="btn btn-main mt-20" value="Add To Cart">
 				</div>
 			</div>
 		</div>
+	</form>		
+	<!-- 카트에 넣기 끝 -->	
+		
+		
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="tabCommon mt-20">
