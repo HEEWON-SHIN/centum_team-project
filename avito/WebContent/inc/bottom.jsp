@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath"  value="${contextPath}"  />
+    
 <footer class="footer section text-center">
 	<div class="container">
 		<div class="row">
@@ -28,16 +33,16 @@
 				</ul>
 				<ul class="footer-menu text-uppercase">
 					<li>
-						<a href="contact.jsp">CONTACT</a>
+						<a href="${contextPath}/contact.jsp">CONTACT</a>
 					</li>
 					<li>
-						<a href="shop.jsp">SHOP</a>
+						<a href="${contextPath}/shop.jsp">SHOP</a>
 					</li>
 					<li>
-						<a href="pricing.jsp">Pricing</a>
+						<a href="${contextPath}/pricing.jsp">Pricing</a>
 					</li>
 					<li>
-						<a href="contact.jsp">PRIVACY POLICY</a>
+						<a href="${contextPath}/contact.jsp">PRIVACY POLICY</a>
 					</li>
 				</ul>
 				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>

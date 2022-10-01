@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+
+<c:set var="pdNum" value="1"/>
+    
 <!DOCTYPE html>
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
@@ -10,7 +18,7 @@
 				<div class="content">
 					<h1 class="page-name">Shop</h1>
 					<ol class="breadcrumb">
-						<li><a href="index.jsp">Home</a></li>
+						<li><a href="${contextPath}/index.jsp">Home</a></li>
 						<li class="active">shop</li>
 					</ol>
 				</div>
@@ -30,6 +38,7 @@
                         <select class="form-control">
                             <option>Man</option>
                             <option>Women</option>
+           
                             <option>Accessories</option>
                             <option>Shoes</option>
                         </select>
@@ -126,7 +135,11 @@
 				<div class="product-item">
 					<div class="product-thumb">
 						<span class="bage">Sale</span>
-						<img class="img-responsive" src="images/shop/products/product-1.jpg" alt="product-img" />
+						
+						
+					
+							<img class="img-responsive" src="images/shop/products/product-1.jpg" alt="product-img" />
+						
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -144,7 +157,7 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="product-single.jsp">Reef Boardsport</a></h4>
+						<h4><a href="${contextPath}/single/viewSinglePd.s?pdNum=${pdNum}">Reef Boardsport</a></h4>
 						<p class="price">$200</p>
 					</div>
 				</div>

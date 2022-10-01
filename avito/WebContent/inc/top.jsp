@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
 
 <html lang="utf-8">
@@ -21,21 +23,21 @@
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
   
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/images/favicon.png" />
   
   <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="plugins/themefisher-font/style.css">
+  <link rel="stylesheet" href="${contextPath}/plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="${contextPath}/plugins/bootstrap/css/bootstrap.min.css">
   
   <!-- Animate css -->
-  <link rel="stylesheet" href="plugins/animate/animate.css">
+  <link rel="stylesheet" href="${contextPath}/plugins/animate/animate.css">
   <!-- Slick Carousel -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
+  <link rel="stylesheet" href="${contextPath}/plugins/slick/slick.css">
+  <link rel="stylesheet" href="${contextPath}/plugins/slick/slick-theme.css">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="${contextPath}/css/style.css">
 
 </head>
 
@@ -54,7 +56,7 @@
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- Site Logo -->
 				<div class="logo text-center">
-					<a href="index.jsp">
+					<a href="${contextPath}/index.jsp">
 						<!-- replace logo here -->
 						<svg width="135px" height="29px" viewBox="0 0 155 29" version="1.1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -80,7 +82,7 @@
 							<!-- Cart Item -->
 							<div class="media">
 								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
+									<img class="media-object" src="${contextPath}/images/shop/cart/cart-1.jpg" alt="image" />
 								</a>
 								<div class="media-body">
 									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
@@ -95,7 +97,7 @@
 							<!-- Cart Item -->
 							<div class="media">
 								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-2.jpg" alt="image" />
+									<img class="media-object" src="${contextPath}/images/shop/cart/cart-2.jpg" alt="image" />
 								</a>
 								<div class="media-body">
 									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
@@ -113,8 +115,8 @@
 								<span class="total-price">$1799.00</span>
 							</div>
 							<ul class="text-center cart-buttons">
-								<li><a href="cart.jsp" class="btn btn-small">View Cart</a></li>
-								<li><a href="checkout.jsp" class="btn btn-small btn-solid-border">Checkout</a></li>
+								<li><a href="${contextPath}/cart.jsp" class="btn btn-small">View Cart</a></li>
+								<li><a href="${contextPath}/checkout.jsp" class="btn btn-small btn-solid-border">Checkout</a></li>
 							</ul>
 						</div>
 
@@ -161,13 +163,13 @@
 
 					<!-- Home -->
 					<li class="dropdown ">
-						<a href="index.jsp">Home</a>
+						<a href="${contextPath}/index.jsp">Home</a>
 					</li><!-- / Home -->
 
 
 					<!-- Elements -->
 					<li class="dropdown dropdown-slide">
-						<a href="${pageContext.request.contextPath}/shop-sidebar.jsp" class="dropdown-toggle" 
+						<a href="${contextPath}/shop-sidebar.jsp" class="dropdown-toggle" 
 							role="button" aria-haspopup="true" aria-expanded="false">Shop <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						
@@ -187,11 +189,11 @@
 									<ul>
 										<li class="dropdown-header">Introduction</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="contact.jsp">Contact Us</a></li>
-										<li><a href="about.jsp">About Us</a></li>
-										<li><a href="404.jsp">404 Page</a></li>
-										<li><a href="coming-soon.jsp">Coming Soon</a></li>
-										<li><a href="faq.jsp">FAQ</a></li>
+										<li><a href="${contextPath}/contact.jsp">Contact Us</a></li>
+										<li><a href="${contextPath}/about.jsp">About Us</a></li>
+										<li><a href="${contextPath}/404.jsp">404 Page</a></li>
+										<li><a href="${contextPath}/coming-soon.jsp">Coming Soon</a></li>
+										<li><a href="${contextPath}/faq.jsp">FAQ</a></li>
 									</ul>
 								</div>
 
@@ -200,10 +202,10 @@
 									<ul>
 										<li class="dropdown-header">Dashboard</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="dashboard.jsp">User Interface</a></li>
-										<li><a href="order.jsp">Orders</a></li>
-										<li><a href="address.jsp">Address</a></li>
-										<li><a href="profile-details.jsp">Profile Details</a></li>
+										<li><a href="${contextPath}/dashboard.jsp">User Interface</a></li>
+										<li><a href="${contextPath}/order.jsp">Orders</a></li>
+										<li><a href="${contextPath}/address.jsp">Address</a></li>
+										<li><a href="${contextPath}/profile-details.jsp">Profile Details</a></li>
 									</ul>
 								</div>
 
@@ -212,16 +214,16 @@
 									<ul>
 										<li class="dropdown-header">Utility</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="login.jsp">Login Page</a></li>
-										<li><a href="signin.jsp">Signin Page</a></li>
-										<li><a href="forget-password.jsp">Forget Password</a></li>
+										<li><a href="${contextPath}/login.jsp">Login Page</a></li>
+										<li><a href="${contextPath}/signin.jsp">Signin Page</a></li>
+										<li><a href="${contextPath}/forget-password.jsp">Forget Password</a></li>
 									</ul>
 								</div>
 
 								<!-- Mega Menu -->
 								<div class="col-sm-3 col-xs-12">
-									<a href="shop.jsp">
-										<img class="img-responsive" src="images/shop/header-img.jpg" alt="menu image" />
+									<a href="${contextPath}/shop.jsp">
+										<img class="img-responsive" src="${contextPath}/images/shop/header-img.jpg" alt="menu image" />
 									</a>
 								</div>
 							</div><!-- / .row -->
@@ -236,11 +238,11 @@
 							role="button" aria-haspopup="true" aria-expanded="false">Blog <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="blog-left-sidebar.jsp">Blog Left Sidebar</a></li>
-							<li><a href="blog-right-sidebar.jsp">Blog Right Sidebar</a></li>
-							<li><a href="blog-full-width.jsp">Blog Full Width</a></li>
-							<li><a href="blog-grid.jsp">Blog 2 Columns</a></li>
-							<li><a href="blog-single.jsp">Blog Single</a></li>
+							<li><a href="${contextPath}/blog-left-sidebar.jsp">Blog Left Sidebar</a></li>
+							<li><a href="${contextPath}/blog-right-sidebar.jsp">Blog Right Sidebar</a></li>
+							<li><a href="${contextPath}/blog-full-width.jsp">Blog Full Width</a></li>
+							<li><a href="${contextPath}/blog-grid.jsp">Blog 2 Columns</a></li>
+							<li><a href="${contextPath}/blog-single.jsp">Blog Single</a></li>
 						</ul>
 					</li><!-- / Blog -->
 
@@ -250,9 +252,9 @@
 							role="button" aria-haspopup="true" aria-expanded="false">Elements <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="typography.jsp">Typography</a></li>
-							<li><a href="buttons.jsp">Buttons</a></li>
-							<li><a href="alerts.jsp">Alerts</a></li>
+							<li><a href="${contextPath}/typography.jsp">Typography</a></li>
+							<li><a href="${contextPath}/buttons.jsp">Buttons</a></li>
+							<li><a href="${contextPath}/alerts.jsp">Alerts</a></li>
 						</ul>
 					</li><!-- / Blog -->
 				</ul><!-- / .nav .navbar-nav -->
