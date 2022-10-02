@@ -19,7 +19,7 @@
 		margin-left: -17px;
 	}
 	
-	#product-quantity{ width: 50px; height: 34px;}
+	#product-quantity{ width: 51px; height: 34px;}
 
 </style>
 
