@@ -515,26 +515,17 @@ function rp_delete(rNo) {
 					<p class="product-price">$ ${sBean.pdPrice}</p>
 					
 					
-					<div class="color-swatches">
-						<span>color:</span>
-						<ul>
+					<div class="product-size">
+						<span>Color:</span>
+						<select class="form-control" name="size">
+							<option>Black</option>
+							<option>White</option>
 							
-							<li>
-								<a href="#!" class="swatch-black" id="black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream" id="white"></a>
-							</li>
-						</ul>
+						</select>
 					</div>
 					<div class="product-size">
 						<span>Size:</span>
-						<select class="form-control" name="size">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
+						Free Size 
 					</div>
 					<div class="product-quantity">
 						<span>Quantity:</span>
