@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -81,9 +82,14 @@ public class singleProductController extends HttpServlet {
 				
 				/*글번호를 기준으로 부모 리뷰글 갯수를 조회*/
 				int totReviews = reviewService.countReviews(Integer.parseInt(req.getParameter("pdNum")));
-				 
+				
+				/*카테고리가 같은 상품 조회*/
+				List<related_Pd_Bean> relatedList = singleSevice.relatedPd(Integer.parseInt(req.getParameter("pdNum")));
+				
+				
 				req.setAttribute("sBean", sBean);
 				req.setAttribute("totReviews", totReviews);
+				req.setAttribute("relatedList", relatedList);
 				
 				nextPage = "/product-single.jsp";
 			

@@ -25,6 +25,17 @@
 	#edit_review_input{width: 1010px; height: 50px;}
 	#edit_reply_input{width: 1010px; height: 50px;}
 	
+	.bage{	 position: absolute;
+ 			 top: 5px;
+ 			 left: 12px;	
+		    font-size: 50px;
+		    color: red;
+		    width: 50px;
+    }
+    
+    .carousel-inner{ position: relative;}
+    .item{position: relative;}
+	
 </style>
 
 <%-- <% singleBean sBean = (singleBean)request.getAttribute("sBean"); %>
@@ -451,24 +462,35 @@ function rp_delete(rNo) {
 						<div class='carousel-outer'>
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
-								<div class='item active'>
-									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+							
+									
+							
+								<div class='item active'>							
+									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-1.jpg"/>
+								
+								<c:if test="${sBean.sale eq 'y'}"><span class="bage">Sale</span></c:if>
+								
 								</div>
 								<div class='item'>
 									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
+									<c:if test="${sBean.sale eq 'y'}"><span class="bage">Sale</span></c:if>
 								</div>
 								
 								<div class='item'>
 									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
+									<c:if test="${sBean.sale eq 'y'}"><span class="bage">Sale</span></c:if>
 								</div>
 								<div class='item'>
 									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
+									<c:if test="${sBean.sale eq 'y'}"><span class="bage">Sale</span></c:if>
 								</div>
 								<div class='item'>
 									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Main}' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
+									<c:if test="${sBean.sale eq 'y'}"><span class="bage">Sale</span></c:if>
 								</div>
 								<div class='item'>
 									<img src='${contextPath}/images/shop/products/${sBean.pdImg_Sub}' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
+									<c:if test="${sBean.sale eq 'y'}"><span class="bage">Sale</span></c:if>
 								</div>
 								
 							</div>
@@ -511,9 +533,22 @@ function rp_delete(rNo) {
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
+				
 					<h2 >${sBean.pdName}</h2>
-					<p class="product-price">$ ${sBean.pdPrice}</p>
 					
+					<fmt:parseNumber value="${sBean.pdPrice*(100-sale_val)/100}" var="final_price" integerOnly="true"/>
+					
+					
+					<c:choose>
+						<c:when test="${sBean.sale eq 'n'}"><p class="product-price">$ ${sBean.pdPrice}</p></c:when>
+						
+						<c:otherwise>
+							<p class="product-price" >
+								<i style="text-decoration:line-through;">$ ${sBean.pdPrice}</i>
+								<i style="color: red;">&nbsp;→&nbsp;<b>$ ${final_price}</b>(${sBean.sale_Val}%) </i>  								 
+							</p>
+						</c:otherwise>			
+					</c:choose>
 					
 					<div class="product-size">
 						<span>Color:</span>
@@ -638,113 +673,45 @@ function rp_delete(rNo) {
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<span class="bage">Sale</span>
-						<img class="img-responsive" src="${contextPath}/images/shop/products/product-5.jpg" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="${contextPath}/product-single.jsp">Reef Boardsport</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" src="${contextPath}/images/shop/products/product-1.jpg" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="${contextPath}/product-single.jsp">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
+		
+		<c:choose>
+		
+			<c:when test="${!empty relatedList}">
+			  <c:forEach var="relList" items="${relatedList}">
+				<div class="col-md-3">
+					<div class="product-item">
+						<div class="product-thumb">
+							<c:if test="${relList.sale eq 'y'}"><span class="bage">Sale</span></c:if>
+							<img class="img-responsive" src="${contextPath}/images/shop/products/${relList.pdImg_Main}" alt="product-img" />
+							
+						</div>
+						<div class="product-content">
+							<h4><a href="${contextPath}/single/viewSingle.do?pdNum=${relList.pdNum}">${relList.pdName}</a></h4>
+							
+							<fmt:parseNumber value="${relList.pdPrice*(100-sale_val)/100}" var="final_price" integerOnly="true"/>
+						
+						
+						<c:choose>
+							<c:when test="${relList.sale eq 'n'}"><p class="product-price">$ ${relList.pdPrice}</p></c:when>
+							
+							<c:otherwise>
+								<p class="product-price" >
+									<i style="text-decoration:line-through;">$ ${relList.pdPrice}</i>
+									<i style="color: red;">&nbsp;→&nbsp;<b>$ ${final_price}</b>(${relList.sale_Val}%) </i>  								 
+								</p>
+							</c:otherwise>			
+						</c:choose>
+	
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" src="${contextPath}/images/shop/products/product-2.jpg" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="${contextPath}/product-single.jsp">Strayhorn SP</a></h4>
-						<p class="price">$230</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" src="${contextPath}/images/shop/products/product-3.jpg" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="${contextPath}/product-single.jsp">Bradley Mid</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
+			
+			  </c:forEach>
+			</c:when>
+		</c:choose>
 			
 		</div>
+		
 	</div>
 </section>
 
