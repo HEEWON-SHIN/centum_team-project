@@ -13,6 +13,8 @@
 
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
+<style>
+
 
 <style>
 
@@ -20,7 +22,10 @@
 		margin-left: -17px;
 	}
 	
-	#product-quantity{ width: 50px; height: 34px;}
+
+
+	#product-quantity{ width: 51px; height: 34px;}
+
 
 </style>
 
@@ -61,8 +66,10 @@
 												<th class="">Item Name</th>
 												<th class="">Item Price</th>
 												<th class="">Item Size</th>
+
 												<th class="">Item Color</th>
 												<th class="">Item Quantity</th>
+
 												<th class="">Actions</th>
 											</tr>
 										</thead>
@@ -96,6 +103,7 @@
 														</select>
 													</div>
 												</td>
+
 											
 											<td class="" align="center" id="item-quantity">		
 												<div class="product-quantity-slider">
@@ -107,6 +115,7 @@
 												<a class="product-remove"
 												   href="${contextPath}/shop/RemoveCart.do">Remove</a>
 												</td>
+
 											</tr>
 										</tbody>
 									</c:forEach>																		
