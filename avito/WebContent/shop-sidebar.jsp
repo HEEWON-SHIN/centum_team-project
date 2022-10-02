@@ -205,7 +205,7 @@ function heartAlert(pdnum) {
 					</div>
 
 					<div class="product-content">
-						<h4><a href="${Path}/product-single.jsp?pdnum=${cateList.pdNum}">${cateList.pdName}</a></h4>
+						<h4><a href="${Path}/single/viewSingle.do?pdNum=${cateList.pdNum}">${cateList.pdName}</a></h4>
 						<c:if test="${cateList.sale eq 'n'}">
 						<p class="price"> $${cateList.pdPrice}</p>
 						</c:if>

@@ -74,7 +74,7 @@ public class singleProductController extends HttpServlet {
 		
 		try {
 			
-			if(action == null || action.equals("/viewSinglePd.s")) {/**shop-sidebar.jsp에서 상품명을 클릭했을 때?**/
+			if(action == null || action.equals("/viewSingle.do")) {/**shop-sidebar.jsp에서 상품명을 클릭했을 때?**/
 				
 				/*글번호를 기준으로 DB에 저장된 제품 정보를 조회해옴*/
 				sBean = singleSevice.product(Integer.parseInt(req.getParameter("pdNum")));
