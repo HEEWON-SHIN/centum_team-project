@@ -14,8 +14,13 @@
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
 <style>
+
+	.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+		margin-left: -17px;
+	}
 	
-	#product-quantity{width: 50px; height: 34px;}
+	#product-quantity{ width: 50px; height: 34px;}
+
 </style>
 
 <section class="page-header">
