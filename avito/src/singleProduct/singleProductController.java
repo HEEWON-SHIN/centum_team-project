@@ -269,10 +269,28 @@ public class singleProductController extends HttpServlet {
 				
 				String email = req.getParameter("email");
 				
-				int result = sendService.sendProccess("ise0305@naver.com", req, resp);
-				
+				int result = promotionService.sendProccess("ise0305@naver.com", req, resp);
+				 
 				System.out.println("메일 result : "+result);
+			
+			}else if(action.equals("/getDiscount.do")) {//결제화면에서 쿠폰 코드를 입력했을 때?
 				
+				String email = req.getParameter("email");
+				String code = req.getParameter("code");
+				
+				
+				int result = promotionService.getDiscount(req, email, code);
+				
+				PrintWriter out = resp.getWriter();
+				out.print(Integer.toString(result));
+				
+			}else if(action.equals("/placeOrder.do")) {
+				
+				String email = req.getParameter("email");
+				
+				promotionService.placeOrder(req, resp, email);//쿠키 제거
+				
+				nextPage = "/checkout.jsp";
 			 
 			}else {
 				nextPage = "/product-single.jsp";

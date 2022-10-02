@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 public class cookie extends HttpServlet{
 	
 	/*쿠키 생성 메소드*/
-	public static void setCookie(HttpServletResponse resp, String value, String cookieName) throws Exception{
+	public static void setCookie(HttpServletResponse resp, String value, String email) throws Exception{
 		value = URLEncoder.encode(value, "utf-8");
-	    Cookie cookie = new Cookie(cookieName, value); // 쿠키 이름 지정하여 생성( key, value 개념)
+	    Cookie cookie = new Cookie(email, value); // 쿠키 이름을 이메일로 지정하여 생성( key, value 개념)
 	    cookie.setMaxAge(60*60*24); //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
 	    cookie.setPath("/"); //모든 경로에서 접근 가능하도록 설정
 	    resp.addCookie(cookie); //response에 Cookie 추가
@@ -20,13 +20,13 @@ public class cookie extends HttpServlet{
 	}
 	
 	/*쿠키 가져오는 메소드*/
-	public static String getCookie(HttpServletRequest req, String cookieName){
+	public static String getCookie(HttpServletRequest req, String email){
 	    Cookie[] cookies=req.getCookies(); // 모든 쿠키 가져오기
 	    if(cookies!=null){
 	        for (Cookie c : cookies) {
 	            String name = c.getName(); // 쿠키 이름 가져오기
 	            String value = c.getValue(); // 쿠키 값 가져오기
-	            if (name.equals(cookieName)) {
+	            if (name.equals(email)) {
 	                return value;//쿠키 값 반환
 	            }
 	        }
@@ -42,7 +42,6 @@ public class cookie extends HttpServlet{
 	    resp.addCookie(cookie); // 응답에 추가해서 없어지도록 함
 	}
 
-	
 	
 	
 	

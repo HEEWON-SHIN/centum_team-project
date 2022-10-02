@@ -1,6 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%request.setCharacterEncoding("utf-8");%>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%-- JSTL라이브러리의 Formatting태그들을 사용하기 위해 taglib 지시자를 선언 --%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+
+
+<script>
+
+	function getDiscount() {
+		
+		var code = $("#code").val();
+		var email = ${email};
+		
+		$.ajax({
+				url:'${contextPath}/single//sendPromoCode.do?code='+code+'&email='+email,
+				type:"post",	
+		      	dataType : 'text',		 		
+				success:function(resData){
+					
+					if(resData == 1){
+						alert("쿠폰번호가 확인되었습니다.");
+						
+						var price = '<span>Discount:</span>'
+									+'<span style="text-decoration:line-through;">$ ${cList.pdPrice}</span>'
+									+'<span style="color: red;">&nbsp;→&nbsp;<b>$ ${cList.pdPrice-10}</b></span>  ';
+									
+						$("#afterDc").html(price);
+									
+					}else if(resData == -1){alert("유효하지 않은 쿠폰번호입니다.");}			
+				  }
+			});
+		
+	}
+
+
+
+</script>
+
+
+
+
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
 
@@ -70,7 +116,7 @@
                                  <label for="card-cvc">Card Code <span class="required">*</span></label>
                                  <input id="card-cvc" class="form-control"  type="tel" maxlength="4" placeholder="CVC" >
                               </div>
-                              <a href="confirmation.jsp" class="btn btn-main mt-20">Place Order</a >
+                              <a href="${contextPath}/single/placeOrder.do?email=${email}" class="btn btn-main mt-20">Place Order</a >
                            </form>
                         </div>
                      </div>
@@ -103,6 +149,8 @@
                            <span>Shipping:</span>
                            <span>Free</span>
                         </li>
+                        <li id="afterDc">
+                        </li>
                      </ul>
                      <div class="summary-total">
                         <span>Total</span>
@@ -123,11 +171,12 @@
       <div class="modal-dialog" role="document">
          <div class="modal-content">
             <div class="modal-body">
-               <form>
+               <form >
                   <div class="form-group">
-                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
+                     <input name="code" id="code" class="form-control" type="text" placeholder="Enter Coupon Code">
+                     <input name="email" id="email" type="hidden"  value="${email}">
                   </div>
-                  <button type="submit" class="btn btn-main">Apply Coupon</button>
+                  <button onclick="getDiscount();"  class="btn btn-main">Apply Coupon</button>
                </form>
             </div>
          </div>
