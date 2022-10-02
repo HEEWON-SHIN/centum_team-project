@@ -2,6 +2,8 @@ package shopPage;
 
 import java.util.List;
 
+import cartPage.CartVO;
+
 //ProductsDAO객체 생성후 DB관련 메소드를 호출하여 응답한 결과를 얻어서
 //ProductsController서블릿에게 보고하는 클래스 (부장)
 public class ProductsService {
@@ -22,12 +24,20 @@ public class ProductsService {
 		return productsDAO.selectCategory(productsVO);
 	}	
 
+
 	
-
-	/******  조회한 상품 하나만 가져오는 메소드 **********/
-	public ProductsVO selectOne (int pdNum) {
-
+   /******* 상품 하나만 조회 해오는 메소드 ***********/
+	public ProductsVO selectOne(int pdNum) {
+		
 		return productsDAO.selectOneProduct(pdNum);
+	}
+
+
+	
+	/****** 카트페이지!!!!!에 넘길 상품 하나만 가져오는 메소드 **********/
+	public CartVO selectOneCart (int pdNum) {
+
+		return productsDAO.selectCartProduct(pdNum);
 	}
 
 	
@@ -37,6 +47,8 @@ public class ProductsService {
 
 		return productsDAO.UpHeart(pdNum);
 	}
+
+
 
 
 

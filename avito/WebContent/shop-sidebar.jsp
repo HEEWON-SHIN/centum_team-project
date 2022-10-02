@@ -21,7 +21,7 @@ function OptionChange() {
 	
  	//alert("value = " + option);
     
-	location.href = "${Path}/shop/SelectCategory.do?option=" + option;
+	location.href = "${Path}/shop/SelectCategory.do?option="+option;
 }
 
 /***카테고리부분 온클릭***/
@@ -44,6 +44,7 @@ function SearchChange() {
 	location.href = "${Path}/shop/SelectCategory.do?search=" + search;
 } 
 
+/**** 좋아요 *****/
 function heartAlert(pdnum) {
 
 
@@ -68,8 +69,8 @@ function heartAlert(pdnum) {
 		
 	});//ajax
 
-
 }//heartAlert() 메소드 끝
+
 
  
 </script>
@@ -104,10 +105,11 @@ function heartAlert(pdnum) {
 					<form method="post" id="optionForm" action="#" 
 							onchange="OptionChange()" name="optionfrm">
                         <select class="form-control" name="optionList" id="optionList" >
-<%--                         	<option  <c:if test='${empty opt}'> selected </c:if> >--</option> --%>
-                        	<option value="all" <c:if test='${productsVO eq "all"}'> selected </c:if> >ALL</option>
-                            <option value="best" <c:if test='${productsVO eq "best"}'> selected </c:if> >BEST</option>
-                            <option value="y" <c:if test='${productsVO eq "y"}'> selected </c:if> >SALE</option>                          
+<%--                         	<option  <c:if test='${empty productsVO}'> selected </c:if> >--</option> --%>
+                        	<option value="all" <c:if test="$('.optionList').val() eq 'all'"> selected </c:if> >ALL</option>
+                            <option value="best" <c:if test="$('.optionList').val() eq 'best'"> selected </c:if> >BEST</option>
+                            <option value="y" <c:if test='${cateList eq "y"}'> selected </c:if> >SALE</option>     
+                   
                         </select>
                     </form>
 	            </div>				
@@ -191,43 +193,50 @@ function heartAlert(pdnum) {
 
 
 	<c:when test="${!empty cateList}">
-		<c:forEach var="cateList" items="${cateList}">
+		<c:forEach var="cList" items="${cateList}">
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
-			       <c:if test="${cateList.sale eq 'y' }">
+			       <c:if test="${cList.sale eq 'y' }">
 						<span class="bage">Sale</span> 
 				   </c:if>
-						<img class="img-responsive" src="${Path}/images/shop/products/${cateList.pdImg_Main}" alt="" />
+						<img class="img-responsive" src="${Path}/images/shop/products/${cList.pdImg_Main}" alt="" />
 						<div class="preview-meta">
 						</div>
 						
 					</div>
 
 					<div class="product-content">
-						<h4><a href="${Path}/single/viewSingle.do?pdNum=${cateList.pdNum}">${cateList.pdName}</a></h4>
-						<c:if test="${cateList.sale eq 'n'}">
-						<p class="price"> $${cateList.pdPrice}</p>
+						<h4><a href="${Path}/product-single.jsp?pdnum=${cList.pdNum}">${cList.pdName}</a></h4>
+						<c:if test="${cList.sale eq 'n'}">
+						<p class="price"> $${cList.pdPrice}</p>
 						</c:if>
 								
-						<c:set value="${cateList.pdPrice}" var="price"/>
-						<c:set value="${cateList.sale_Val}" var="sale_val"/>
+						<c:set value="${cList.pdPrice}" var="price"/>
+						<c:set value="${cList.sale_Val}" var="sale_val"/>
 						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
 	
-						<c:if test="${cateList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${cateList.pdPrice}</span>
+						<c:if test="${cList.sale eq 'y'}">
+						<p class="price"><span style="text-decoration:line-through;">$${cList.pdPrice}</span>
 						    &nbsp;
-							<i style="color: red;">${cateList.sale_Val}% -> </i>  
+							<i style="color: red;">${cList.sale_Val}% →&nbsp;</i>  
 							<b style="color: red;">$${ final_price }</b> 
 						</p>
 						</c:if>					
 					</div>
 						
 					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${cateList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${cateList.pdNum}'>${cateList.heartCnt}</i>
+						<a id="heart" href="#!" onclick="heartAlert(${cList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
+						<i id='updateHeart${cList.pdNum}'>${cList.heartCnt}</i>
 						&nbsp;&nbsp; 
-						<a id="cart${cateList.pdNum}" href="${Path}/shop/Cart.do?pdNum=${cateList.pdNum}"><i class="tf-ion-android-cart"></i></a>
+						<input type="hidden" id="pdnum" value="${cList.pdNum}">
+						<input type="hidden" id="pdname" value="${cList.pdName}">
+						<input type="hidden" id="cartprice" value="${cList.pdPrice}">
+						<input type="hidden" id="pdimg" value="${cList.pdImg_Main}">
+						<a id="cart${cList.pdNum}"
+						href="${Path}/shop/Cart.do?pNum=${cList.pdNum}&pName=${cList.pdName}&cPrice=${cList.pdPrice}&pImg=${cList.pdImg_Main}&pdqty=1">
+						<i class="tf-ion-android-cart"></i>
+						</a>
 					</div>
 
 				</div>

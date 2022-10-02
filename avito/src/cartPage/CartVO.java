@@ -14,6 +14,7 @@ public class CartVO {
 	private String pdCategory;
 	private String sale;
 	private int sale_Val;
+	private int pdQty;
 	
 	
 	
@@ -65,6 +66,12 @@ public class CartVO {
 	}
 	public void setSale_Val(int sale_Val) {
 		this.sale_Val = sale_Val;
+	}
+	public int getPdQty() {
+		return pdQty;
+	}
+	public void setPdQty(int pdQty) {
+		this.pdQty = pdQty;
 	}
 	 
 	

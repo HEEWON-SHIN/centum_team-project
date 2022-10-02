@@ -13,11 +13,25 @@
 
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
+<script>
+
+function return beforeCH() {
+	var c = $('#color').val()
+ 	alert(c);
+	
+	return false;
+	
+// 	if(c == null  ||c =="color"){
+// 		alert('옵션선택하삼');
+// 	}
+}
+
+</script>
 
 <style>
 
 	.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-		margin-left: -17px;
+		margin-left: -19px;
 	}
 	
 	#product-quantity{ width: 50px; height: 34px;}
@@ -43,7 +57,7 @@
 
 <c:choose>
 
-<c:when test="${!empty productsVO}">
+<c:when test="${!empty cList}">
 
 	<div class="page-wrapper">
 		<div class="cart shopping">
@@ -53,7 +67,7 @@
 						<div class="block">
 							<div class="product-list">
 
-								<form method="post">
+								<form method="post" action="${contextPath}/checkout.jsp">
 									<table class="table">
 										<thead>
 											<tr>
@@ -67,29 +81,29 @@
 											</tr>
 										</thead>
  
-									<c:forEach var="productsVO" items="${productsVO}">
+									<c:forEach var="cList" items="${cList}">
 										<tbody>
 											<tr class="">												
 												
 												<td class="" align="center" id="item-image">
 												<img width="80"
-													 src="${contextPath}/images/shop/products/${productsVO.pdImg_Main}"/>
+													 src="${contextPath}/images/shop/products/${cList.pdImg_Main}"/>
 												</td>
 												
 												<td class="" id="item-name">
 													<div style="text-align: center;">
-														<a href="${contextPath}/product-single.jsp"><b>${productsVO.pdName}</b></a>
+														<a href="${contextPath}/product-single.jsp"><b>${cList.pdName}</b></a>
 													</div>
 												
 												</td>
 												
-												<td class="" align="center" id="item-price">$${productsVO.pdPrice}</td>
+												<td class="" align="center" id="item-price">$${cList.cartPrice}</td>
 												
 												<td class="" align="center">Free</td>
 												
 												<td class="" align="center" id="item-color">
 													<div class="product-size">
-														<select class="form-control">
+														<select class="form-control" onchange="colorCH()" id="color">
 															<option>color</option>
 															<option>black</option>
 															<option>white</option>
@@ -105,7 +119,7 @@
 
 												<td class="">
 												<a class="product-remove"
-												   href="${contextPath}/shop/RemoveCart.do">Remove</a>
+												   href="${contextPath}/shop/RemoveCart.do?pdNum=${cList.pdNum}">Remove</a>
 												</td>
 											</tr>
 										</tbody>
@@ -114,8 +128,8 @@
 								<div align="right">
 									<a href="${contextPath}/shop/SelectCategory.do?option=all"
 								       class="btn btn-main ">MORE</a> &nbsp;
-								 	<a href="${contextPath}/checkout.jsp"
-								       class="btn btn-main ">Checkout</a>
+								 	<input type="button" value="CHECKOUT"
+								       class="btn btn-main " onclick="return beforeCH()">
 								</div>  	
 							</form>
 								
