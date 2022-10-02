@@ -104,10 +104,10 @@ function heartAlert(pdnum) {
 					<form method="post" id="optionForm" action="#" 
 							onchange="OptionChange()" name="optionfrm">
                         <select class="form-control" name="optionList" id="optionList" >
-                        	<option  <c:if test='${empty opt}'> selected </c:if> >--</option>
-                        	<option value="all" <c:if test='${option eq "all"}'> selected </c:if> >ALL</option>
-                            <option value="best" <c:if test='${option eq "best"}'> selected </c:if> >BEST</option>
-                            <option value="y" <c:if test='${option eq "y"}'> selected </c:if> >SALE</option>                          
+<%--                         	<option  <c:if test='${empty opt}'> selected </c:if> >--</option> --%>
+                        	<option value="all" <c:if test='${productsVO eq "all"}'> selected </c:if> >ALL</option>
+                            <option value="best" <c:if test='${productsVO eq "best"}'> selected </c:if> >BEST</option>
+                            <option value="y" <c:if test='${productsVO eq "y"}'> selected </c:if> >SALE</option>                          
                         </select>
                     </form>
 	            </div>				
