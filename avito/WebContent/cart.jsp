@@ -13,7 +13,10 @@
 
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
-
+<style>
+	
+	#product-quantity{width: 50px; height: 34px;}
+</style>
 
 <section class="page-header">
 	<div class="container">
@@ -55,7 +58,7 @@
 												<th class="">Item Price</th>
 												<th class="">Item Color</th>
 												<th class="">Item Size</th>
-												<th class="">Item Quantity</th>
+												<th align="center" class="">Item Quantity</th>
 												<th class="">Actions</th>
 											</tr>
 										</thead>
@@ -83,27 +86,15 @@
 													</div>
 												</td>
 												<td class="" align="center" id="item-size">
-													<div class="product-size">
-														<select class="form-control">
-															<option>size</option>
-															<option>S</option>
-															<option>M</option>
-															<option>L</option>
-															<option>XL</option>
-														</select>
-													</div>
+													Free
 												</td>
 											<td class="" align="center" id="item-quantity">
-													<div class="product-size">
-														<select class="form-control" id="item-quantity" name="select-quantity" >
-															<option>Quantity</option>
-															<option>1</option>
-															<option>2</option>
-															<option>3</option>
-															<option>4</option>
-															<option>5</option>
-														</select>
-													</div>
+												<div class="product-quantity">
+						
+						<div class="product-quantity-slider">
+							<input id="product-quantity" type="text" value="0" name="product-quantity">
+						</div>
+					</div>
 												</td>
 
 												<td class=""><a class="product-remove"

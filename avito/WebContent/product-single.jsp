@@ -440,7 +440,7 @@ function rp_delete(rNo) {
 			</div>
 			
 		</div>
-		
+	<!-- 카트 넣기 -->	
 	<form action="${contextPath}/single/addCart.do" method="post" enctype="multipart/form-data">
 	
 	
