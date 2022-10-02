@@ -16,10 +16,14 @@ public class ProductsVO {
 	private String sale;
 	private int sale_Val;
 	
+	private String option;
+	private String cate;
+	private String search;
+	
+	
 	public ProductsVO() { }
 
-	
-	
+		
 	public ProductsVO(String pdName, String pdPrice, String pdImg_Main, String pdImg_Sub, String pdCategory,
 			String pdInfo, int heartCnt, String sale, int sale_Val) {
 		super();
@@ -33,7 +37,6 @@ public class ProductsVO {
 		this.sale = sale;
 		this.sale_Val = sale_Val;
 	}
-
 
 
 	public ProductsVO(int pdNum, String pdName, String pdPrice, String pdImg_Main, String pdImg_Sub, String pdCategory,
@@ -51,9 +54,17 @@ public class ProductsVO {
 		this.sale_Val = sale_Val;
 	}
 
-
 	
-//getter setter 메소드
+	public ProductsVO(String option, String cate, String search) {
+		
+		this.option = option;
+		this.cate = cate;
+		this.search = search;
+	}
+
+
+
+	//getter setter 메소드
 	public int getPdNum() {
 		return pdNum;
 	}
@@ -171,8 +182,41 @@ public class ProductsVO {
 	public void setSale_Val(int sale_Val) {
 		this.sale_Val = sale_Val;
 	}
+
+
 	
 	
+	public String getOption() {
+		return option;
+	}
+
+
+	public void setOption(String option) {
+		this.option = option;
+	}
+
+
+	public String getCate() {
+		return cate;
+	}
+
+
+	public void setCate(String cate) {
+		this.cate = cate;
+	}
+
+
+	public String getSearch() {
+		return search;
+	}
+
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+
+
 	
 	
 	

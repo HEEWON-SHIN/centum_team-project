@@ -21,6 +21,7 @@ public class ProductsDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
+	private String sql;
 	
 	public ProductsDAO() {
 		
@@ -62,99 +63,71 @@ public class ProductsDAO {
 	
 	
 	
-	
-	
-	
-	//products테이블에 있는 모든 상품 정보를 조회해서 가져오는 메소드
-	public List<ProductsVO> selectAllProducts() {
+	/***** side-bar에서 선택한 카테고리에 일치하는 상품만 조회해오는 메소드 *****/
+	public List<ProductsVO> selectCategory(ProductsVO productsVO) {
 		
-		List<ProductsVO> productsList = new ArrayList();
+		String option = productsVO.getOption();
+		String cate = productsVO.getCate();
+		String search = productsVO.getSearch();
 		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				int pdNum = rs.getInt("pdNum");
-				String pdName = rs.getString("pdName");
-				String pdPrice = rs.getString("pdPrice");
-				String pdImg_Main = rs.getString("pdImg_Main");
-				String pdImg_Sub = rs.getString("pdImg_Sub");
-				String pdCategory = rs.getString("pdCategory");
-				String pdInfo = rs.getString("pdInfo");
-				int heartCnt = rs.getInt("heartCnt");
-				String sale = rs.getString("sale");
-				int sale_Val = rs.getInt("sale_Val");
-				
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(pdNum);
-				productVO.setPdName(pdName);
-				productVO.setPdPrice(pdPrice);
-				productVO.setPdImg_Main(pdImg_Main);
-				productVO.setPdImg_Sub(pdImg_Sub);
-				productVO.setPdCategory(pdCategory);
-				productVO.setPdInfo(pdInfo);
-				productVO.setHeartCnt(heartCnt);
-				productVO.setSale(sale);
-				productVO.setSale_Val(sale_Val);
-				
-				productsList.add(productVO);
-			}// while문 끝
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-			
-		
-		return productsList;
-	
-	}// selectAllProducts 메소드 끝
-
-
-
-
-	//products테이블에 있는 top 상품을 모두 조회 해오는 메소드
-	public List<ProductsVO> selectTop() {
-		
-		List<ProductsVO> toplist = new ArrayList<ProductsVO>();
+		List<ProductsVO> cateList = new ArrayList<ProductsVO>();
 		
 		try {
 			
 			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdCategory like '%top%'";
-			pstmt = conn.prepareStatement(sql);
+				
+				
+			if(option!=null) {
+				
+				sql = "select * from products ";
+				
+				if(option.equals("all")){
+					
+					pstmt = conn.prepareStatement(sql);
+					
+				}
+				else if(option.equals("best")) {
+					
+					sql +=" order by heartCnt desc";
+					pstmt = conn.prepareStatement(sql);
+
+				}else if(option.equals("y")) {
+					
+					sql += " where sale = ? ";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, option);
+					
+				}
+			}else if(cate!=null) {
+				
+				sql = "select * from products where pdCategory like '%' ? '%' ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, cate);
+				
+			}else if(search!=null) {
+				
+				sql = "select * from products where pdName like '%' ? '%' ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, search);
+				
+			}
+				
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int pdNum = rs.getInt("pdNum");
-				String pdName = rs.getString("pdName");
-				String pdPrice = rs.getString("pdPrice");
-				String pdImg_Main = rs.getString("pdImg_Main");
-				String pdImg_Sub = rs.getString("pdImg_Sub");
-				String pdCategory = rs.getString("pdCategory");
-				String pdInfo = rs.getString("pdInfo");
-				int heartCnt = rs.getInt("heartCnt");
-				String sale = rs.getString("sale");
-				int sale_Val = rs.getInt("sale_Val");
-				
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(pdNum);
-				productVO.setPdName(pdName);
-				productVO.setPdPrice(pdPrice);
-				productVO.setPdImg_Main(pdImg_Main);
-				productVO.setPdImg_Sub(pdImg_Sub);
-				productVO.setPdCategory(pdCategory);
-				productVO.setPdInfo(pdInfo);
-				productVO.setHeartCnt(heartCnt);
-				productVO.setSale(sale);
-				productVO.setSale_Val(sale_Val);
-				
-				toplist.add(productVO);
+	
+				ProductsVO productVO = new ProductsVO(rs.getInt("pdNum"),
+													  rs.getString("pdName"), 
+												   	  rs.getString("pdPrice"), 
+													  rs.getString("pdImg_Main"),
+													  rs.getString("pdImg_Sub"), 
+													  rs.getString("pdCategory"), 
+													  rs.getString("pdInfo"), 
+													  rs.getInt("heartCnt"), 
+													  rs.getString("sale"), 
+													  rs.getInt("sale_Val"));
+															
+				cateList.add(productVO);
 			}
 			
 		} catch (Exception e) {
@@ -163,229 +136,13 @@ public class ProductsDAO {
 			resourceClose();
 		}
 		
-		return toplist;
-	}// selectTop 메소드 끝
-
-	//하의만 조회 해오는 메소드
-	public List<ProductsVO> selectBottom() {
-		
-		List<ProductsVO> bottomList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdCategory like '%bottom%'";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				int pdNum = rs.getInt("pdNum");
-				String pdName = rs.getString("pdName");
-				String pdPrice = rs.getString("pdPrice");
-				String pdImg_Main = rs.getString("pdImg_Main");
-				String pdImg_Sub = rs.getString("pdImg_Sub");
-				String pdCategory = rs.getString("pdCategory");
-				String pdInfo = rs.getString("pdInfo");
-				int heartCnt = rs.getInt("heartCnt");
-				String sale = rs.getString("sale");
-				int sale_Val = rs.getInt("sale_Val");
-				
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(pdNum);
-				productVO.setPdName(pdName);
-				productVO.setPdPrice(pdPrice);
-				productVO.setPdImg_Main(pdImg_Main);
-				productVO.setPdImg_Sub(pdImg_Sub);
-				productVO.setPdCategory(pdCategory);
-				productVO.setPdInfo(pdInfo);
-				productVO.setHeartCnt(heartCnt);
-				productVO.setSale(sale);
-				productVO.setSale_Val(sale_Val);
-				
-				bottomList.add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return bottomList;
-	}// selectBottom 메소드 끝
-
-	//드레스만 조회 해오는 메소드
-	public List<ProductsVO> selectDress() {
-		
-		List<ProductsVO> dressList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdCategory like '%dress%'";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				int pdNum = rs.getInt("pdNum");
-				String pdName = rs.getString("pdName");
-				String pdPrice = rs.getString("pdPrice");
-				String pdImg_Main = rs.getString("pdImg_Main");
-				String pdImg_Sub = rs.getString("pdImg_Sub");
-				String pdCategory = rs.getString("pdCategory");
-				String pdInfo = rs.getString("pdInfo");
-				int heartCnt = rs.getInt("heartCnt");
-				String sale = rs.getString("sale");
-				int sale_Val = rs.getInt("sale_Val");
-				
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(pdNum);
-				productVO.setPdName(pdName);
-				productVO.setPdPrice(pdPrice);
-				productVO.setPdImg_Main(pdImg_Main);
-				productVO.setPdImg_Sub(pdImg_Sub);
-				productVO.setPdCategory(pdCategory);
-				productVO.setPdInfo(pdInfo);
-				productVO.setHeartCnt(heartCnt);
-				productVO.setSale(sale);
-				productVO.setSale_Val(sale_Val);
-				
-				
-				dressList.add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return dressList;
+		return cateList;
 	
-	}// selectDress 메소드 끝
-
-	//머플러만 조회 해오는 메소드
-	public List<ProductsVO> selectMuffler() {
-		
-		List<ProductsVO> mufflerList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdCategory like '%muffler%'";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+	}// selectCategory 메소드 끝	
 	
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(rs.getInt("pdNum"));
-				productVO.setPdName(rs.getString("pdName"));
-				productVO.setPdPrice(rs.getString("pdPrice"));
-				productVO.setPdImg_Main(rs.getString("pdImg_Main"));
-				productVO.setPdImg_Sub(rs.getString("pdImg_Sub"));
-				productVO.setPdCategory(rs.getString("pdCategory"));
-				productVO.setPdInfo(rs.getString("pdInfo"));
-				productVO.setHeartCnt(rs.getInt("heartCnt"));
-				productVO.setSale(rs.getString("sale"));
-				productVO.setSale_Val(rs.getInt("sale_Val"));
-				
-				mufflerList.add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return mufflerList;
 	
-	}// selectMuffler 메소드 끝
-
-	//선글라스만 조회 해오기 위한 메소드
-	public List<ProductsVO> selectSunglasses() {
-		
-		List<ProductsVO> sunglassesList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdCategory like '%sunglasses%'";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
 	
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(rs.getInt("pdNum"));
-				productVO.setPdName(rs.getString("pdName"));
-				productVO.setPdPrice(rs.getString("pdPrice"));
-				productVO.setPdImg_Main(rs.getString("pdImg_Main"));
-				productVO.setPdImg_Sub(rs.getString("pdImg_Sub"));
-				productVO.setPdCategory(rs.getString("pdCategory"));
-				productVO.setPdInfo(rs.getString("pdInfo"));
-				productVO.setHeartCnt(rs.getInt("heartCnt"));
-				productVO.setSale(rs.getString("sale"));
-				productVO.setSale_Val(rs.getInt("sale_Val"));
-				
-				sunglassesList.add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return sunglassesList;
-	
-	}// selectSunglasses 메소드 끝
-
-	//검색어로 상품 조회 해오는 메소드
-	public List<ProductsVO> selectSearch(String search) {
-		
-		List<ProductsVO> searchList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdName like '%' ? '%' ";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, search);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-	
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(rs.getInt("pdNum"));
-				productVO.setPdName(rs.getString("pdName"));
-				productVO.setPdPrice(rs.getString("pdPrice"));
-				productVO.setPdImg_Main(rs.getString("pdImg_Main"));
-				productVO.setPdImg_Sub(rs.getString("pdImg_Sub"));
-				productVO.setPdCategory(rs.getString("pdCategory"));
-				productVO.setPdInfo(rs.getString("pdInfo"));
-				productVO.setHeartCnt(rs.getInt("heartCnt"));
-				productVO.setSale(rs.getString("sale"));
-				productVO.setSale_Val(rs.getInt("sale_Val"));
-				
-				searchList .add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return searchList;
-
-
-	}// selectSearch 메소드 끝
-
-	
-	// pdNum에 맞는 하나의 상품 조회 하는 메소드
+	/********* pdNum에 맞는 하나의 상품 조회 하는 메소드 *************/
 	public ProductsVO selectOneProduct(int pdNum) {
 		
 		ProductsVO productVO = new ProductsVO();
@@ -393,7 +150,7 @@ public class ProductsDAO {
 		try {
 			
 			conn = dataFactory.getConnection();
-			String sql = "select * from products where pdNum = ? ";
+			sql = "select * from products where pdNum = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pdNum);
 			rs = pstmt.executeQuery();			
@@ -421,14 +178,16 @@ public class ProductsDAO {
 		return productVO;
 	}// selectOneProduct 메소드 끝
 	
-	//하트 수 증가 시켜서 테이블 업데이트 하는 메소드
+	
+	
+	/************** 하트 수 증가 시켜서 테이블 업데이트 하는 메소드 **********/
 	public int UpHeart(int pdNum) {
 			
 		int result =0;
 		try {
 			
 			conn = dataFactory.getConnection();
-			String sql = "update products set heartCnt = heartCnt+1 where pdNum=?";
+			sql = "update products set heartCnt = heartCnt+1 where pdNum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pdNum);
 			result = pstmt.executeUpdate();
@@ -448,83 +207,6 @@ public class ProductsDAO {
 			return result;
 	}// UpHeart 메소드 끝
 
-	public List<ProductsVO> selectsale(String option) {
-		
-		List<ProductsVO> saleList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql = "select * from products where sale = ? ";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, option);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-	
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(rs.getInt("pdNum"));
-				productVO.setPdName(rs.getString("pdName"));
-				productVO.setPdPrice(rs.getString("pdPrice"));
-				productVO.setPdImg_Main(rs.getString("pdImg_Main"));
-				productVO.setPdImg_Sub(rs.getString("pdImg_Sub"));
-				productVO.setPdCategory(rs.getString("pdCategory"));
-				productVO.setPdInfo(rs.getString("pdInfo"));
-				productVO.setHeartCnt(rs.getInt("heartCnt"));
-				productVO.setSale(rs.getString("sale"));
-				productVO.setSale_Val(rs.getInt("sale_Val"));
-				
-				saleList.add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return saleList;
-
-	}
-
-	public List<ProductsVO> selectbest() {
-		
-		List<ProductsVO> bestList = new ArrayList<ProductsVO>();
-		
-		try {
-			
-			conn = dataFactory.getConnection();
-			String sql =  "select * from products order by heartCnt desc";
-
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-	
-				ProductsVO productVO = new ProductsVO();
-				productVO.setPdNum(rs.getInt("pdNum"));
-				productVO.setPdName(rs.getString("pdName"));
-				productVO.setPdPrice(rs.getString("pdPrice"));
-				productVO.setPdImg_Main(rs.getString("pdImg_Main"));
-				productVO.setPdImg_Sub(rs.getString("pdImg_Sub"));
-				productVO.setPdCategory(rs.getString("pdCategory"));
-				productVO.setPdInfo(rs.getString("pdInfo"));
-				productVO.setHeartCnt(rs.getInt("heartCnt"));
-				productVO.setSale(rs.getString("sale"));
-				productVO.setSale_Val(rs.getInt("sale_Val"));
-				
-				bestList.add(productVO);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			resourceClose();
-		}
-		
-		return bestList;
-	}
 
 
 	
