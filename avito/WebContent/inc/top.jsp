@@ -1,16 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+    pageEncoding="UTF-8" isELIgnored="false"%>
+ 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%request.setCharacterEncoding("UTF-8");%>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}" /> 
 
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
-
-<html lang="utf-8">
 <head>
-
-  <!-- Basic Page Needs
-  ================================================== -->
   <meta charset="utf-8">
   <title>Aviato | E-commerce template</title>
 
@@ -169,7 +165,7 @@
 
 					<!-- Elements -->
 					<li class="dropdown dropdown-slide">
-						<a href="${contextPath}/shop-sidebar.jsp" class="dropdown-toggle" 
+						<a href="${contextPath}/shop/SelectCategory.do?option=all" class="dropdown-toggle" 
 							role="button" aria-haspopup="true" aria-expanded="false">Shop <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						
