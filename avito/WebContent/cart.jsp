@@ -14,6 +14,15 @@
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
 
+<style>
+
+	.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+		margin-left: -17px;
+	}
+	
+	#product-quantity{ width: 50px; height: 34px;}
+
+</style>
 
 <section class="page-header">
 	<div class="container">
@@ -34,8 +43,6 @@
 
 <c:choose>
 
-
-
 <c:when test="${!empty productsVO}">
 
 	<div class="page-wrapper">
@@ -53,27 +60,34 @@
 												<th class="" ></th>
 												<th class="">Item Name</th>
 												<th class="">Item Price</th>
-												<th class="">Item Color</th>
 												<th class="">Item Size</th>
+												<th class="">Item Color</th>
 												<th class="">Item Quantity</th>
 												<th class="">Actions</th>
 											</tr>
 										</thead>
  
-<c:forEach var="productsVO" items="${productsVO}">
+									<c:forEach var="productsVO" items="${productsVO}">
 										<tbody>
 											<tr class="">												
+												
 												<td class="" align="center" id="item-image">
 												<img width="80"
 													 src="${contextPath}/images/shop/products/${productsVO.pdImg_Main}"/>
 												</td>
+												
 												<td class="" id="item-name">
 													<div style="text-align: center;">
 														<a href="${contextPath}/product-single.jsp"><b>${productsVO.pdName}</b></a>
 													</div>
+												
 												</td>
+												
 												<td class="" align="center" id="item-price">$${productsVO.pdPrice}</td>
-												<td class="" align="center">
+												
+												<td class="" align="center">Free</td>
+												
+												<td class="" align="center" id="item-color">
 													<div class="product-size">
 														<select class="form-control">
 															<option>color</option>
@@ -82,46 +96,28 @@
 														</select>
 													</div>
 												</td>
-												<td class="" align="center" id="item-size">
-													<div class="product-size">
-														<select class="form-control">
-															<option>size</option>
-															<option>S</option>
-															<option>M</option>
-															<option>L</option>
-															<option>XL</option>
-														</select>
-													</div>
-												</td>
-											<td class="" align="center" id="item-quantity">
-													<div class="product-size">
-														<select class="form-control" id="item-quantity" name="select-quantity" >
-															<option>Quantity</option>
-															<option>1</option>
-															<option>2</option>
-															<option>3</option>
-															<option>4</option>
-															<option>5</option>
-														</select>
-													</div>
-												</td>
+											
+											<td class="" align="center" id="item-quantity">		
+												<div class="product-quantity-slider">
+												<input id="product-quantity" type="text" value="0" name="product-quantity">
+												</div>	
+											</td>
 
-												<td class=""><a class="product-remove"
-													href="${contextPath}/shop/RemoveCart.do">Remove</a></td>
+												<td class="">
+												<a class="product-remove"
+												   href="${contextPath}/shop/RemoveCart.do">Remove</a>
+												</td>
 											</tr>
 										</tbody>
-		</c:forEach>								
-																				
-										
-									</table>
-
-									<div align="right">
-									<a href="${contextPath}/shop/ProductsList.do"
-									   class="btn btn-main ">MORE</a> &nbsp;
-									  <a href="${contextPath}/checkout.jsp"
-									   class="btn btn-main ">Checkout</a>
-									   </div>  
-								</form>
+									</c:forEach>																		
+								</table>
+								<div align="right">
+									<a href="${contextPath}/shop/SelectCategory.do?option=all"
+								       class="btn btn-main ">MORE</a> &nbsp;
+								 	<a href="${contextPath}/checkout.jsp"
+								       class="btn btn-main ">Checkout</a>
+								</div>  	
+							</form>
 								
 							</div>
 						</div>
@@ -133,18 +129,17 @@
 </c:when>
 
 <c:otherwise>
-	<div>
-
-		<br> <br> <br>
-		<h2 class="widget-title" align="center">장바구니에 담은 상품이 없습니다.</h2>
-		<br>
-		<div align="center">
-			<a href="${contextPath}/shop/ProductsList.do" class="btn btn-main">CONTINUE SHOPPING</a>
+		
+		<div>
+			<br> <br> <br>
+			<h2 class="widget-title" align="center">장바구니에 담은 상품이 없습니다.</h2>
+			<br>
+			<div align="center">
+				<a href="${contextPath}/shop/SelectCategory.do?option=all" class="btn btn-main">CONTINUE SHOPPING</a>
+			</div>
+			<br> <br> <br>
 		</div>
-		<br> <br> <br>
-
-
-	</div>
+		
 </c:otherwise>
 
 
