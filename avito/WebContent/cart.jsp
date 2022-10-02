@@ -13,6 +13,8 @@
 
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
+
+
 <section class="page-header">
 	<div class="container">
 		<div class="row">
@@ -30,56 +32,125 @@
 </section>
 
 
+<c:choose>
 
-<div class="page-wrapper">
-  <div class="cart shopping">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="block">
-            <div class="product-list">
-              <form method="post">
-                <table class="table">
-                  <thead>
-                    <tr>
-                    	
-                      <th class=""></th>
-                      <th class="">Item Price</th>
-                      <th class="">Item Color</th>
-                      <th class="">Item Size</th>
-                      <th class="">Item Quantity</th>
-                      <th class="">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-1.jpg" alt="" />
-                          <a href="#!">Sunglass</a>
-                        </div>
-                      </td>
-                      <td class="" align="center">$200.00</td>
-                      <td class="" align="center">$200.00</td>
-                      <td class="" align="center">$200.00</td>
-                      <td class="" align="center">$200.00</td>
-                      
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                </table>
-                <a href="checkout.jsp" class="btn btn-main pull-right">Checkout</a>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+<c:when test="${!empty productsVO}">
+
+	<div class="page-wrapper">
+		<div class="cart shopping">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="block">
+							<div class="product-list">
+
+								<form method="post">
+									<table class="table">
+										<thead>
+											<tr>
+												<th class="" ></th>
+												<th class="">Item Name</th>
+												<th class="">Item Price</th>
+												<th class="">Item Color</th>
+												<th class="">Item Size</th>
+												<th class="">Item Quantity</th>
+												<th class="">Actions</th>
+											</tr>
+										</thead>
+ 
+<c:forEach var="productsVO" items="${productsVO}">
+										<tbody>
+											<tr class="">												
+												<td class="" align="center" id="item-image">
+												<img width="80"
+													 src="${contextPath}/images/shop/products/${productsVO.pdImg_Main}"/>
+												</td>
+												<td class="" id="item-name">
+													<div style="text-align: center;">
+														<a href="${contextPath}/product-single.jsp"><b>${productsVO.pdName}</b></a>
+													</div>
+												</td>
+												<td class="" align="center" id="item-price">$${productsVO.pdPrice}</td>
+												<td class="" align="center">
+													<div class="product-size">
+														<select class="form-control">
+															<option>color</option>
+															<option>black</option>
+															<option>white</option>
+														</select>
+													</div>
+												</td>
+												<td class="" align="center" id="item-size">
+													<div class="product-size">
+														<select class="form-control">
+															<option>size</option>
+															<option>S</option>
+															<option>M</option>
+															<option>L</option>
+															<option>XL</option>
+														</select>
+													</div>
+												</td>
+											<td class="" align="center" id="item-quantity">
+													<div class="product-size">
+														<select class="form-control" id="item-quantity" name="select-quantity" >
+															<option>Quantity</option>
+															<option>1</option>
+															<option>2</option>
+															<option>3</option>
+															<option>4</option>
+															<option>5</option>
+														</select>
+													</div>
+												</td>
+
+												<td class=""><a class="product-remove"
+													href="${contextPath}/shop/RemoveCart.do">Remove</a></td>
+											</tr>
+										</tbody>
+		</c:forEach>								
+																				
+										
+									</table>
+
+									<div align="right">
+									<a href="${contextPath}/shop/ProductsList.do"
+									   class="btn btn-main ">MORE</a> &nbsp;
+									  <a href="${contextPath}/checkout.jsp"
+									   class="btn btn-main ">Checkout</a>
+									   </div>  
+								</form>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</c:when>
+
+<c:otherwise>
+	<div>
+
+		<br> <br> <br>
+		<h2 class="widget-title" align="center">장바구니에 담은 상품이 없습니다.</h2>
+		<br>
+		<div align="center">
+			<a href="${contextPath}/shop/ProductsList.do" class="btn btn-main">CONTINUE SHOPPING</a>
+		</div>
+		<br> <br> <br>
+
+
+	</div>
+</c:otherwise>
+
+
+</c:choose>
+
+
 
 
 <jsp:include page="./inc/bottom.jsp"></jsp:include>

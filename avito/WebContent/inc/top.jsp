@@ -165,7 +165,7 @@
 
 					<!-- Elements -->
 					<li class="dropdown dropdown-slide">
-						<a href="${contextPath}/shop/ProductsList.do" class="dropdown-toggle" 
+						<a href="${contextPath}/shop/SelectCategory.do?option=all" class="dropdown-toggle" 
 							role="button" aria-haspopup="true" aria-expanded="false">Shop <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						

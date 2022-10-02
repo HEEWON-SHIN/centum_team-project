@@ -13,73 +13,31 @@ public class ProductsService {
 		productsDAO = new ProductsDAO();
 	}
 	
-	// shop-sidebar.jsp 페이지에 모든 상품리스트를 나열하기 위한 메소드
-	public List<ProductsVO> listproducts() {
-		return productsDAO.selectAllProducts();
-	}
 
-	//shop-sidebar.jsp 페이지에 top상품만 나열하기 위한 메소드
-	public List<ProductsVO> list_Top() {
+
+
+	/******** 선택한 카테고리에 해당하는 상품만 가져오는 메소드 ************/
+	public List<ProductsVO> list_category(ProductsVO productsVO) {
 		
-		return  productsDAO.selectTop();
-	}
+		return productsDAO.selectCategory(productsVO);
+	}	
 
-	//shop-sidebar.jsp 페이지에 bottom상품만 나열하기 위한 메소드
-	public List<ProductsVO> list_bottom() {
-		
-		return productsDAO.selectBottom();
-	}
-
-	//shop-sidebar.jsp 페이지에 dress상품만 나열하기 위한 메소드
-	public List<ProductsVO> list_dress() {
-		
-		return productsDAO.selectDress();
-	}
-
-	//shop-sidebar.jsp 페이지에 muffler상품만 나열하기 위한 메소드
-	public List<ProductsVO> list_muffler() {
-		
-		return productsDAO.selectMuffler();
-	}
-
-	//shop-sidebar.jsp 페이지에 sunglasses상품만 나열하기 위한 메소드
-	public List<ProductsVO> list_sunglasses() {
-		
-		return productsDAO.selectSunglasses();
-	}
-
-//	public List<ProductsVO> list_option(String option) {
-//		
-//		//return productsDAO.selectOption();
-//	}
-
-	//shop-sidebar.jsp 페이지에 검색한 상품만 나열하기 위한 메소드
-	public List<ProductsVO> list_search(String search) {
-		
-		return productsDAO.selectSearch(search);
-	}
 	
-	//조회한 상품 하나만 가져오는 메소드
+
+	/******  조회한 상품 하나만 가져오는 메소드 **********/
 	public ProductsVO selectOne (int pdNum) {
 
 		return productsDAO.selectOneProduct(pdNum);
 	}
+
 	
-	//하트 클릭한 상품의 하트수 얻어오는 메소드
+	
+	/********** 하트 클릭한 상품의 하트수 얻어오는 메소드 **********/
 	public int update_heart(int pdNum) {
 
 		return productsDAO.UpHeart(pdNum);
 	}
 
-	public List<ProductsVO> list_sale(String option) {
-		
-		return productsDAO.selectsale(option);
-	}
-
-	public List<ProductsVO> list_best() {
-		
-		return productsDAO.selectbest();
-	}
 
 
 

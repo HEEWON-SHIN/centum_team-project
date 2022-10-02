@@ -13,18 +13,36 @@
  
 <!DOCTYPE html>
 <jsp:include page="/inc/top.jsp"></jsp:include>
-
-
-
 <script type="text/javascript">
 
-function formChange() {
-	var select = $('select[name=optionList]').val();
+/***대분류 온체인지***/
+function OptionChange() {
+	var option = $('select[name=optionList]').val();
 	
- //	alert("value = " + select);
+ 	//alert("value = " + option);
     
-	location.href = "${Path}/shop/SelectOption.do?option=" + select;
+	location.href = "${Path}/shop/SelectCategory.do?option=" + option;
 }
+
+/***카테고리부분 온클릭***/
+function CateChange(id) {
+	
+	var cate = id;
+	
+	//alert(cate);
+    
+	location.href = "${Path}/shop/SelectCategory.do?cate=" + cate;
+}
+
+/***검색부분 온클릭***/
+function SearchChange() {
+
+	var search = $('#search').val();
+	
+	//alert(search);
+	
+	location.href = "${Path}/shop/SelectCategory.do?search=" + search;
+} 
 
 function heartAlert(pdnum) {
 
@@ -84,12 +102,12 @@ function heartAlert(pdnum) {
 				<div class="widget">
 					<h4 class="widget-title">WOMEN</h4>
 					<form method="post" id="optionForm" action="#" 
-							onchange="formChange()" name="optionfrm">
+							onchange="OptionChange()" name="optionfrm">
                         <select class="form-control" name="optionList" id="optionList" >
-<%--                         	<option  <c:if test='${empty opt}'> selected </c:if> >--</option> --%>
-                        	<option value="all" <c:if test='${opt eq "all"}'> selected </c:if> >ALL</option>
-                            <option value="best" <c:if test='${opt eq "best"}'> selected </c:if> >BEST</option>
-                            <option value="y" <c:if test='${opt eq "y"}'> selected </c:if> >SALE</option>                          
+                        	<option  <c:if test='${empty opt}'> selected </c:if> >--</option>
+                        	<option value="all" <c:if test='${option eq "all"}'> selected </c:if> >ALL</option>
+                            <option value="best" <c:if test='${option eq "best"}'> selected </c:if> >BEST</option>
+                            <option value="y" <c:if test='${option eq "y"}'> selected </c:if> >SALE</option>                          
                         </select>
                     </form>
 	            </div>				
@@ -99,7 +117,7 @@ function heartAlert(pdnum) {
 					<h4 class="widget-title">CATEGORIES</h4>
 					<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
 					  	
-					  	
+					  
 					  	<div class="panel panel-default">
 						    <div class="panel-heading" role="tab" id="headingOne">
 						      	<h4 class="panel-title">
@@ -111,14 +129,14 @@ function heartAlert(pdnum) {
 					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<ul>
-									<li><a href="${Path}/shop/SelectTop.do">Top</a></li>
-									<li><a href="${Path}/shop/SelectBottom.do">Bottom</a></li>
-									<li><a href="${Path}/shop/SelectDress.do">Dress</a></li>
+									<li><a id="top" onclick="CateChange(this.id)" href="#">Top</a></li>
+									<li><a id="bottom" onclick="CateChange(this.id)" href="#">Bottom</a></li>
+									<li><a id="dress" onclick="CateChange(this.id)" href="#">Dress</a></li>
 								</ul>
 							</div>
 					    </div>
 					  </div>
-					 
+					
 					  <div class="panel panel-default">
 					    <div class="panel-heading" role="tab" id="headingTwo">
 					      <h4 class="panel-title">
@@ -130,13 +148,13 @@ function heartAlert(pdnum) {
 					    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 					    	<div class="panel-body">
 					     		<ul>
-									<li><a href="${Path}/shop/SelectMuffler.do">muffler</a></li>
-									<li><a href="${Path}/shop/SelectSunglasses.do">sunglasses</a></li>
+									<li><a id="muffler" onclick="CateChange(this.id)" href="#">muffler</a></li>
+									<li><a id="sunglasses" onclick="CateChange(this.id)" href="#">sunglasses</a></li>
 								</ul>
 					    	</div>
 					    </div>
 					  </div>
-					  
+					 
 
 					</div>
 				</div>
@@ -147,12 +165,12 @@ function heartAlert(pdnum) {
 				<!-- 검색부분 -->
 			
 					<div class="widget">
-						<form action="${Path}/shop/SelectSearch.do" method="get">
+						<form action="#" method="get">
 						<h4 class="widget-title">Search</h4>
-						<input type="search" class="form-control" placeholder="search..." name="search" style=" white-space : nowrap;">
+						<input type="search" id="search" class="form-control" placeholder="search..." name="search" style=" white-space : nowrap;">
 						<br>
-	   					<button type="submit" style="display: none;"><i  class="tf-ion-ios-search-strong"></i></button>
-	   						</form>
+	   					<button type="submit" onclick="SearchChange()" style="display: none;"><i  class="tf-ion-ios-search-strong"></i></button>
+	   				   </form>
 		            </div>
 			
 
@@ -170,46 +188,46 @@ function heartAlert(pdnum) {
 		
 <c:choose>
 
-	<c:when test="${!empty productsList}">
-		<c:forEach var="pdList" items="${productsList}">
+
+
+	<c:when test="${!empty cateList}">
+		<c:forEach var="cateList" items="${cateList}">
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
-			       <c:if test="${pdList.sale eq 'y' }">
+			       <c:if test="${cateList.sale eq 'y' }">
 						<span class="bage">Sale</span> 
 				   </c:if>
-						
-						<img class="img-responsive" src="${Path}/images/shop/products/${pdList.pdImg_Main}" alt="" />
-						
+						<img class="img-responsive" src="${Path}/images/shop/products/${cateList.pdImg_Main}" alt="" />
 						<div class="preview-meta">
 						</div>
 						
 					</div>
 
 					<div class="product-content">
-						<h4><a href="${Path}/single/viewSinglePd.s?pdNum=${pdList.pdNum}">${pdList.pdName}</a></h4>
-						<c:if test="${pdList.sale eq 'n'}">
-						<p class="price"> $${pdList.pdPrice}</p>
+						<h4><a href="${Path}/product-single.jsp?pdnum=${cateList.pdNum}">${cateList.pdName}</a></h4>
+						<c:if test="${cateList.sale eq 'n'}">
+						<p class="price"> $${cateList.pdPrice}</p>
 						</c:if>
 								
-						<c:set value="${pdList.pdPrice}" var="price"/>
-						<c:set value="${pdList.sale_Val}" var="sale_val"/>
+						<c:set value="${cateList.pdPrice}" var="price"/>
+						<c:set value="${cateList.sale_Val}" var="sale_val"/>
 						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
 	
-						<c:if test="${pdList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${pdList.pdPrice}</span>
+						<c:if test="${cateList.sale eq 'y'}">
+						<p class="price"><span style="text-decoration:line-through;">$${cateList.pdPrice}</span>
 						    &nbsp;
-							<i style="color: red;">${pdList.sale_Val}% -> </i>  
+							<i style="color: red;">${cateList.sale_Val}% -> </i>  
 							<b style="color: red;">$${ final_price }</b> 
 						</p>
 						</c:if>					
 					</div>
 						
 					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${pdList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${pdList.pdNum}'>${pdList.heartCnt}</i>
+						<a id="heart" href="#!" onclick="heartAlert(${cateList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
+						<i id='updateHeart${cateList.pdNum}'>${cateList.heartCnt}</i>
 						&nbsp;&nbsp; 
-						<a id="cart${pdList.pdNum}" href="${Path}/shop/Cart.do?pdNum=${pdList.pdNum}"><i class="tf-ion-android-cart"></i></a>
+						<a id="cart${cateList.pdNum}" href="${Path}/shop/Cart.do?pdNum=${cateList.pdNum}"><i class="tf-ion-android-cart"></i></a>
 					</div>
 
 				</div>
@@ -218,392 +236,21 @@ function heartAlert(pdnum) {
 	</c:when>
 
 
-	<c:when test="${!empty saleList}">
-		<c:forEach var="saleList" items="${saleList}">		
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb" >
-				        <c:if test="${saleList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>
-						<img class="img-responsive" src="${Path}/images/shop/products/${saleList.pdImg_Main}" alt=""/>
-						<div class="preview-meta">
 
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4>
-							<a href="${Path}/single/viewSinglePd.s?pdNum=${saleList.pdNum}">${saleList.pdName}</a>
-						</h4>
-						<c:if test="${saleList.sale eq 'n'}">
-						<p class="price">$${saleList.pdPrice}</p>
-						</c:if>						
-						
-						<c:set value="${saleList.pdPrice}" var="price"/>
-						<c:set value="${saleList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
-						
-						<c:if test="${saleList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${saleList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${saleList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-					</div>
-				 	
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${saleList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${saleList.pdNum}'>${saleList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${saleList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-				
-				
-				</div>
-			</div>
-		</c:forEach>
-	</c:when>	
-
-
-	<c:when test="${!empty bestList}">
-		<c:forEach var="bestList" items="${bestList}">		
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb" >
-			        	<c:if test="${bestList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>
-						<img class="img-responsive" src="${Path}/images/shop/products/${bestList.pdImg_Main}" alt=""/>
-						<div class="preview-meta">
-
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="${Path}/single/viewSinglePd.s?pdNum=${bestList.pdNum}">${bestList.pdName}</a></h4>
-						<c:if test="${bestList.sale eq 'n'}">
-						<p class="price">$${bestList.pdPrice}</p>
-						</c:if>
-
-						<c:set value="${bestList.pdPrice}" var="price"/>
-						<c:set value="${bestList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>							
-						
-						<c:if test="${bestList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${bestList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${bestList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-					</div>
-				 	
-				 	<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${bestList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${bestList.pdNum}'>${bestList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${bestList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-				
-				
-				</div>
-			</div>
-		</c:forEach>
-	</c:when>	
-	
-	<c:when test="${!empty topList}">
-		<c:forEach var="topList" items="${topList}">	
-			<div class="col-md-4">
-			
-				<div class="product-item">
-					<div class="product-thumb" >
-			        	<c:if test="${topList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>
-						<img class="img-responsive" src="${Path}/images/shop/products/${topList.pdImg_Main}" alt=""/>
-						<div class="preview-meta">
-
-                      	</div>
-					</div>
-				<div class="product-content">
-						<h4><a href="${Path}/single/viewSinglePd.s?pdNum=${topList.pdNum}">${topList.pdName}</a></h4>
-						<c:if test="${topList.sale eq 'n'}">
-						<p class="price">$${topList.pdPrice}</p>
-						</c:if>			
-						
-						<c:set value="${topList.pdPrice}" var="price"/>
-						<c:set value="${topList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
-													
-						<c:if test="${topList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${topList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${topList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-				</div>
-					
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${topList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${topList.pdNum}'>${topList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${topList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-	
-				</div>
-			</div>
-		</c:forEach>	
-	</c:when>
-
-	
-	<c:when test="${!empty bottomList}">
-		<c:forEach var="bottomList" items="${bottomList}">
-			<div class="col-md-4">
-
-				<div class="product-item">
-					<div class="product-thumb">
-			        	<c:if test="${bottomList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>					
-						<img class="img-responsive"
-							src="${Path}/images/shop/products/${bottomList.pdImg_Main}" alt="" />
-						<div class="preview-meta"></div>
-					</div>
-				<div class="product-content">
-						<h4><a href="${Path}/single/viewSinglePd.s?pdNum=${bottomList.pdNum}">${bottomList.pdName}</a></h4>
-						<c:if test="${bottomList.sale eq 'n'}">
-						<p class="price">$${bottomList.pdPrice}</p>
-						</c:if>	
-						
-						<c:set value="${bottomList.pdPrice}" var="price"/>
-						<c:set value="${bottomList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>							
-									
-						<c:if test="${bottomList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${bottomList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${bottomList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-
-				</div>
-					
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${bottomList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${bottomList.pdNum}'>${bottomList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${bottomList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-
-				</div>
-			</div>
-		</c:forEach>
-	</c:when>
-
-
-	<c:when test="${!empty dressList}">
-			<c:forEach var="dressList" items="${dressList}">	
-				<div class="col-md-4">
-				
-					<div class="product-item">
-						<div class="product-thumb" >
-				        <c:if test="${dressList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>
-							<img class="img-responsive" src="${Path}/images/shop/products/${dressList.pdImg_Main}" alt=""/>
-							<div class="preview-meta">
-	
-	                      	</div>
-						</div>
-					<div class="product-content">
-						<h4><a href="${Path}/single/viewSinglePd.s?pdNum=${dressList.pdNum}">${dressList.pdName}</a></h4>
-						<c:if test="${dressList.sale eq 'n'}">
-						<p class="price">$${dressList.pdPrice}</p>
-						</c:if>	
-							
-						<c:set value="${dressList.pdPrice}" var="price"/>
-						<c:set value="${dressList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
-												
-						<c:if test="${dressList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${dressList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${dressList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-					</div>
-						
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${dressList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${dressList.pdNum}'>${dressList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${bottomList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-		
-					</div>
-				</div>
-			</c:forEach>	
-		</c:when>	
-	
-	<c:when test="${!empty mufflerList}">
-			<c:forEach var="mufflerList" items="${mufflerList}">	
-				<div class="col-md-4">
-				
-					<div class="product-item">
-						<div class="product-thumb" >
-					    <c:if test="${mufflerList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>
-							<img class="img-responsive" src="${Path}/images/shop/products/${mufflerList.pdImg_Main}" alt=""/>
-							<div class="preview-meta">
-	
-	                      	</div>
-						</div>
-					<div class="product-content">
-							<h4><a href="{Path}/single/viewSinglePd.s?pdNum=${mufflerList.pdNum}">${mufflerList.pdName}</a></h4>
-						<c:if test="${mufflerList.sale eq 'n'}">
-						<p class="price">$${mufflerList.pdPrice}</p>
-						</c:if>		
-							
-						<c:set value="${mufflerList.pdPrice}" var="price"/>
-						<c:set value="${mufflerList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
-												
-						<c:if test="${mufflerList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${mufflerList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${mufflerList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-					</div>
-						
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${mufflerList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${mufflerList.pdNum}'>${mufflerList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${mufflerList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-		
-					</div>
-				</div>
-			</c:forEach>	
-		</c:when>		
-	
-
-	<c:when test="${!empty sunglassesList}">
-			<c:forEach var="sunglassesList" items="${sunglassesList}">	
-				<div class="col-md-4">
-				
-					<div class="product-item">
-						<div class="product-thumb" >
-					    <c:if test="${sunglassesList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>	
-							<img class="img-responsive" src="${Path}/images/shop/products/${sunglassesList.pdImg_Main}" alt=""/>
-							<div class="preview-meta">
-	
-	                      	</div>
-						</div>
-						<div class="product-content">
-							<h4><a href="{Path}/single/viewSinglePd.s?pdNum=${sunglassesList.pdNum}">${sunglassesList.pdName}</a></h4>
-						<c:if test="${sunglassesList.sale eq 'n'}">
-						<p class="price">$${sunglassesList.pdPrice}</p>
-						</c:if>								
-						
-						<c:set value="${sunglassesList.pdPrice}" var="price"/>
-						<c:set value="${sunglassesList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>	
-												
-						<c:if test="${sunglassesList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${sunglassesList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${sunglassesList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-						
-						</div>
-						
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${sunglassesList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${sunglassesList.pdNum}'>${sunglassesList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${sunglassesList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-		
-					</div>
-				</div>
-			</c:forEach>	
-		</c:when>	
-
-	<c:when test="${!empty searchList}">
-			<c:forEach var="searchList" items="${searchList}">	
-				<div class="col-md-4">
-				
-					<div class="product-item">
-						<div class="product-thumb" >
-					    <c:if test="${searchList.sale eq 'y' }">
-							<span class="bage">Sale</span> 
-						</c:if>		
-							<img class="img-responsive" src="${Path}/images/shop/products/${searchList.pdImg_Main}" alt=""/>
-							<div class="preview-meta">
-	
-	                      	</div>
-						</div>
-					<div class="product-content">
-						<h4><a href="{Path}/single/viewSinglePd.s?pdNum=${searchList.pdNum}">${searchList.pdName}</a></h4>
-						
-						<c:if test="${searchList.sale eq 'n'}">
-							<p class="price">$${searchList.pdPrice}</p>
-						</c:if>							
-											
-							
-						<c:set value="${searchList.pdPrice}" var="price"/>
-						<c:set value="${searchList.sale_Val}" var="sale_val"/>
-						<fmt:parseNumber value="${price*(100-sale_val)/100}" var="final_price" integerOnly="true"/>		
-											
-						<c:if test="${searchList.sale eq 'y'}">
-						<p class="price"><span style="text-decoration:line-through;">$${searchList.pdPrice}</span>
-						    &nbsp;
-							<i style="color: red;">${searchList.sale_Val}% -> </i>  
-							<b style="color: red;">$${ final_price }</b> 
-						</p>
-						</c:if>
-					</div>	
-
-						
-					<div class="product-content">
-						<a id="heart" href="#!" onclick="heartAlert(${searchList.pdNum})"><i class="tf-ion-ios-heart"></i></a> 
-						<i id='updateHeart${searchList.pdNum}'>${searchList.heartCnt}</i>
-						&nbsp;&nbsp;
-						<a href="${Path}/shop/Cart.do?pdNum=${searchList.pdNum}"><i class="tf-ion-android-cart"></i></a>
-					</div>
-					
-					</div>
-				</div>
-			</c:forEach>	
-		</c:when>
-		<c:when test="${empty searchList}">
-		<div>
-
-			<br> <br> <br>
-			<h2 class="widget-title" align="center">검색 결과가 없습니다.</h2>
-			<br>
-			<div align="center">
-				<a href="${Path}/shop/ProductsList.do" class="btn btn-main">GO BACK</a>
-			</div>
-			<br> <br> <br>
-
-
-		</div>
-		</c:when>
 	
 	<c:otherwise>
+			<div>
 
+				<br> <br> <br>
+				<h2 class="widget-title" align="center">검색 결과가 없습니다.</h2>
+				<br>
+				<div align="center">
+					<a href="${Path}/shop/SelectCategory.do?option=all" class="btn btn-main">GO BACK</a>
+				</div>
+				<br> <br> <br>
+
+
+			</div>
 	</c:otherwise>	
 	
 </c:choose>	

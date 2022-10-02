@@ -27,6 +27,8 @@ public class ProductsController extends HttpServlet {
 			
 			productsService = new ProductsService();
 			productsList = new ArrayList<ProductsVO>();
+			productsVO = new ProductsVO();
+			
 		}
 		
 		@Override
@@ -41,111 +43,42 @@ public class ProductsController extends HttpServlet {
 		
 		protected void doHandle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			
-			//재요청할 페이지 주소를 저장할 변수
+	
 			String nextPage = "";
 			
 			HttpSession session = null;
 			req.setCharacterEncoding("UTF-8");
 			
-			//요청명을 가져옵니다.
+			
 			String action = req.getPathInfo();
 			System.out.println(action);
 			
 			
 			try {
-				 //여기를 왜 if문 밖으로 뺏을까? 다시생각해보세요~
-												
-				if(action.equals("/ProductsList.do") ){
-					
-					productsList = productsService.listproducts();				
-					req.setAttribute("productsList", productsList);
-					
-					
-					nextPage = "/shop-sidebar.jsp";
 				
-				}else if(action.equals("/SelectOption.do")) {
-					
-						String option = req.getParameter("option");
+																			
+		/****** 전체 상품 및 카테고리부분 *******/		
+				if(action.equals("/SelectCategory.do")) {
 						
-						System.out.println(option);
+			
+						productsVO.setOption(req.getParameter("option"));
+						productsVO.setCate(req.getParameter("cate"));
+						productsVO.setSearch(req.getParameter("search"));
+						req.setAttribute("productsVO", productsVO);
+													
+						productsList = productsService.list_category(productsVO);
+						req.setAttribute("cateList", productsList);
+			
+						nextPage = "/shop-sidebar.jsp";
 						
-						if(option.equals("all")) {
-							req.setAttribute("opt", option);
-							nextPage = "/shop/ProductsList.do";
-						
-						}else if(option.equals("best")) {
-							
-							
-							productsList = productsService.list_best();				
-							req.setAttribute("bestList", productsList);
-							req.setAttribute("opt", option);
-							nextPage = "/shop-sidebar.jsp";						
-						
-						}else if(option.equals("y")) {
-							
-							
-							productsList = productsService.list_sale(option);				
-							req.setAttribute("saleList", productsList);
-							req.setAttribute("opt", option);
-							nextPage = "/shop-sidebar.jsp";
-						}
-						
-						
-						//nextPage = "/shop-sidebar.jsp";
-				
-				}else if(action.equals("/SelectTop.do") ) {
 					
-					
-					productsList = productsService.list_Top();
-					req.setAttribute("topList", productsList);
-		
-					
-					nextPage = "/shop-sidebar.jsp";
-				
-				}else if(action.equals("/SelectBottom.do")) {
-					
-				
-					productsList = productsService.list_bottom();
-					req.setAttribute("bottomList", productsList);	
-					
-					nextPage = "/shop-sidebar.jsp";
-				
-				}else if(action.equals("/SelectDress.do")) {
-					
-					productsList = productsService.list_dress();
-					req.setAttribute("dressList", productsList);	
-					
-					nextPage = "/shop-sidebar.jsp";
-				
-				
-				}else if(action.equals("/SelectMuffler.do")) {
-				
-					productsList = productsService.list_muffler();
-					req.setAttribute("mufflerList", productsList);
-					
-					nextPage = "/shop-sidebar.jsp";
-					
-				
-				}else if(action.equals("/SelectSunglasses.do")) {
-				
-					productsList = productsService.list_sunglasses();
-					req.setAttribute("sunglassesList", productsList);
-					
-					nextPage = "/shop-sidebar.jsp";
-					
-				}else if(action.equals("/SelectSearch.do")) {
-					
-					String search = req.getParameter("search");
-					productsList = productsService.list_search(search);
-					req.setAttribute("searchList", productsList);
-					
-					nextPage = "/shop-sidebar.jsp";				
-				
+
+		/****하트아이콘클릭*****/		
 				}else if(action.equals("/Heart.do")) {
 					
 
 					int pdNum = Integer.parseInt(req.getParameter("pdNum"));
-				System.out.println("click heart pdNum." + pdNum);
+				//	System.out.println("click heart pdNum." + pdNum);
 					int data = productsService.update_heart(pdNum);
 					
 					if(data==1) {
@@ -163,14 +96,14 @@ public class ProductsController extends HttpServlet {
 					
 					return;
 					
-					
+		/****카트아이콘클릭*****/					
 				}else if(action.equals("/Cart.do")) {
 					
 					int pdNum = Integer.parseInt(req.getParameter("pdNum"));
-			//System.out.println("click cart pdNum." +pdNum);
+					//System.out.println("click cart pdNum." +pdNum);
 					  
 					productsVO = productsService.selectOne(pdNum);
-				System.out.println(productsVO.getPdName()); 
+					//System.out.println(productsVO.getPdName()); 
 					productsList.add(productsVO);
 					session = req.getSession();
 					session.setAttribute("productsVO", productsList);
@@ -198,10 +131,9 @@ public class ProductsController extends HttpServlet {
 				
 				
 
+						
 				
-				
-				
-			//뷰 또는 컨트롤러 재요청
+		
 			RequestDispatcher dispatch = req.getRequestDispatcher(nextPage);
 							  dispatch.forward(req, resp);
 				
@@ -213,5 +145,7 @@ public class ProductsController extends HttpServlet {
 			
 			
 		}// doHandle 메소드 끝
+		
+	
 		
 }
