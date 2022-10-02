@@ -263,7 +263,17 @@ public class singleProductController extends HttpServlet {
 				out.print(Integer.toString(result));
 				
 				return;
-			
+				
+				
+			}else if(action.equals("/sendPromoCode.do")) {//쿠폰 다운로드 버튼을 눌렀을 때?
+				
+				String email = req.getParameter("email");
+				
+				int result = sendService.sendProccess("ise0305@naver.com", req, resp);
+				
+				System.out.println("메일 result : "+result);
+				
+			 
 			}else {
 				nextPage = "/product-single.jsp";
 			}

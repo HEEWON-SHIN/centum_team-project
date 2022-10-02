@@ -35,6 +35,7 @@
     
     .carousel-inner{ position: relative;}
     .item{position: relative;}
+    #down{border-color: lightgray;}
 	
 </style>
 
@@ -418,8 +419,7 @@ function rp_delete(rNo) {
 	
 	if(!confirm("삭제하면 복구할 수 없습니다. 정말로 삭제하시겠습니까?")){
 	    return false;
-	}
-	
+	}	
 
 	$.ajax({	url:'${contextPath}/single/deleteReply.do?rNo='+rNo,
 		type:"post",
@@ -428,10 +428,29 @@ function rp_delete(rNo) {
  		
 		success:function(resData){
 			showReview();
-		}
+		}		
+	});	
+}
+
+/*쿠폰 다운로드 전 회원 확인 메소드*/
+function email(email) {
+// 	if(email == null || email == ""){
+// 		if(!confirm("로그인 후에 이용해주세요.")){
+// 		    return false;
+// 		}else{location.href="${contextPath}/login.jsp";}
+// 	}else{
 		
-	});
-	
+		$.ajax({	url:'${contextPath}/single/sendPromoCode.do?email='+email,
+			type:"post",
+			
+	      	dataType : 'text',//응답받을 데이터 타입
+	 		
+			success:function(resData){
+				alert("이메일로 프로모션 코드가 발송되었습니다. 프로모션 코드는 발급일로부터 24시간 동안 유효합니다.");
+			}		
+		});	
+		
+// 	}
 }
 
 
@@ -579,6 +598,11 @@ function rp_delete(rNo) {
 							<c:if test = "${fn:contains(sBean.pdCategory, 'muffler')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Muffler</a></li></c:if>
 						</ul>
 					</div>
+					<div class="product-category">
+						<span>Coupon:</span>
+						<a style="cursor:pointer;" id="down" class="btn btn-small btn-solid-border" onclick="return email(${email});">Download</a>
+						<!-- <i class="join" style="color: orange;">회원가입을 해주세요</i> -->
+					</div>
 				
 					<input type="hidden" name="name" value="${name}">
 					<input type="hidden" name="email" value="${email}">
@@ -586,7 +610,7 @@ function rp_delete(rNo) {
 					<input type="hidden" name="pdName" value="${sBean.pdName}">
 					<input type="hidden" name="pdPrice" value="${sBean.pdPrice}">
 				
-					<input type="submit" class="btn btn-main mt-20" value="Add To Cart">
+					<input type="submit" class="btn btn-main mt-20" id="" value="Add To Cart">
 				</div>
 			</div>
 		</div>

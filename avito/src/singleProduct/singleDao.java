@@ -111,16 +111,13 @@ public class singleDao {
 	public List<related_Pd_Bean> relatedPd(int pdNum) {
 			
 			List<related_Pd_Bean> relatedList = new ArrayList<related_Pd_Bean>();
-			sBean = new singleBean();
-		
+			sBean = new singleBean();		
 			
 			try {
 				
 				sBean = selectProduct(pdNum);
 				String pdCat = sBean.getpdCategory();
 				int no = sBean.getPdNum();
-								
-				System.out.println(pdCat);
 				
 				con = getCon();
 				sql = "select * from products";
@@ -128,10 +125,7 @@ public class singleDao {
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {
-							
-					System.out.println("  ");
-					System.out.println("  ");
-					
+						
 					if(no != rs.getInt(1)) {						
 						
 						String rel_category = rs.getString("pdCategory");
@@ -141,7 +135,6 @@ public class singleDao {
 							String token = rel.nextToken();
 							
 							if(pdCat.contains(token)) {
-								System.out.println(token);
 								
 								relBean = 
 										new related_Pd_Bean(rs.getInt(1), rs.getString(2), rs.getString(3), 
