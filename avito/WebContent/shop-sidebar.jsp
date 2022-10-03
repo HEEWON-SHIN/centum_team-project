@@ -105,10 +105,9 @@ function heartAlert(pdnum) {
 					<form method="post" id="optionForm" action="#" 
 							onchange="OptionChange()" name="optionfrm">
                         <select class="form-control" name="optionList" id="optionList" >
-<%--                         	<option  <c:if test='${empty productsVO}'> selected </c:if> >--</option> --%>
-                        	<option value="all" <c:if test="$('.optionList').val() eq 'all'"> selected </c:if> >ALL</option>
-                            <option value="best" <c:if test="$('.optionList').val() eq 'best'"> selected </c:if> >BEST</option>
-                            <option value="y" <c:if test='${cateList eq "y"}'> selected </c:if> >SALE</option>     
+                        	<option value="all" <c:if test='${option eq "all"}'> selected </c:if> >ALL</option>
+                            <option value="best" <c:if test='${option eq "best"}'> selected </c:if> >BEST</option>
+                            <option value="y" <c:if test='${option eq "y"}'> selected </c:if> >SALE</option>     
                    
                         </select>
                     </form>
@@ -207,7 +206,7 @@ function heartAlert(pdnum) {
 					</div>
 
 					<div class="product-content">
-						<h4><a href="${Path}/product-single.jsp?pdnum=${cList.pdNum}">${cList.pdName}</a></h4>
+						<h4><a href="${Path}/single/viewSingle.do?pdNum=${cList.pdNum}">${cList.pdName}</a></h4>
 						<c:if test="${cList.sale eq 'n'}">
 						<p class="price"> $${cList.pdPrice}</p>
 						</c:if>
@@ -220,7 +219,7 @@ function heartAlert(pdnum) {
 						<p class="price"><span style="text-decoration:line-through;">$${cList.pdPrice}</span>
 						    &nbsp;
 							<i style="color: red;">${cList.sale_Val}% →&nbsp;</i>  
-							<b style="color: red;">$${ final_price }</b> 
+							<b style="color: red;">$${final_price}</b> 
 						</p>
 						</c:if>					
 					</div>
@@ -234,7 +233,7 @@ function heartAlert(pdnum) {
 						<input type="hidden" id="cartprice" value="${cList.pdPrice}">
 						<input type="hidden" id="pdimg" value="${cList.pdImg_Main}">
 						<a id="cart${cList.pdNum}"
-						href="${Path}/shop/Cart.do?pNum=${cList.pdNum}&pName=${cList.pdName}&cPrice=${cList.pdPrice}&pImg=${cList.pdImg_Main}&pdqty=1">
+						href="${Path}/shop/Cart.do?pNum=${cList.pdNum}&pName=${cList.pdName}&cPrice=${cList.pdPrice}&fPrice=${final_price}&pImg=${cList.pdImg_Main}&pdqty=1">
 						<i class="tf-ion-android-cart"></i>
 						</a>
 					</div>

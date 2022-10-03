@@ -15,15 +15,14 @@
 
 <script>
 
-function return beforeCH() {
-	var c = $('#color').val()
- 	alert(c);
+function beforeCH() {
 	
-	return false;
-	
-// 	if(c == null  ||c =="color"){
-// 		alert('옵션선택하삼');
-// 	}
+		var c = $('select[name=color]').val();
+	 				
+		if(c == 'color'){
+			alert("color 옵션을 선택해 주세요를레히이이이히잉~");
+			return false;
+		}		
 }
 
 </script>
@@ -67,7 +66,7 @@ function return beforeCH() {
 						<div class="block">
 							<div class="product-list">
 
-								<form method="post" action="${contextPath}/checkout.jsp">
+								<form method="post" action="${contextPath}/checkout.jsp" onsubmit="return beforeCH()">
 									<table class="table">
 										<thead>
 											<tr>
@@ -92,19 +91,47 @@ function return beforeCH() {
 												
 												<td class="" id="item-name">
 													<div style="text-align: center;">
-														<a href="${contextPath}/product-single.jsp"><b>${cList.pdName}</b></a>
+														<a href="${contextPath}/single/viewSingle.do?pdNum=${cList.pdNum}"><b>${cList.pdName}</b></a>
 													</div>
 												
 												</td>
+											
 												
-												<td class="" align="center" id="item-price">$${cList.cartPrice}</td>
+												
+												<c:choose>
+													<c:when test="${cList.cartPrice != cList.finalPrice }">
+													<td class="" align="center" id="item-price"> 
+														<span style="text-decoration: line-through;"> $${cList.cartPrice}</span>
+														<b style="color: red";>$${cList.finalPrice}</b>
+													</td>
+													</c:when>
+												    
+												    <c:otherwise>
+												   	 <td class="" align="center" id="item-price">$${cList.cartPrice}</td>
+												    </c:otherwise>
+												</c:choose>
+												
+										
 												
 												<td class="" align="center">Free</td>
 												
 												<td class="" align="center" id="item-color">
 													<div class="product-size">
-														<select class="form-control" onchange="colorCH()" id="color">
-															<option>color</option>
+														<select class="form-control" onchange="colorCH()" id="color" name="color">
+															
+															
+															<c:choose>
+																<c:when test="${!empty cList.pdColor}">
+																<option>${cList.pdColor}</option>
+																</c:when>
+																<c:otherwise>
+																<option>color</option>
+																</c:otherwise>
+															</c:choose>														
+															
+															
+															
+															
 															<option>black</option>
 															<option>white</option>
 														</select>
@@ -113,7 +140,7 @@ function return beforeCH() {
 											
 											<td class="" align="center" id="item-quantity">		
 												<div class="product-quantity-slider">
-												<input id="product-quantity" type="text" value="0" name="product-quantity">
+												<input id="product-quantity" type="text" value="${cList.pdQty}" name="product-quantity">
 												</div>	
 											</td>
 
@@ -128,8 +155,11 @@ function return beforeCH() {
 								<div align="right">
 									<a href="${contextPath}/shop/SelectCategory.do?option=all"
 								       class="btn btn-main ">MORE</a> &nbsp;
-								 	<input type="button" value="CHECKOUT"
-								       class="btn btn-main " onclick="return beforeCH()">
+								    <a href="${contextPath}/shop/AllRemoveCart.do"
+								       class="btn btn-main ">ALL REMOVE</a> &nbsp; 
+								 	<input type="submit" value="CHECKOUT"
+								       class="btn btn-main " >
+
 								</div>  	
 							</form>
 								

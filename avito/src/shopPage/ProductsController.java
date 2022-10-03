@@ -65,12 +65,13 @@ public class ProductsController extends HttpServlet {
 		/****** 전체 상품 및 카테고리부분 *******/		
 				if(action.equals("/SelectCategory.do")) {
 						
+					String opt = req.getParameter("option");
 
 					productsVO.setOption(req.getParameter("option"));
 					productsVO.setCate(req.getParameter("cate"));
 					productsVO.setSearch(req.getParameter("search"));
 					req.setAttribute("productsVO", productsVO);
-												
+					req.setAttribute("option", opt);							
 					productsList = productsService.list_category(productsVO);
 					req.setAttribute("cateList", productsList);
 		
@@ -106,19 +107,52 @@ public class ProductsController extends HttpServlet {
 				}else if(action.equals("/Cart.do")) {
 					
 					int pdNum = Integer.parseInt(req.getParameter("pNum"));
-					//System.out.println("click cart pdNum." +pdNum);
-					  
-					cartVO = productsService.selectOneCart(pdNum);
-					//System.out.println(productsVO.getPdName()); 
-					cartList.add(cartVO);
+					String pdName = req.getParameter("pName");
+					String cartPrice = req.getParameter("cPrice");
+					String pdImg_Main = req.getParameter("pImg");
+					int pdQty = Integer.parseInt( req.getParameter("pdqty"));
+					String finalPrice = req.getParameter("fPrice");
+					String pdColor = req.getParameter("pdColor");
+					System.out.println(pdColor);
+					
+				    cartVO = new CartVO(pdNum, pdName, cartPrice, pdImg_Main, pdQty,finalPrice,pdColor);
+									  
+				   			    
+					boolean alreadycart = false;
+					
+					//이미 카트에 담겨있는 orgVO 객체 for문으로 꺼내서 새로 추가되는 cartVO랑 비교 
+					for (CartVO orgVO : cartList) {
+						
+						if(cartVO.getPdColor()==null) {
+							if(orgVO.getPdNum() ==  cartVO.getPdNum() ) {
+							orgVO.setPdQty(orgVO.getPdQty()+cartVO.getPdQty());
+							
+							alreadycart = true;
+							break;
+							}
+						}else if(cartVO.getPdColor()!=null) {	
+							
+							if(orgVO.getPdColor() == cartVO.getPdColor() && orgVO.getPdNum() ==  cartVO.getPdNum()) {
+								orgVO.setPdQty(orgVO.getPdQty()+cartVO.getPdQty());
+							
+							alreadycart = true;
+							break;
+							}
+						}
+					}//for문
+					
+					//기존 상품이 없는 경우
+					if(alreadycart==false) {
+						cartList.add(cartVO);
+					}
+					
+							
 					session = req.getSession();
 					session.setAttribute("cList", cartList);
-				
-					
-				//System.out.println(session.getAttribute("productsVO"));
-					
+												
 					nextPage = "/cart.jsp";
-				
+		
+					
 		/****카트페이지에서 상품별 리무브 클릭*****/	
 				}else if(action.equals("/RemoveCart.do")) {	
 					
@@ -150,6 +184,22 @@ public class ProductsController extends HttpServlet {
 					
 					nextPage = "/cart.jsp";
 					
+				}else if(action.equals("/AllRemoveCart.do")) {
+					//카트아이콘 클릭할때 세션에 저장했던 cList를 제거할려니까 또 안됨... 
+					//아예 통째로 cList를 세션에서 제거하는 건데도.. 카트페이지에서는 한꺼번에 삭제됐다가.. 
+					//페이지이동해서 다시 상품 담으면 그대로 남아 있음.. 그래서 위 방법이랑 같이해줌 ㅜ 이게 맞나? 몰러~
+					session = req.getSession(true);
+					cartList = (List<CartVO>) session.getAttribute("cList");
+					
+					//임시리시트 만들기
+					List<CartVO> removed = new ArrayList<CartVO>();
+						for (CartVO cartVO : cartList) {
+								removed.add(cartVO);
+						}
+					cartList.removeAll(removed);
+					
+					nextPage = "/cart.jsp";
+				
 				}else{
 					
 					nextPage = "/shop-sidebar.jsp";
