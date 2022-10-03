@@ -441,10 +441,8 @@ function email(email) {
 // 	}else{
 		
 		$.ajax({	url:'${contextPath}/single/sendPromoCode.do?email='+email,
-			type:"post",
-			
-	      	dataType : 'text',//응답받을 데이터 타입
-	 		
+			type:"post",			
+	      	dataType : 'text',//응답받을 데이터 타입	 		
 			success:function(resData){
 				alert("이메일로 프로모션 코드가 발송되었습니다. 프로모션 코드는 발급일로부터 24시간 동안 유효합니다.");
 			}		
@@ -555,7 +553,7 @@ function email(email) {
 				
 					<h2 >${sBean.pdName}</h2>
 					
-					<fmt:parseNumber value="${sBean.pdPrice*(100-sale_val)/100}" var="final_price" integerOnly="true"/>
+					<fmt:parseNumber value="${sBean.pdPrice*(100-sBean.sale_Val)/100}" var="final_price" integerOnly="true"/>
 					
 					
 					<c:choose>

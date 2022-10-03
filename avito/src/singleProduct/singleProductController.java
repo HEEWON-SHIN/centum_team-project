@@ -32,6 +32,7 @@ public class singleProductController extends HttpServlet {
 	reviewService reviewService;
 	reviewBean rBean;
 	
+	promotionService promotionService;
 	
 
 	@Override
@@ -41,6 +42,8 @@ public class singleProductController extends HttpServlet {
 		
 		reviewService = new reviewService();
 		rBean = new reviewBean();
+		
+		promotionService = new promotionService();
 	}
 	
 	
@@ -265,14 +268,23 @@ public class singleProductController extends HttpServlet {
 				return;
 				
 				
-			}else if(action.equals("/sendPromoCode.do")) {//쿠폰 다운로드 버튼을 눌렀을 때?
+			}else if(action.equals("/sendPromoCode.do")) {//product-single.jsp페이지에서 쿠폰 다운로드 버튼을 눌렀을 때?
 				
 				String email = req.getParameter("email");
 				
-				int result = promotionService.sendProccess("ise0305@naver.com", req, resp);
-				 
-				System.out.println("메일 result : "+result);
-			
+				boolean check = promotionService.usedCheck(email);//쿠폰 발급받은 이력이 있는 회원인지 조회
+				
+				if(!check) {//발급 이력이 없을 때만 이메일 발송 + DB 저장
+					//성공하면 1, 실패하면 -1 반환
+					int result = promotionService.sendProccess("ise0305@naver.com", req, resp);
+					
+					PrintWriter out = resp.getWriter();
+					out.print(Integer.toString(result));
+					System.out.println("메일 result : "+result);
+				}
+				
+				return;
+				
 			}else if(action.equals("/getDiscount.do")) {//결제화면에서 쿠폰 코드를 입력했을 때?
 				
 				String email = req.getParameter("email");
@@ -284,11 +296,14 @@ public class singleProductController extends HttpServlet {
 				PrintWriter out = resp.getWriter();
 				out.print(Integer.toString(result));
 				
-			}else if(action.equals("/placeOrder.do")) {
+				return;
+				
+			}else if(action.equals("/placeOrder.do")) {//checkout.jsp페이지에서 체크아웃 버튼 눌렀을 때?
 				
 				String email = req.getParameter("email");
 				
 				promotionService.placeOrder(req, resp, email);//쿠키 제거
+				
 				
 				nextPage = "/checkout.jsp";
 			 

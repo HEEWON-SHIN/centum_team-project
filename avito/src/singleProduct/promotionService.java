@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.jvm.hotspot.debugger.cdbg.basic.CompoundTypeKind;
+
 
 
 public class promotionService extends HttpServlet{
 
+	static promoDAO pDao;
+	
 	public static int sendProccess(String email, HttpServletRequest req, HttpServletResponse resp) {
 
 		int result = 0;
@@ -23,7 +25,7 @@ public class promotionService extends HttpServlet{
 		emailInfo.put("to", email);      // 받는 사람
 		emailInfo.put("subject", "쿠폰코드입니다");  // 제목
 
-		// 내용은 메일 포맷에 따라 다르게 처리
+		// 내용
 		String content = "프로모션 코드 : "+promoCode.randomCode(10)+"(발급일로부터 24시간 동안 유효합니다!!)";  // 내용
 		
 	
@@ -41,6 +43,11 @@ public class promotionService extends HttpServlet{
 			    smtpServer.emailSending(emailInfo);      // 전송
 			
 			 result = 1;//성공하면 1 반환
+			 if(result == 1) {
+				 pDao = new promoDAO();
+				 pDao.addEmail(email);
+			 }
+			 
 			
 		} catch (Exception e) {
 			System.out.println("sendService 내부 오류 발생 "+e);
@@ -83,6 +90,13 @@ public class promotionService extends HttpServlet{
 		    }
 		
 		
+	}
+
+	/*DB에 프로모션 코드 발급받은 이력이 없는 이메일 저장*/
+	public static boolean usedCheck(String email) {
+		pDao = new promoDAO();
+		
+		return pDao.usedCheck(email);
 	}
 	
 	

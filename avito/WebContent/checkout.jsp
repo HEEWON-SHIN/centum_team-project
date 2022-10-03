@@ -29,10 +29,12 @@
 						alert("쿠폰번호가 확인되었습니다.");
 						
 						var price = '<span>Discount:</span>'
-									+'<span style="text-decoration:line-through;">$ ${cList.pdPrice}</span>'
-									+'<span style="color: red;">&nbsp;→&nbsp;<b>$ ${cList.pdPrice-10}</b></span>  ';
+									+'<span style="text-decoration:line-through;">$ ${total}</span>'
+									+'<span style="color: red;">&nbsp;→&nbsp;<b>$ ${total-10}</b></span>  ';
 									
 						$("#afterDc").html(price);
+						
+						$("#finalPrice").text(${total-10});//수정 필요할 수도..?
 									
 					}else if(resData == -1){alert("유효하지 않은 쿠폰번호입니다.");}			
 				  }
@@ -116,7 +118,7 @@
                                  <label for="card-cvc">Card Code <span class="required">*</span></label>
                                  <input id="card-cvc" class="form-control"  type="tel" maxlength="4" placeholder="CVC" >
                               </div>
-                              <a href="${contextPath}/single/placeOrder.do?email=${email}" class="btn btn-main mt-20">Place Order</a >
+                              <a href="${contextPath}/single/placeOrder.do?email=${email}&" class="btn btn-main mt-20">Place Order</a >
                            </form>
                         </div>
                      </div>
@@ -127,23 +129,33 @@
                <div class="product-checkout-details">
                   <div class="block">
                      <h4 class="widget-title">Order Summary</h4>
-                     <div class="media product-card">
-                        <a class="pull-left" href="product-single.jsp">
-                           <img class="media-object" src="images/shop/cart/cart-1.jpg" alt="Image" />
-                        </a>
-                        <div class="media-body">
-                           <h4 class="media-heading"><a href="product-single.jsp">Ambassador Heritage 1921</a></h4>
-                           <p class="price">1 x $249</p>
-                           <span class="remove" >Remove</span>
-                        </div>
-                     </div>
+                     
+                     <c:set var="total" value="0"/><!-- 총합계를 구할 변수 -->
+                     <c:forEach var="cList" items="${cList}">
+                     	<c:set var="total" value="${total + cList.pdPrice}"/>
+                     
+	                     <div class="media product-card">
+	                        <a class="pull-left" href="product-single.jsp">
+	                           <img class="media-object" src="images/shop/cart/${cList.pdImg_Main}" alt="Image" />
+	                        </a>
+	                        <div class="media-body">
+	                           <h4 class="media-heading"><a href="product-single.jsp">${cList.pdName}</a></h4>
+	                           <p class="price">1 x $249</p>
+	                           <span class="remove" >Remove</span><!-- 메소드 작성하기 -->
+	                        </div>
+	                     </div>
+                     
+                     
+                     </c:forEach>
+                     
+                     
                      <div class="discount-code">
                         <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
                      </div>
                      <ul class="summary-prices">
                         <li>
                            <span>Subtotal:</span>
-                           <span class="price">$190</span>
+                           <span class="price">$ ${total}</span>
                         </li>
                         <li>
                            <span>Shipping:</span>
@@ -154,7 +166,7 @@
                      </ul>
                      <div class="summary-total">
                         <span>Total</span>
-                        <span>$250</span>
+                        <span id="finalPrice">$ ${total}</span>
                      </div>
                      <div class="verified-icon">
                         <img src="images/shop/verified.png">
