@@ -8,15 +8,16 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
-
+<!------------------------------------ top -->
 <jsp:include page="/inc/top.jsp"></jsp:include>
+<!------------------------------------ top -->
 
 <section class="page-header">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">Contact Us</h1>
+					<h1 class="page-name">메일 보내기</h1>
 					<ol class="breadcrumb">
 						<li><a href="${contextPath}/index.jsp">Home</a></li>
 						<li class="active">contact</li>
@@ -73,8 +74,9 @@
 </section>
 	
 
-
+<!------------------------------------ bottom -->
 <jsp:include page="/inc/bottom.jsp"></jsp:include>
+<!------------------------------------ bottom -->
 
     <!-- 
     Essential Scripts

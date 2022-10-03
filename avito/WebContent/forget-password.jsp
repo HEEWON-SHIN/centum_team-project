@@ -57,8 +57,9 @@ function validateForm() {
              <div class="form-group">
               <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="이메일"/>
              </div>
-           
+           	<div align="center">
 			<button type="submit" class="btn btn-main text-center">패스워드 찾기</button>
+			</div>
           </form>
           <p class="mt-20"><a href="${contextPath}/member/prevlogin.do">로그인화면으로 돌아가기</a></p>
         </div>
@@ -67,7 +68,9 @@ function validateForm() {
   </div>
 </section>
 
+<!------------------------------------ bottom -->
 <jsp:include page="/inc/bottom.jsp"></jsp:include>
+<!------------------------------------ bottom -->
 
     <!-- 
     Essential Scripts
@@ -99,7 +102,7 @@ function validateForm() {
  
  <script>
 	
-//-------------------------------------------------------------------- 이메일 공란		
+//-------------------------------------------------------------------- 이름 공란		
 		
 	$("#name").blur(
 			

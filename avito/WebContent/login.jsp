@@ -6,11 +6,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:out value="${contextPath}"/>
 
 <!DOCTYPE html>
-
+<!------------------------------------ top -->
 <jsp:include page="/inc/top.jsp"></jsp:include>
+<!------------------------------------ top -->
 
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -69,7 +69,9 @@
   </div>
 </section>
 
+<!------------------------------------ bottom -->
 <jsp:include page="/inc/bottom.jsp"></jsp:include>
+<!------------------------------------ bottom -->
 
     <!-- 
     Essential Scripts
