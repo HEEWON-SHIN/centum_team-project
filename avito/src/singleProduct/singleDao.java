@@ -3,6 +3,10 @@ package singleProduct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -20,6 +24,8 @@ public class singleDao {
 	String sql;
 	
 	singleBean sBean;
+	
+	related_Pd_Bean relBean;
 	
 
 	/* DB연결 메소드 */
@@ -85,14 +91,81 @@ public class singleDao {
 			sBean.setpdCategory(rs.getString(6));
 			sBean.setpdInfo(rs.getString(7));
 			
+			sBean.setSale(rs.getString(9));
+			sBean.setSale_Val(rs.getInt(10));
+			
 			
 		} catch (Exception e) {
 			System.out.println("selectProduct메소드 오류 발생 : "+e);
 			e.printStackTrace();
+		}finally {
+			close();
 		}
 		
 		return sBean;
 		
 	}//selectProduct메소드 끝
+	
+	
+	/*글번호로 제품을 조회한 후, 카테고리가 같은 상품을 조회해주는 메소드*/
+	public List<related_Pd_Bean> relatedPd(int pdNum) {
+			
+			List<related_Pd_Bean> relatedList = new ArrayList<related_Pd_Bean>();
+			sBean = new singleBean();		
+			
+			try {
+				
+				sBean = selectProduct(pdNum);
+				String pdCat = sBean.getpdCategory();
+				int no = sBean.getPdNum();
+				
+				con = getCon();
+				sql = "select * from products";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+						
+					if(no != rs.getInt(1)) {						
+						
+						String rel_category = rs.getString("pdCategory");
+						StringTokenizer rel = new StringTokenizer(rel_category, ",");
+						
+						while(rel.hasMoreTokens()) {
+							String token = rel.nextToken();
+							
+							if(pdCat.contains(token)) {
+								
+								relBean = 
+										new related_Pd_Bean(rs.getInt(1), rs.getString(2), rs.getString(3), 
+																		rs.getString(4), rs.getString(9), rs.getInt(10));
+								break;//토큰 while문 빠져나감
+							}
+						}//안쪽 while	
+						
+							if(relatedList.size() != 0) {
+								for(int i=0; i<relatedList.size(); i++) {
+									if(relatedList.indexOf(relBean) == -1) {//리스트에 담겨있지 않은 제품일 때만 리스트에 추가
+										relatedList.add(relBean);
+										
+/*indexOf(Object o)는 인자로 객체를 받습니다.
+ *  리스트의 앞쪽부터 인자와 동일한 객체가 있는지 찾으며, 존재한다면 그 인덱스를 리턴합니다.
+ *  존재하지 않는다면 -1을 리턴합니다.*/
+									}
+								}
+							}else if(relatedList.size() == 0){relatedList.add(relBean);}							
+							
+					}//글번호 판별하는 if문			
+				}//바깥 while						
+				
+			} catch (Exception e) {
+				System.out.println("relatedPd메소드 오류 발생 : "+e);
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+			
+			return relatedList;//리스트에 관련상품을 담아서 서비스로 반환
+		}
 
 }

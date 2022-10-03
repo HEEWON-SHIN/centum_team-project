@@ -13,7 +13,52 @@
  
 <!DOCTYPE html>
 <jsp:include page="/inc/top.jsp"></jsp:include>
+
+<style>
+
+#product-quantity{ width: 195px; height: 34px;}
+
+</style>
+
 <script type="text/javascript">
+
+/***** 카트페이지로 값 넘기기 ******/
+//function sendCart() {
+	
+//	var c = selectColor();
+//	var q = selectQty();
+//	var pNum = $('#pNum').val();
+//	var pName = $('#pName').val();
+//	var pImg = $('#pImg').val();
+//	var cPrice = $('#cPrice').val();
+//	var fPrice = document.getElementById('fPrice').value;
+	
+	
+	
+//// 	if(c=='Color' || q =='0'){
+//// 		alert("상품 옵션을 선택해주세요");
+//// 		return false;
+//// 	}else{
+		
+//		location.href = "${Path}/shop/Cart.do?pNum="+pNum+"&pName="+pName"&cPrice="+cPrice
+//			 		  +"&fPrice="+fPrice+"&pImg="+pImg+"&pdqty="+q+"&pdColor="+c;
+//	//}
+//}
+
+/***** sendCart()메소드로 보낼 컬러 선택한 값 ******/
+function selectColor() {
+
+	var color = $('select[name=color]').val();
+	alert(color);
+	return color;
+} 
+
+/****** sendCart()메소드로 보낼 수량 선택한 값 *******/
+function selectQty() {
+	var pdqty =   $('input[name=product-quantity]').val();
+	alert(pdqty);
+	return pdqty;
+}
 
 /***대분류 온체인지***/
 function OptionChange() {
@@ -52,7 +97,7 @@ function heartAlert(pdnum) {
     
       $.ajax({
     	  
-    	    url: "http://localhost:8081/TeamProject/shop/Heart.do?pdNum="+pdnum,
+    	    url: "http://localhost:8081/avito/shop/Heart.do?pdNum="+pdnum,
 			type: "post",
 			dataType: "text",
 			success: function(data) {
@@ -192,7 +237,7 @@ function heartAlert(pdnum) {
 
 
 	<c:when test="${!empty cateList}">
-		<c:forEach var="cList" items="${cateList}">
+		<c:forEach var="cList" items="${cateList}" varStatus="i">
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
@@ -201,6 +246,13 @@ function heartAlert(pdnum) {
 				   </c:if>
 						<img class="img-responsive" src="${Path}/images/shop/products/${cList.pdImg_Main}" alt="" />
 						<div class="preview-meta">
+						<ul>
+						 <li>
+							<span  data-toggle="modal" data-target="#product-modal${i.count}">
+								<i class="tf-ion-ios-search-strong"></i>
+							</span>
+						 </li>						
+						</ul>						
 						</div>
 						
 					</div>
@@ -233,13 +285,86 @@ function heartAlert(pdnum) {
 						<input type="hidden" id="cartprice" value="${cList.pdPrice}">
 						<input type="hidden" id="pdimg" value="${cList.pdImg_Main}">
 						<a id="cart${cList.pdNum}"
-						href="${Path}/shop/Cart.do?pNum=${cList.pdNum}&pName=${cList.pdName}&cPrice=${cList.pdPrice}&fPrice=${final_price}&pImg=${cList.pdImg_Main}&pdqty=1">
+						href="${Path}/shop/Cart.do?pNum=${cList.pdNum}&pName=${cList.pdName}&cPrice=${cList.pdPrice}&fPrice=${final_price}&pImg=${cList.pdImg_Main}&pdqty=1&pdColor=White">
 						<i class="tf-ion-android-cart"></i>
 						</a>
 					</div>
 
 				</div>
 			</div>
+		
+		
+	<div class="modal product-modal fade" id="product-modal${i.count}">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<i class="tf-ion-close"></i>
+			</button>
+		  	<div class="modal-dialog " role="document">
+		    	<div class="modal-content">
+			      	<div class="modal-body">
+			        	<div class="row">
+			        		<div class="col-md-8 col-sm-6 col-xs-12">
+			        			<div class="modal-image">
+				        			<img class="img-responsive" src="${Path}/images/shop/products/${cList.pdImg_Main}" alt="product-img" />
+			        			</div>
+			        		</div>
+			        		<div class="col-md-4 col-sm-6 col-xs-12">
+			        			<div class="product-short-details">
+			        				<h2 class="product-title">${cList.pdName}</h2>
+							        	
+							        	<c:choose>
+								        	 <c:when test="${cList.sale eq 'y'}">
+								        	    <p class="product-price"><span style="text-decoration:line-through;">$${cList.pdPrice}</span>
+											    &nbsp;<br>
+												<i style="color: red;">${cList.sale_Val}% →&nbsp;</i>  
+												<b style="color: red;">$${final_price}</b> </p>
+								        	 </c:when>
+								        	<c:otherwise>
+								        		<p class="product-price">$ ${cList.pdPrice}</p>
+								        	</c:otherwise>
+							        	</c:choose>
+									<p class="product-short-description">
+			        					${cList.pdInfo}
+			        				</p>
+			        	 
+			        	 <br><br><br>
+			        	 
+			        	 
+			        	 <div class="product-color">
+		                  <span>Color:</span>
+		                  <select class="form-control" name="color" onchange="selectColor()">
+		                   <option>Color</option>
+		                     <option>Black</option>
+		                     <option>White</option>
+		                  </select>
+		               </div>
+   					 <br>
+		               <div class="product-quantity">
+		                  <span>Quantity:</span>
+		                  <div class="product-quantity-slider">
+		                     <input onchange="selectQty()" id="product-quantity" type="text" value="0" name="product-quantity">
+		                  </div>
+		               </div>
+             		
+	             	  <div align="center">
+	       				<a 
+	       				href="${Path}/shop/Cart.do?pNum=${cList.pdNum}&pName=${cList.pdName}&cPrice=${cList.pdPrice}&fPrice=${final_price}&pImg=${cList.pdImg_Main}&pdqty=1&pdColor=White" 
+	       				class="btn btn-main">Add To Cart</a>
+	       				
+	       			
+	       				<a href="${Path}/single/viewSingle.do?pdNum=${cList.pdNum}" class="btn btn-transparent">View Product Details</a>
+	       			  </div> 		        		
+					
+			        			</div>
+			        		</div>
+			        	</div>
+			        </div>
+		    	</div>
+		  	</div>
+		</div>			
+		
+		
+		
+		
 		</c:forEach>
 	</c:when>
 
@@ -266,36 +391,7 @@ function heartAlert(pdnum) {
 			
 			
 		
-		<!-- Modal -->
-		<div class="modal product-modal fade" id="product-modal">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<i class="tf-ion-close"></i>
-			</button>
-		  	<div class="modal-dialog " role="document">
-		    	<div class="modal-content">
-			      	<div class="modal-body">
-			        	<div class="row">
-			        		<div class="col-md-8 col-sm-6 col-xs-12">
-			        			<div class="modal-image">
-				        			<img class="img-responsive" src="${Path}/images/shop/products/modal-product.jpg" alt="product-img" />
-			        			</div>
-			        		</div>
-			        		<div class="col-md-4 col-sm-6 col-xs-12">
-			        			<div class="product-short-details">
-			        				<h2 class="product-title">GM Pendant, Basalt Grey</h2>
-			        				<p class="product-price">$200</p>
-			        				<p class="product-short-description">
-			        					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem iusto nihil cum. Illo laborum numquam rem aut officia dicta cumque.
-			        				</p>
-			        				<a href="${Path}/cart.jsp" class="btn btn-main">Add To Cart</a>
-			        				<a href="${Path}/product-single.jsp" class="btn btn-transparent">View Product Details</a>
-			        			</div>
-			        		</div>
-			        	</div>
-			        </div>
-		    	</div>
-		  	</div>
-		</div><!-- /.modal -->
+		
 
 				</div>				
 			</div>

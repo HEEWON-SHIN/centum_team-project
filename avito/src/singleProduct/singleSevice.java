@@ -1,5 +1,7 @@
 package singleProduct;
 
+import java.util.List;
+
 public class singleSevice {
 
 	singleDao sDao;
@@ -13,8 +15,15 @@ public class singleSevice {
 	public singleBean product(int pdNum) {
 		
 		return sDao.selectProduct(pdNum); 
-		
-		
+	
 	}
+
+	/*관련상품 조회*/
+	public List<related_Pd_Bean> relatedPd(int pdNum) {
+		
+		return sDao.relatedPd(pdNum);
+	}
+	
+	
 
 }

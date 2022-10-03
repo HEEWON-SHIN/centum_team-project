@@ -15,12 +15,13 @@
 
 <script>
 
+/**** 수량이 0이면 체크아웃으로 못 넘어갓! ****/
 function beforeCH() {
 	
-		var c = $('select[name=color]').val();
+		var qty = $('#product-quantity').val();
 	 				
-		if(c == 'color'){
-			alert("color 옵션을 선택해 주세요를레히이이이히잉~");
+		if(qty == '0'){
+			alert("수량을 선택해 주세요.");
 			return false;
 		}		
 }
@@ -30,10 +31,10 @@ function beforeCH() {
 <style>
 
 	.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-		margin-left: -19px;
+		margin-left: -25px;
 	}
 	
-	#product-quantity{ width: 50px; height: 34px;}
+	#product-quantity{ width: 55px; height: 34px;}
 
 </style>
 
@@ -115,28 +116,7 @@ function beforeCH() {
 												
 												<td class="" align="center">Free</td>
 												
-												<td class="" align="center" id="item-color">
-													<div class="product-size">
-														<select class="form-control" onchange="colorCH()" id="color" name="color">
-															
-															
-															<c:choose>
-																<c:when test="${!empty cList.pdColor}">
-																<option>${cList.pdColor}</option>
-																</c:when>
-																<c:otherwise>
-																<option>color</option>
-																</c:otherwise>
-															</c:choose>														
-															
-															
-															
-															
-															<option>black</option>
-															<option>white</option>
-														</select>
-													</div>
-												</td>
+												<td class="" align="center" id="item-color">${cList.pdColor}</td>
 											
 											<td class="" align="center" id="item-quantity">		
 												<div class="product-quantity-slider">
@@ -146,7 +126,7 @@ function beforeCH() {
 
 												<td class="">
 												<a class="product-remove"
-												   href="${contextPath}/shop/RemoveCart.do?pdNum=${cList.pdNum}">Remove</a>
+												   href="${contextPath}/shop/RemoveCart.do?pdName=${cList.pdName}&pdColor=${cList.pdColor}">Remove</a>
 												</td>
 											</tr>
 										</tbody>
@@ -156,7 +136,7 @@ function beforeCH() {
 									<a href="${contextPath}/shop/SelectCategory.do?option=all"
 								       class="btn btn-main ">MORE</a> &nbsp;
 								    <a href="${contextPath}/shop/AllRemoveCart.do"
-								       class="btn btn-main ">ALL REMOVE</a> &nbsp; 
+								       class="btn btn-main ">REMOVE ALL</a> &nbsp; 
 								 	<input type="submit" value="CHECKOUT"
 								       class="btn btn-main " >
 

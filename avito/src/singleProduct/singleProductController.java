@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -81,9 +82,14 @@ public class singleProductController extends HttpServlet {
 				
 				/*글번호를 기준으로 부모 리뷰글 갯수를 조회*/
 				int totReviews = reviewService.countReviews(Integer.parseInt(req.getParameter("pdNum")));
-				 
+				
+				/*카테고리가 같은 상품 조회*/
+				List<related_Pd_Bean> relatedList = singleSevice.relatedPd(Integer.parseInt(req.getParameter("pdNum")));
+				
+				
 				req.setAttribute("sBean", sBean);
 				req.setAttribute("totReviews", totReviews);
+				req.setAttribute("relatedList", relatedList);
 				
 				nextPage = "/product-single.jsp";
 			
@@ -257,7 +263,35 @@ public class singleProductController extends HttpServlet {
 				out.print(Integer.toString(result));
 				
 				return;
+				
+				
+			}else if(action.equals("/sendPromoCode.do")) {//쿠폰 다운로드 버튼을 눌렀을 때?
+				
+				String email = req.getParameter("email");
+				
+				int result = promotionService.sendProccess("ise0305@naver.com", req, resp);
+				 
+				System.out.println("메일 result : "+result);
 			
+			}else if(action.equals("/getDiscount.do")) {//결제화면에서 쿠폰 코드를 입력했을 때?
+				
+				String email = req.getParameter("email");
+				String code = req.getParameter("code");
+				
+				
+				int result = promotionService.getDiscount(req, email, code);
+				
+				PrintWriter out = resp.getWriter();
+				out.print(Integer.toString(result));
+				
+			}else if(action.equals("/placeOrder.do")) {
+				
+				String email = req.getParameter("email");
+				
+				promotionService.placeOrder(req, resp, email);//쿠키 제거
+				
+				nextPage = "/checkout.jsp";
+			 
 			}else {
 				nextPage = "/product-single.jsp";
 			}

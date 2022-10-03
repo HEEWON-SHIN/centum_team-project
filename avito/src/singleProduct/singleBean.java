@@ -9,7 +9,8 @@ public class singleBean {
 	private String pdImg_Sub;
 	private String pdInfo;
 	private String pdCategory;
-
+	private int sale_Val;
+	private String sale;
 	
 	public singleBean() {
 		
@@ -106,6 +107,56 @@ public class singleBean {
 
 	public void setpdCategory(String pdCategory) {
 		this.pdCategory = pdCategory;
+	}
+
+
+	public String getPdImg_Main() {
+		return pdImg_Main;
+	}
+
+
+	public void setPdImg_Main(String pdImg_Main) {
+		this.pdImg_Main = pdImg_Main;
+	}
+
+
+	public String getPdInfo() {
+		return pdInfo;
+	}
+
+
+	public void setPdInfo(String pdInfo) {
+		this.pdInfo = pdInfo;
+	}
+
+
+	public String getPdCategory() {
+		return pdCategory;
+	}
+
+
+	public void setPdCategory(String pdCategory) {
+		this.pdCategory = pdCategory;
+	}
+
+
+	public int getSale_Val() {
+		return sale_Val;
+	}
+
+
+	public void setSale_Val(int sale_Val) {
+		this.sale_Val = sale_Val;
+	}
+
+
+	public String getSale() {
+		return sale;
+	}
+
+
+	public void setSale(String sale) {
+		this.sale = sale;
 	}
 
 

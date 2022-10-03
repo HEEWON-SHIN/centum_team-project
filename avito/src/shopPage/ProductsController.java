@@ -113,39 +113,56 @@ public class ProductsController extends HttpServlet {
 					int pdQty = Integer.parseInt( req.getParameter("pdqty"));
 					String finalPrice = req.getParameter("fPrice");
 					String pdColor = req.getParameter("pdColor");
-					System.out.println(pdColor);
+					System.out.println("cart클릭" + pdColor);
+					System.out.println("cart클릭" + pdName);
+					System.out.println("cart클릭" + pdQty);
 					
 				    cartVO = new CartVO(pdNum, pdName, cartPrice, pdImg_Main, pdQty,finalPrice,pdColor);
-									  
-				   			    
-					boolean alreadycart = false;
-					
-					//이미 카트에 담겨있는 orgVO 객체 for문으로 꺼내서 새로 추가되는 cartVO랑 비교 
+				 
+				    boolean alreadycart = false;
+				    //이미 카트에 담겨있는 orgVO 객체 for문으로 꺼내서 새로 추가되는 cartVO랑 비교 
 					for (CartVO orgVO : cartList) {
-						
-						if(cartVO.getPdColor()==null) {
-							if(orgVO.getPdNum() ==  cartVO.getPdNum() ) {
-							orgVO.setPdQty(orgVO.getPdQty()+cartVO.getPdQty());
-							
-							alreadycart = true;
-							break;
-							}
-						}else if(cartVO.getPdColor()!=null) {	
-							
-							if(orgVO.getPdColor() == cartVO.getPdColor() && orgVO.getPdNum() ==  cartVO.getPdNum()) {
+
+						System.out.println("원래" + orgVO.getPdColor());		
+						System.out.println("원래" + orgVO.getPdName());	
+						System.out.println("원래" + orgVO.getPdQty());	
+						 if(orgVO != null) {	
+
+							if(orgVO.getPdColor().equals( cartVO.getPdColor() ) && orgVO.getPdName().equals(cartVO.getPdName()) ) {
 								orgVO.setPdQty(orgVO.getPdQty()+cartVO.getPdQty());
-							
+
 							alreadycart = true;
 							break;
 							}
 						}
 					}//for문
-					
+
 					//기존 상품이 없는 경우
 					if(alreadycart==false) {
 						cartList.add(cartVO);
-					}
+					}				  
+				   			    
 					
+					
+					//이미 카트에 담겨있는 orgVO 객체 for문으로 꺼내서 새로 추가되는 cartVO랑 비교 
+//					for (CartVO orgVO : cartList) {
+//						System.out.println("원래" + orgVO.getPdColor());		
+//						System.out.println("원래" + orgVO.getPdName());	
+//							if(orgVO.getPdName() == cartVO.getPdName()) {
+//								orgVO.setPdQty(orgVO.getPdQty()+ cartVO.getPdQty());
+//								
+//							
+//							alreadycart = true;
+//							break;
+//							}
+//						
+//					}//for문
+//					
+//					//기존 상품이 없는 경우
+//					if(alreadycart==false) {
+//						cartList.add(cartVO);
+//					}
+//					
 							
 					session = req.getSession();
 					session.setAttribute("cList", cartList);
@@ -153,10 +170,11 @@ public class ProductsController extends HttpServlet {
 					nextPage = "/cart.jsp";
 		
 					
-		/****카트페이지에서 상품별 리무브 클릭*****/	
+		/**** 카트페이지에서 상품별 리무브 클릭 *****/	
 				}else if(action.equals("/RemoveCart.do")) {	
 					
-					int pdnum = Integer.parseInt(req.getParameter("pdNum")); 
+					String pdName = req.getParameter("pdName");
+					String pdColor = req.getParameter("pdColor");
 					session = req.getSession(true);
 					cartList = (List<CartVO>) session.getAttribute("cList");
 					System.out.println(cartList);
@@ -176,14 +194,15 @@ public class ProductsController extends HttpServlet {
 					//임시리시트 만들기
 					List<CartVO> removed = new ArrayList<CartVO>();
 						for (CartVO cartVO : cartList) {
-							if (cartVO.getPdNum()== pdnum) {
+							if (cartVO.getPdName().equals(pdName) && cartVO.getPdColor().equals(pdColor)) {
 								removed.add(cartVO);
 							}
 						}
 					cartList.removeAll(removed);
 					
 					nextPage = "/cart.jsp";
-					
+			
+		/**** 카트페이지에서 전체 리무브 클릭 *****/			
 				}else if(action.equals("/AllRemoveCart.do")) {
 					//카트아이콘 클릭할때 세션에 저장했던 cList를 제거할려니까 또 안됨... 
 					//아예 통째로 cList를 세션에서 제거하는 건데도.. 카트페이지에서는 한꺼번에 삭제됐다가.. 
@@ -197,6 +216,8 @@ public class ProductsController extends HttpServlet {
 								removed.add(cartVO);
 						}
 					cartList.removeAll(removed);
+					
+					session.removeAttribute("cList");
 					
 					nextPage = "/cart.jsp";
 				
@@ -226,40 +247,40 @@ public class ProductsController extends HttpServlet {
 		}// doHandle 메소드 끝
 	
 	//카트페이지에 상품 담기위한 클래스
-	public class Cart{
+//	public class Cart{
+//		
+//		private List<CartVO> cartList = new ArrayList<CartVO>();
+//		
+//		//list안에 cartVO객체 리턴하는 메소드
+//		public List<CartVO> getCartList(){
+//			
+//			return cartList;
+//			
+//		}
+//		
+//		public void push(CartVO newVO) {
+//			
+//			//이미 카트에 담겨있는지 알아내는 변수
+//			boolean alreadycart = false;
+//			
+//			//이미 카트에 담겨있는 cartVO 객체 for문으로 꺼내서 새로 추가되는 newVO랑 비교 
+//			for (CartVO cartVO : cartList) {
+//				
+//				if(cartVO.getPdName() == newVO.getPdName() ) {
+//					cartVO.setPdQty(cartVO.getPdQty()+newVO.getPdQty());
+//					
+//					alreadycart = true;
+//					break;
+//				}
+//			
+//			}//for문
+//			
+//			//기존 상품이 없는 경우
+//			if(alreadycart==false) {
+//				cartList.add(newVO);
+//			}
+//		}// push 메소드 끝
 		
-		private List<CartVO> cartList = new ArrayList<CartVO>();
-		
-		//list안에 cartVO객체 리턴하는 메소드
-		public List<CartVO> getCartList(){
-			
-			return cartList;
-			
-		}
-		
-		public void push(CartVO newVO) {
-			
-			//이미 카트에 담겨있는지 알아내는 변수
-			boolean alreadycart = false;
-			
-			//이미 카트에 담겨있는 cartVO 객체 for문으로 꺼내서 새로 추가되는 newVO랑 비교 
-			for (CartVO cartVO : cartList) {
-				
-				if(cartVO.getPdName() == newVO.getPdName() ) {
-					cartVO.setPdQty(cartVO.getPdQty()+newVO.getPdQty());
-					
-					alreadycart = true;
-					break;
-				}
-			
-			}//for문
-			
-			//기존 상품이 없는 경우
-			if(alreadycart==false) {
-				cartList.add(newVO);
-			}
-		}// push 메소드 끝
-		
-	}// Cart 메소드 끝
+//	}// Cart 메소드 끝
 		
 }//컨트롤러
