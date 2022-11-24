@@ -14,34 +14,44 @@
 
 <script>
 
+
+
+		
 	function getDiscount() {
+		var tot = $('#subtotal').text();
+var finalprice = tot-10;
 		
 		var code = $("#code").val();
-		var email = ${email};
+		var email = $("#email").val();
+		alert(tot);
+		console.log("tot="+tot);
+		console.log("finalprice는"+finalprice);
 		
 		$.ajax({
-				url:'${contextPath}/single//sendPromoCode.do?code='+code+'&email='+email,
-				type:"post",	
+				url:'${contextPath}/single/getDiscount.do?code='+code+'&email='+email,
+				type:'post',	
 		      	dataType : 'text',		 		
 				success:function(resData){
 					
 					if(resData == 1){
-						alert("쿠폰번호가 확인되었습니다.");
+						alert("쿠폰번호가 확인되었습니다.");	
 						
-						var price = '<span>Discount:</span>'
-									+'<span style="text-decoration:line-through;">$ ${total}</span>'
-									+'<span style="color: red;">&nbsp;→&nbsp;<b>$ ${total-10}</b></span>  ';
+						var price = '<li><span>Discount:</span>'
+									+'<span style="text-decoration:line-through;">'+tot+'</span>'
+									+'<span style="color: red;">&nbsp;→&nbsp;<b>'+finalprice+'</b></span><li>';
 									
-						$("#afterDc").html(price);
+						$("#applyCoupon").html(price);
 						
-						$("#finalPrice").text(${total-10});//수정 필요할 수도..?
-									
+						$("#finalPrice").text(finalprice);//수정 필요할 수도..?
+						return false;		
+								
 					}else if(resData == -1){alert("유효하지 않은 쿠폰번호입니다.");}			
-				  }
-			});
+			}
 		
+	});
+		
+		return false;
 	}
-
 
 
 </script>
@@ -118,7 +128,7 @@
                                  <label for="card-cvc">Card Code <span class="required">*</span></label>
                                  <input id="card-cvc" class="form-control"  type="tel" maxlength="4" placeholder="CVC" >
                               </div>
-                              <a href="${contextPath}/single/placeOrder.do?email=${email}&" class="btn btn-main mt-20">Place Order</a >
+                              <a href="${contextPath}/single/placeOrder.do?email=${email}" class="btn btn-main mt-20">Place Order</a >
                            </form>
                         </div>
                      </div>
@@ -132,15 +142,15 @@
                      
                      <c:set var="total" value="0"/><!-- 총합계를 구할 변수 -->
                      <c:forEach var="cList" items="${cList}">
-                     	<c:set var="total" value="${total + cList.pdPrice}"/>
+                     	<c:set var="total" value="${total + cList.finalPrice}"/>
                      
 	                     <div class="media product-card">
 	                        <a class="pull-left" href="product-single.jsp">
-	                           <img class="media-object" src="images/shop/cart/${cList.pdImg_Main}" alt="Image" />
+	                           <img class="media-object" src="${contextPath}/images/shop/products/${cList.pdImg_Main}" alt="Image" />
 	                        </a>
 	                        <div class="media-body">
-	                           <h4 class="media-heading"><a href="product-single.jsp">${cList.pdName}</a></h4>
-	                           <p class="price">1 x $249</p>
+	                           <h4 class="media-heading"><a href="product-single.jsp">${cList.pdName}</h4>
+	                           <p class="price">${cList.pdQty} x $ ${cList.finalPrice}</p>
 	                           <span class="remove" >Remove</span><!-- 메소드 작성하기 -->
 	                        </div>
 	                     </div>
@@ -150,26 +160,31 @@
                      
                      
                      <div class="discount-code">
-                        <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
+                        <p>Have a discount ? <a href="#!" data-toggle="modal" data-target="#coupon-modal" style="cursor: pointer;">enter it here</a></p>
                      </div>
                      <ul class="summary-prices">
                         <li>
                            <span>Subtotal:</span>
-                           <span class="price">$ ${total}</span>
+                           <span class="price">$<span id="subtotal">${total}</span></span>
                         </li>
                         <li>
                            <span>Shipping:</span>
                            <span>Free</span>
                         </li>
-                        <li id="afterDc">
-                        </li>
+                        
                      </ul>
+                     
+                     <ul id="applyCoupon">
+                     	<!-- 쿠폰 적용 -->
+                     </ul>
+                     
+                     
                      <div class="summary-total">
                         <span>Total</span>
                         <span id="finalPrice">$ ${total}</span>
                      </div>
                      <div class="verified-icon">
-                        <img src="images/shop/verified.png">
+                        <img src="${contextPath}/images/shop/verified.png">
                      </div>
                   </div>
                </div>
@@ -185,10 +200,10 @@
             <div class="modal-body">
                <form >
                   <div class="form-group">
-                     <input name="code" id="code" class="form-control" type="text" placeholder="Enter Coupon Code">
-                     <input name="email" id="email" type="hidden"  value="${email}">
+                     <input name="code" id="code" class="form-control" type="text" placeholder="Enter Coupon Code"/>
+                     <input name="email" id="email" type="hidden"  value="${email}"/>
                   </div>
-                  <button onclick="getDiscount();"  class="btn btn-main">Apply Coupon</button>
+                  <button onclick="return getDiscount();" class="btn btn-main">Apply Coupon</button>
                </form>
             </div>
          </div>
@@ -201,28 +216,28 @@
     =====================================-->
     
     <!-- Main jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <script src="${contextPath}/plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- Bootstrap Touchpin -->
-    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="${contextPath}/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
     <!-- Instagram Feed Js -->
-    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <script src="${contextPath}/plugins/instafeed/instafeed.min.js"></script>
     <!-- Video Lightbox Plugin -->
-    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <script src="${contextPath}/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
     <!-- Count Down Js -->
-    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+    <script src="${contextPath}/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
 
     <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/slick/slick-animation.min.js"></script>
+    <script src="${contextPath}/plugins/slick/slick.min.js"></script>
+    <script src="${contextPath}/plugins/slick/slick-animation.min.js"></script>
 
     <!-- Google Mapl -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+    <script type="text/javascript" src="${contextPath}/plugins/google-map/gmap.js"></script>
 
     <!-- Main Js File -->
-    <script src="js/script.js"></script>
+    <script src="${contextPath}/js/script.js"></script>
     
 
 

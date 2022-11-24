@@ -11,6 +11,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import cartPage.CartVO;
+
 
 
 //MVC중 Model역할하는 DB관련 작업하는 클래스
@@ -63,7 +65,7 @@ public class ProductsDAO {
 	
 	
 	
-	/***** side-bar에서 선택한 카테고리에 일치하는 상품만 조회해오는 메소드 *****/
+	/***** 전체 상품 조회 포함 side-bar에서 선택한 카테고리에 일치하는 상품만 조회해오는 메소드 *****/
 	public List<ProductsVO> selectCategory(ProductsVO productsVO) {
 		
 		String option = productsVO.getOption();
@@ -177,6 +179,44 @@ public class ProductsDAO {
 		}
 		return productVO;
 	}// selectOneProduct 메소드 끝
+	
+
+	
+	
+	/**** 카트 페이지에 세션으로 넘겨줄 상품 조회하는 메소드 ******/	
+	public CartVO selectCartProduct(int pdNum) {
+		
+		CartVO cartVO = new CartVO();
+		
+		try {
+			
+			conn = dataFactory.getConnection();
+			sql = "select * from products where pdNum = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pdNum);
+			rs = pstmt.executeQuery();			
+			
+			rs.next();
+				
+			 cartVO.setPdNum(rs.getInt("pdNum"));
+			 cartVO.setPdName(rs.getString("pdName"));
+			 cartVO.setCartPrice(rs.getString("pdPrice"));
+			 cartVO.setPdImg_Main(rs.getString("pdImg_Main"));
+			 cartVO.setPdImg_Sub(rs.getString("pdImg_Sub"));
+			 cartVO.setPdCategory(rs.getString("pdCategory"));
+			 cartVO.setSale(rs.getString("sale"));
+			 cartVO.setSale_Val(rs.getInt("sale_Val"));
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
+		return cartVO;
+	}// selectCartProduct 메소드 끝
+	
 	
 	
 	

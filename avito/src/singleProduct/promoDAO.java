@@ -87,7 +87,7 @@ public class promoDAO {
 		
 		try {
 			con = getCon();
-			sql = "insert into promocode (email) set (?) ";
+			sql = "insert into promocode set email=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);
 			pstmt.executeUpdate();			

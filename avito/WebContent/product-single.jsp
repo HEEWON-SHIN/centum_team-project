@@ -4,16 +4,18 @@
 <!DOCTYPE html>
  
 <%request.setCharacterEncoding("utf-8");%>
-	
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+   
+   <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <%-- JSTL라이브러리의 Formatting태그들을 사용하기 위해 taglib 지시자를 선언 --%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+ <fmt:parseNumber value="${sBean.pdPrice*(100-sBean.sale_Val)/100}" var="final_price" integerOnly="true"/>
 
 <jsp:include page="./inc/top.jsp"></jsp:include> 
+
 
 <style>
 	#paging{margin-left: 80px;}
@@ -42,9 +44,28 @@
 <%-- <% singleBean sBean = (singleBean)request.getAttribute("sBean"); %>
 <%=sBean.getPdNum()%> --%>
 
+
+
 <script>
 
+//카트페이지로 값 넘겨주기
+function sendCart() {
+	
+	var pdqty =   $('input[name=product-quantity]').val();
 
+	var color = selectColor();
+	
+	location.href = "${contextPath}/shop/Cart.do?pNum=${sBean.pdNum}&pName=${sBean.pdName}&cPrice=${sBean.pdPrice}"
+				  +"&fPrice=${final_price}&pImg=${sBean.pdImg_Main}&pdqty="+pdqty+"&pdColor="+color;
+}
+
+// sendCart()메소드로 보낼 컬러 선택한 값 
+function selectColor() {
+	
+	var color = $('select[name=color]').val();
+	
+	return color;
+} 
 
 var os = 0;
 
@@ -433,22 +454,29 @@ function rp_delete(rNo) {
 }
 
 /*쿠폰 다운로드 전 회원 확인 메소드*/
-function email(email) {
-// 	if(email == null || email == ""){
-// 		if(!confirm("로그인 후에 이용해주세요.")){
-// 		    return false;
-// 		}else{location.href="${contextPath}/login.jsp";}
-// 	}else{
-		
-		$.ajax({	url:'${contextPath}/single/sendPromoCode.do?email='+email,
+function email() {
+	
+	var email = $("#Email").text();
+
+	if(email == null || email == ""){
+		if(!confirm("로그인 후에 이용해주세요.")){
+		    return false;
+		}else{//location.href="${contextPath}/login.jsp";
+			
+		}
+	}else{
+	
+		$.ajax({	url:'${contextPath}/single/sendPromoCode.do?email='+email+'&name='+name,
 			type:"post",			
 	      	dataType : 'text',//응답받을 데이터 타입	 		
 			success:function(resData){
-				alert("이메일로 프로모션 코드가 발송되었습니다. 프로모션 코드는 발급일로부터 24시간 동안 유효합니다.");
+				
+				if(resData == 1){alert("이메일로 프로모션 코드가 발송되었습니다. 프로모션 코드는 발급일로부터 24시간 동안 유효합니다.");}
+				else if(resData == -1){alert("프로모션 코드 전송에 실패했습니다. 잠시 후에 다시 시도해주세요.");}
 			}		
 		});	
 		
-// 	}
+ 	}
 }
 
 
@@ -469,7 +497,7 @@ function email(email) {
 			
 		</div>
 	<!-- 카트 넣기 -->	
-	<form action="${contextPath}/single/addCart.do" method="post" enctype="multipart/form-data">
+	<form action="#" method="post" enctype="multipart/form-data">
 	
 	
 		<div class="row mt-20">
@@ -553,8 +581,6 @@ function email(email) {
 				
 					<h2 >${sBean.pdName}</h2>
 					
-					<fmt:parseNumber value="${sBean.pdPrice*(100-sBean.sale_Val)/100}" var="final_price" integerOnly="true"/>
-					
 					
 					<c:choose>
 						<c:when test="${sBean.sale eq 'n'}"><p class="product-price">$ ${sBean.pdPrice}</p></c:when>
@@ -569,7 +595,7 @@ function email(email) {
 					
 					<div class="product-size">
 						<span>Color:</span>
-						<select class="form-control" name="size">
+						<select class="form-control" name="color" onchange="selectColor()">
 							<option>Black</option>
 							<option>White</option>
 							
@@ -582,7 +608,7 @@ function email(email) {
 					<div class="product-quantity">
 						<span>Quantity:</span>
 						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
+							<input id="product-quantity" type="text" value="1" name="product-quantity">
 						</div>
 					</div>
 					<div class="product-category">
@@ -596,10 +622,13 @@ function email(email) {
 							<c:if test = "${fn:contains(sBean.pdCategory, 'muffler')}"><li><a href="${contextPath}/product-single.jsp" onclick="return false;">Muffler</a></li></c:if>
 						</ul>
 					</div>
+					
+					
 					<div class="product-category">
 						<span>Coupon:</span>
-						<a style="cursor:pointer;" id="down" class="btn btn-small btn-solid-border" onclick="return email(${email});">Download</a>
-						<!-- <i class="join" style="color: orange;">회원가입을 해주세요</i> -->
+						<a style="cursor:pointer;" id="down" class="btn btn-small btn-solid-border" onclick="return email();">Download</a>
+						<a hidden id="Email">${email}</a>
+					
 					</div>
 				
 					<input type="hidden" name="name" value="${name}">
@@ -608,7 +637,7 @@ function email(email) {
 					<input type="hidden" name="pdName" value="${sBean.pdName}">
 					<input type="hidden" name="pdPrice" value="${sBean.pdPrice}">
 				
-					<input type="submit" class="btn btn-main mt-20" id="" value="Add To Cart">
+					<input type="button" class="btn btn-main mt-20" id="" value="Add To Cart"  onclick="sendCart()">
 				</div>
 			</div>
 		</div>

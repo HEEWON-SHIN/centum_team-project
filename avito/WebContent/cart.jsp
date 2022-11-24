@@ -13,17 +13,27 @@
 
 <jsp:include page="./inc/top.jsp"></jsp:include>
 
+<script>
+
+function beforeCH() {
+	
+		var c = $('select[name=color]').val();
+	 				
+		if(c == 'color'){
+			alert("color 옵션을 선택해 주세요를레히이이이히잉~");
+			return false;
+		}		
+}
+
+</script>
 
 <style>
 
 	.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-		margin-left: -17px;
+		margin-left: -19px;
 	}
 	
-
-
-	#product-quantity{ width: 51px; height: 34px;}
-
+	#product-quantity{ width: 50px; height: 34px;}
 
 </style>
 
@@ -46,7 +56,7 @@
 
 <c:choose>
 
-<c:when test="${!empty productsVO}">
+<c:when test="${!empty cList}">
 
 	<div class="page-wrapper">
 		<div class="cart shopping">
@@ -56,7 +66,7 @@
 						<div class="block">
 							<div class="product-list">
 
-								<form method="post">
+								<form method="post" action="${contextPath}/checkout.jsp" onsubmit="return beforeCH()">
 									<table class="table">
 										<thead>
 											<tr>
@@ -64,56 +74,80 @@
 												<th class="">Item Name</th>
 												<th class="">Item Price</th>
 												<th class="">Item Size</th>
-
 												<th class="">Item Color</th>
 												<th class="">Item Quantity</th>
-
 												<th class="">Actions</th>
 											</tr>
 										</thead>
  
-									<c:forEach var="productsVO" items="${productsVO}">
+									<c:forEach var="cList" items="${cList}">
 										<tbody>
 											<tr class="">												
 												
 												<td class="" align="center" id="item-image">
 												<img width="80"
-													 src="${contextPath}/images/shop/products/${productsVO.pdImg_Main}"/>
+													 src="${contextPath}/images/shop/products/${cList.pdImg_Main}"/>
 												</td>
 												
 												<td class="" id="item-name">
 													<div style="text-align: center;">
-														<a href="${contextPath}/product-single.jsp"><b>${productsVO.pdName}</b></a>
+														<a href="${contextPath}/single/viewSingle.do?pdNum=${cList.pdNum}"><b>${cList.pdName}</b></a>
 													</div>
 												
 												</td>
+											
 												
-												<td class="" align="center" id="item-price">$${productsVO.pdPrice}</td>
+												
+												<c:choose>
+													<c:when test="${cList.cartPrice != cList.finalPrice }">
+													<td class="" align="center" id="item-price"> 
+														<span style="text-decoration: line-through;"> $${cList.cartPrice}</span>
+														<b style="color: red";>$${cList.finalPrice}</b>
+													</td>
+													</c:when>
+												    
+												    <c:otherwise>
+												   	 <td class="" align="center" id="item-price">$${cList.cartPrice}</td>
+												    </c:otherwise>
+												</c:choose>
+												
+										
 												
 												<td class="" align="center">Free</td>
 												
 												<td class="" align="center" id="item-color">
 													<div class="product-size">
-														<select class="form-control">
-															<option>color</option>
+														<select class="form-control" onchange="colorCH()" id="color" name="color">
+															
+															
+															<c:choose>
+																<c:when test="${!empty cList.pdColor}">
+																<option>${cList.pdColor}</option>
+																</c:when>
+																<c:otherwise>
+																<option>color</option>
+																</c:otherwise>
+															</c:choose>														
+															
+															
+															
+															
 															<option>black</option>
 															<option>white</option>
 														</select>
 													</div>
 												</td>
-
 											
 											<td class="" align="center" id="item-quantity">		
 												<div class="product-quantity-slider">
-												<input id="product-quantity" type="text" value="0" name="product-quantity">
+												<input id="product-quantity" type="text" value="${cList.pdQty}" name="product-quantity">
 												</div>	
 											</td>
 
 												<td class="">
 												<a class="product-remove"
-												   href="${contextPath}/shop/RemoveCart.do">Remove</a>
+												   href="${contextPath}/shop/RemoveCart.do?pdNum=${cList.pdNum}">Remove</a>
 												</td>
-
 											</tr>
 										</tbody>
 									</c:forEach>																		
@@ -121,8 +155,10 @@
 								<div align="right">
 									<a href="${contextPath}/shop/SelectCategory.do?option=all"
 								       class="btn btn-main ">MORE</a> &nbsp;
-								 	<a href="${contextPath}/checkout.jsp"
-								       class="btn btn-main ">Checkout</a>
+								    <a href="${contextPath}/shop/AllRemoveCart.do"
+								       class="btn btn-main ">ALL REMOVE</a> &nbsp; 
+								 	<a href="${contextPath}/single/checkout.do">	<input style="cursor: pointer;" value="CHECKOUT" class="btn btn-main " ></a>
+
 								</div>  	
 							</form>
 								

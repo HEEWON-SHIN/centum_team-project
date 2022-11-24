@@ -271,12 +271,13 @@ public class singleProductController extends HttpServlet {
 			}else if(action.equals("/sendPromoCode.do")) {//product-single.jsp페이지에서 쿠폰 다운로드 버튼을 눌렀을 때?
 				
 				String email = req.getParameter("email");
+				int result = -1;
 				
 				boolean check = promotionService.usedCheck(email);//쿠폰 발급받은 이력이 있는 회원인지 조회
 				
 				if(!check) {//발급 이력이 없을 때만 이메일 발송 + DB 저장
 					//성공하면 1, 실패하면 -1 반환
-					int result = promotionService.sendProccess("ise0305@naver.com", req, resp);
+					result = promotionService.sendProccess(email, req, resp);
 					
 					PrintWriter out = resp.getWriter();
 					out.print(Integer.toString(result));
@@ -303,10 +304,15 @@ public class singleProductController extends HttpServlet {
 				String email = req.getParameter("email");
 				
 				promotionService.placeOrder(req, resp, email);//쿠키 제거
+				System.out.println("쿠키가 정상적으로 삭제됐습니다.");
+				
+				nextPage = "/confirmation.jsp";
+			 
+			}else if(action.equals("/checkout.do")){//cart.jsp페이지에서 checkout 눌렀을 때
 				
 				
 				nextPage = "/checkout.jsp";
-			 
+				
 			}else {
 				nextPage = "/product-single.jsp";
 			}

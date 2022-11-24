@@ -1,5 +1,6 @@
 package singleProduct;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,11 +23,11 @@ public class promotionService extends HttpServlet{
 		// 폼값(이메일 내용) 저장
 		Map<String, String> emailInfo = new HashMap<String, String>();
 		emailInfo.put("from", "kahncho0713@naver.com");  // 보내는 사람
-		emailInfo.put("to", email);      // 받는 사람
-		emailInfo.put("subject", "쿠폰코드입니다");  // 제목
+		emailInfo.put("to", "ise0305@naver.com");      // 받는 사람
+		emailInfo.put("subject", "$10 할인 쿠폰코드입니다~~발급일로부터 24시간 동안 유효합니다!!");  // 제목
 
 		// 내용
-		String content = "프로모션 코드 : "+promoCode.randomCode(10)+"(발급일로부터 24시간 동안 유효합니다!!)";  // 내용
+		String content = promoCode.randomCode(10);  // 내용
 		
 	
 		    
@@ -61,7 +62,7 @@ public class promotionService extends HttpServlet{
 
 	
 	/*체크아웃에서 쿠폰코드 입력하면 할인 적용시켜주는 메소드*/
-	public static int getDiscount(HttpServletRequest req, String email, String code) {
+	public static int getDiscount(HttpServletRequest req, String email, String code) throws UnsupportedEncodingException {
 		
 		int result = 0;
 		String value = "";

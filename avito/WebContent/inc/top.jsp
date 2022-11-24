@@ -1,12 +1,16 @@
+<%@page import="MemberAction.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
- 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%request.setCharacterEncoding("UTF-8");%>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}" /> 
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<html lang="utf-8">
 <head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
   <meta charset="utf-8">
   <title>Aviato | E-commerce template</title>
 
@@ -19,7 +23,7 @@
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
   
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/images/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/images/favicon.png"/>
   
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="${contextPath}/plugins/themefisher-font/style.css">
@@ -35,6 +39,7 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="${contextPath}/css/style.css">
 
+	
 </head>
 
 <body id="body">
@@ -43,12 +48,19 @@
 <section class="top-header">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4 col-xs-12 col-sm-4">
-				<div class="contact-number">
-					<i class="tf-ion-ios-telephone"></i>
-					<span>0129- 12323-123123</span>
+		
+		<c:choose>
+			<c:when test="${email eq null}">
+				<div class="col-md-4 col-xs-12 col-sm-4">
+					<p>로그인 후 이용해주세요.</p>
 				</div>
-			</div>
+			</c:when>
+			<c:otherwise>
+				<div class="col-md-4 col-xs-12 col-sm-4">
+				<p>${name}님 반갑습니다!</p>
+				</div>
+			</c:otherwise>
+		</c:choose>
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- Site Logo -->
 				<div class="logo text-center">
@@ -69,8 +81,22 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
+				<!-- login -->
+				<c:choose>
+					<c:when test="${name eq null}">
+						<ul class="top-menu text-center list-inline">
+							<a href="${contextPath}/member/prevlogin.do">login</a> | <a href="${contextPath}/member/prevsignin.do">signin</a>
+	            		</ul>
+					</c:when>
+					<c:otherwise>
+					<ul class="top-menu text-center list-inline">
+						<a href="${contextPath}/member/logout.do">logout</a> | <a href="${contextPath}/member/search.do">myinfo</a>
+	            	</ul>
+	            	</c:otherwise>
+	            </c:choose>
+            	
 				<!-- Cart -->
-				<ul class="top-menu text-right list-inline">
+					<ul class="top-menu text-right list-inline">
 					<li class="dropdown cart-nav dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
 								class="tf-ion-android-cart"></i>Cart</a>
@@ -165,7 +191,7 @@
 
 					<!-- Elements -->
 					<li class="dropdown dropdown-slide">
-						<a href="${contextPath}/shop/SelectCategory.do?option=all" class="dropdown-toggle" 
+						<a href="${contextPath}/shop-sidebar.jsp" class="dropdown-toggle" 
 							role="button" aria-haspopup="true" aria-expanded="false">Shop <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						
@@ -185,7 +211,7 @@
 									<ul>
 										<li class="dropdown-header">Introduction</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="${contextPath}/contact.jsp">Contact Us</a></li>
+										<li><a href="${contextPath}/mailSend/contact.jsp">Contact Us</a></li>
 										<li><a href="${contextPath}/about.jsp">About Us</a></li>
 										<li><a href="${contextPath}/404.jsp">404 Page</a></li>
 										<li><a href="${contextPath}/coming-soon.jsp">Coming Soon</a></li>

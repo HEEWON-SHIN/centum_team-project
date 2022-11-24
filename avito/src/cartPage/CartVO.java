@@ -14,6 +14,23 @@ public class CartVO {
 	private String pdCategory;
 	private String sale;
 	private int sale_Val;
+	private int pdQty;
+	private String finalPrice;
+	private String pdColor;
+	
+	public CartVO() { }
+	
+
+	public CartVO(int pdNum, String pdName, String cartPrice, String pdImg_Main, int pdQty, String finalPrice,String pdColor) {
+		super();
+		this.pdNum = pdNum;
+		this.pdName = pdName;
+		this.cartPrice = cartPrice;
+		this.pdImg_Main = pdImg_Main;
+		this.pdQty = pdQty;
+		this.finalPrice = finalPrice;
+		this.pdColor = pdColor;
+	}
 	
 	
 	
@@ -66,9 +83,35 @@ public class CartVO {
 	public void setSale_Val(int sale_Val) {
 		this.sale_Val = sale_Val;
 	}
+	public int getPdQty() {
+		return pdQty;
+	}
+	public void setPdQty(int pdQty) {
+		this.pdQty = pdQty;
+	}
+
+
+	public String getFinalPrice() {
+		return finalPrice;
+	}
+
+
+	public void setFinalPrice(String finalPrice) {
+		this.finalPrice = finalPrice;
+	}
+
+
+	public String getPdColor() {
+		return pdColor;
+	}
+
+
+	public void setPdColor(String pdColor) {
+		this.pdColor = pdColor;
+	}
 	 
 	
-	
+
 	
 
 	
